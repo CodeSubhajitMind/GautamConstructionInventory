@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shri Gautam Constructions - Inventory</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://kit.fontawesome.com/c1a8a4a3ac.js" crossorigin="anonymous"></script>
+<style>
+body, html {
+  height:100%;
+}
+/*
+ * Off Canvas sidebar at medium breakpoint
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 992px) {
+
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -33%;
+  }
+
+  .row-offcanvas-left.active {
+    left: 33%;
+    margin-left: -6px;
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 33%;
+    height: 100%;
+  }
+}
+
+/*
+ * Off Canvas wider at sm breakpoint
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 34em) {
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -45%;
+  }
+
+  .row-offcanvas-left.active {
+    left: 45%;
+    margin-left: -6px;
+  }
+  
+  .sidebar-offcanvas {
+    width: 45%;
+  }
+}
+
+.card {
+    overflow:hidden;
+}
+
+.card-body .rotate {
+    z-index: 8;
+    float: right;
+    height: 100%;
+}
+
+.card-body .rotate i {
+    color: rgba(20, 20, 20, 0.15);
+    position: absolute;
+    left: 0;
+    left: auto;
+    right: -10px;
+    bottom: 0;
+    display: block;
+    -webkit-transform: rotate(-44deg);
+    -moz-transform: rotate(-44deg);
+    -o-transform: rotate(-44deg);
+    -ms-transform: rotate(-44deg);
+    transform: rotate(-44deg);
+}
+
+</style>
+<script>
+	$(document).ready(function(){
+		
+		$('#link_sub_admin').click(function(e){
+			$('#addSubAdmin').show();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			
+			$(".nav-item .active").removeClass('active');
+		    $(this).parent().addClass('active'); 
+		    e.preventDefault();
+		});
+		
+		$('#link_dashboard').click(function(e){
+			$('#addSubAdmin').hide();
+			$('#dashboard').show();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			
+			$(".nav-item .active").removeClass('active');
+		    $(this).parent().addClass('active'); 
+		    e.preventDefault();
+		});
+		
+		$('#link_add_products').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').show();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_staffs').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').show();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_contractors').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').show();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_vehicles').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').show();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_locations').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').show();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		
+		$('#link_view_product').click(function(){
+			alert("ok");
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').show();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_staff').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').show();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_contractor').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').show();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_vehicle').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').show();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_location').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').show();
+		});
+	});
+</script>
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
+    <div class="flex-row d-flex">
+        <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#" title="Gautam Constructions">Gautam Constructions</a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="collapsingNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" data-target="#myModal" data-toggle="modal">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid" id="main">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
+            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
+                <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
+                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
+                       <li id="link_view_product" class="nav-item"><a class="nav-link" href="#">View Product Details</a></li>
+                       <li id="link_view_staff" class="nav-item"><a class="nav-link" href="#">View Staff Details</a></li>
+                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Contractor Details</a></li>
+                       <li id="link_view_vehicle" class="nav-item"><a class="nav-link" href="#">View Vehicle Details</a></li>
+                       <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
+                    </ul>
+                </li>
+                <li id="link_sub_admin" class="nav-item"><a class="nav-link" href="#">Create Sub-Admin</a></li>
+                <li id="link_add_products" class="nav-item"><a class="nav-link" href="#">Add Products</a></li>
+                <li id="link_add_staffs" class="nav-item"><a class="nav-link" href="#">Add Staffs</a></li>
+                <li id="link_add_contractors" class="nav-item"><a class="nav-link" href="#">Add Contractors</a></li>
+                <li id="link_add_vehicles" class="nav-item"><a class="nav-link" href="#">Add Vehicles</a></li>
+                <li id="link_add_locations" class="nav-item"><a class="nav-link" href="#">Add Locations</a></li>
+                <li id="link_analytics" class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+                <li id="link_export" class="nav-item"><a class="nav-link" href="#">Export</a></li>
+            </ul>
+        </div>
+        <!--/col-->
+
+        <div id="dashboard" class="col main pt-5 mt-3">
+            <h1 class="display-4 d-none d-sm-block">
+            	General Inventory Dashboard
+            </h1>
+            <p class="lead d-none d-sm-block">Insight into the over all general store inventory of Shree Gautam Constructions</p>
+
+            <div class="alert alert-warning fade collapse" role="alert" id="myAlert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <strong>Holy guacamole!</strong> this is an example.
+            </div>
+            <div class="row mb-3">
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Products</h6>
+                            <h1 class="display-4">134</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Vehicles</h6>
+                            <h1 class="display-4">20</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-twitter fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Staffs</h6>
+                            <h1 class="display-4">125</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="fa fa-share fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Contractors</h6>
+                            <h1 class="display-4">25</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+
+            <hr>
+            <div class="row placeholders mb-3">
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <i class="fa-solid fa-bars fa-xl" style="color: #0562a8;"></i>
+                    <h5>Product Add By Challan</h5>
+                    <span class="text-muted">Average 23 per day</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <i class="fa-solid fa-house-laptop fa-xl" style="color: #0562a8;"></i>
+                    <h5>Product Add By Purchase from Office</h5>
+                    <span class="text-muted">Average 15 per day</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <i class="fa-solid fa-globe fa-xl" style="color: #0562a8;"></i>
+                    <h5>Product Add By Local Purchase</h5>
+                    <span class="text-muted">Average 20 per day</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                   	<i class="fa-solid fa-door-open fa-xl" style="color: #0562a8;"></i>
+                   	<h5>Product Exit Total</h5>
+                    <span class="text-muted">Average 10 per day</span>
+                </div>
+            </div>
+
+            <a id="features"></a>
+            <hr>
+            <p class="lead mt-5">
+                Insight Into Products Details
+            </p>
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Product In</h4>
+                            <p class="card-text" style="font-size:50px;"><b>20</b></p>
+                            <a href="#" class="btn btn-primary">Get Detailed List</a>
+                        </div>
+                    </div>
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Total Product Out</h3>
+                            <p class="card-text" style="font-size:50px;	"><b>5</b></p>
+                            <a href="#" class="btn btn-primary">Get Detailed List</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Product Unit</th>
+                                    <th>Type</th>
+                                    <th>Quantity(in store)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1,001</td>
+                                    <td>ACC Blocks</td>
+                                    <td>Cubic Meter</td>
+                                    <td>Non-Refundable</td>
+                                    <td>500</td>
+                                </tr>
+                                <tr>
+                                    <td>1,002</td>
+                                    <td>Cement</td>
+                                    <td>Bags</td>
+                                    <td>Refundable</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,003</td>
+                                    <td>Steel Bars</td>
+                                    <td>Kg / meter cube</td>
+                                    <td>Non-Refundable</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,004</td>
+                                    <td>Sand</td>
+                                    <td>Kg</td>
+                                    <td>Non-Refundable</td>
+                                    <td>2000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,005</td>
+                                    <td>Aggregate</td>
+                                    <td>Cubic Meter</td>
+                                    <td>Refundable</td>
+                                    <td>1500</td>
+                                </tr>
+                                <tr>
+                                    <td>1,006</td>
+                                    <td>Titles</td>
+                                    <td>Sq.Ft</td>
+                                    <td>Non-Refundable</td>
+                                    <td>5000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,007</td>
+                                    <td>Titles</td>
+                                    <td>Sq.Ft</td>
+                                    <td>Non-Refundable</td>
+                                    <td>5000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,008</td>
+                                    <td>Titles</td>
+                                    <td>Sq.Ft</td>
+                                    <td>Non-Refundable</td>
+                                    <td>5000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+
+            <a id="more"></a>
+            <hr>
+            <h2 class="sub-header mt-5">Use card decks for equal height rows of cards</h2>
+            <div class="mb-3">
+                <div class="card-deck">
+                    <div class="card card-inverse card-success text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>It's really good news that the new Bootstrap 4 now has support for CSS 3 flexbox.</p>
+                                <footer>Makes flexible layouts <cite title="Source Title">Faster</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-danger text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>The Bootstrap 3.x element that was called "Panel" before, is now called a "Card".</p>
+                                <footer>All of this makes more <cite title="Source Title">Sense</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-warning text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>There are also some interesting new text classes for uppercase and capitalize.</p>
+                                <footer>These handy utilities make it <cite title="Source Title">Easy</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="card card-inverse card-info text-center">
+                        <div class="card-body">
+                            <blockquote class="card-blockquote">
+                                <p>If you want to use cool icons in Bootstrap 4, you'll have to find your own such as Font Awesome or Ionicons.</p>
+                                <footer>The Glyphicons are not <cite title="Source Title">Included</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+
+            <a id="flexbox"></a>
+            <hr>
+            <h2 class="sub-header mt-5">Interesting layouts and elements</h2>
+            <div class="row mb-3">
+                <div class="col-lg-6">
+
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Bye .well, .panel &amp; .thumbnail
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Replaced with .card</h4>
+                            <p class="card-text">All of these Bootstrap 3.x components have been dropped entirely for the new card component.</p>
+                            <button type="button" class="btn btn-secondary btn-lg">Large</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#home1" role="tab" data-toggle="tab">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#profile1" role="tab" data-toggle="tab">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#messages1" role="tab" data-toggle="tab">Messages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#settings1" role="tab" data-toggle="tab">Settings</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <br>
+                        <div role="tabpanel" class="tab-pane active" id="home1">
+                            <h4>Home</h4>
+                            <p>
+                                1. These Bootstrap 4 Tabs work basically the same as the Bootstrap 3.x tabs.
+                                <br>
+                                <br>
+                                <button class="btn btn-primary-outline btn-lg">Wow</button>
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile1">
+                            <h4>Pro</h4>
+                            <p>
+                                2. Tabs are helpful to hide or collapse some addtional content.
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="messages1">
+                            <h4>Messages</h4>
+                            <p>
+                                3. You can really put whatever you want into the tab pane.
+                            </p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="settings1">
+                            <h4>Settings</h4>
+                            <p>
+                                4. Some of the Bootstrap 3.x components like well and panel have been dropped for the new card component.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-6">
+                    <div class="card card-default card-body">
+                        <ul id="tabsJustified" class="nav nav-tabs nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-target="#tab1" data-toggle="tab">List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="" data-target="#tab2" data-toggle="tab">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-target="#tab3" data-toggle="tab">More</a>
+                            </li>
+                        </ul>
+                        <!--/tabs-->
+                        <br>
+                        <div id="tabsJustifiedContent" class="tab-content">
+                            <div class="tab-pane" id="tab1">
+                                <div class="list-group">
+                                    <a href="" class="list-group-item"><span class="float-right label label-success">51</span> Home Link</a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-success">8</span> Link 2</a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-success">23</span> Link 3</a>
+                                    <a href="" class="list-group-item text-muted">Link n..</a>
+                                </div>
+                            </div>
+                            <div class="tab-pane active" id="tab2">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <h4>Profile Section</h4>
+                                        <p>Imagine creating this simple user profile inside a tab card.</p>
+                                    </div>
+                                    <div class="col-sm-5"><img src="//placehold.it/170" class="float-right img-responsive img-rounded"></div>
+                                </div>
+                                <hr>
+                                <a href="javascript:;" class="btn btn-info btn-block">Read More Profiles</a>
+                                <div class="spacer5"></div>
+                            </div>
+                            <div class="tab-pane" id="tab3">
+                                <div class="list-group">
+                                    <a href="" class="list-group-item"><span class="float-right label label-info label-pill">44</span> <code>.panel</code> is now <code>.card</code></a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-info label-pill">8</span> <code>.nav-justified</code> is deprecated</a>
+                                    <a href="" class="list-group-item"><span class="float-right label label-info label-pill">23</span> <code>.badge</code> is now <code>.label-pill</code></a>
+                                    <a href="" class="list-group-item text-muted">Message n..</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/tabs content-->
+                    </div><!--/card-->
+                </div><!--/col-->
+                <div class="col-lg-6">
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="card">
+                        <div class="card-header" role="tab" id="headingOne"  data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Accordion example
+                        </div>
+                        <div id="collapseOne" class="card-block collapse in" role="tabpanel" aria-labelledby="headingOne">
+                             <p>This is a Bootstrap 4 accordion that uses the <code>.card</code> classes instead of <code>.panel</code>. The single-open section aspect is not working because the parent option (dependent on .panel) has not yet been finalized in BS 4 alpha. </p>
+                        </div>
+                        <div class="card-header" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Mobile-first
+                        </div>
+                        <div id="collapseTwo" class="card-block collapse" role="tabpanel" aria-labelledby="headingTwo">
+                             <p>Just like it's predecesor, Bootstrap 4 is mobile-first so that you start by designing for smaller devices such as smartphones and tablets, then proceed to laptop and desktop layouts.</p>
+                        </div>
+                        <div class="card-header" role="tab" id="headingThree"  data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              Built for CSS3
+                        </div>
+                        <div id="collapseThree" class="card-block collapse" role="tabpanel" aria-labelledby="headingThree">
+                             <p>Bootstrap employs a handful of important global styles and settings that you’ll need to be aware of when using it, all of which are almost exclusively geared towards the normalization of cross browser styles.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="mt-4">
+                        <a href="/go/KrUO8QpyXP/bootstrao-4-dashboard" target="_ext">Get this Bootstrap 4 admin dashboard at Codeply</a>
+                    </p>
+                </div><!--/col-->
+            </div><!--/row-->
+
+        </div>
+        <div id="addSubAdmin" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Create Sub-Admin</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group">
+	                    <label for="sub_admin_name">Name</label> 
+											<input class="form-control" id="sub_admin_name" placeholder="Sub Admin name" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="user_id_sub_admin">UserId</label> 
+											<input class="form-control" id="user_id_sub_admin" placeholder="Email" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="password_sub_admin">Password</label> 
+											<input class="form-control" id="password_sub_admin" placeholder="Password" type="password"> 
+											<small class="form-text text-muted" id="passwordHelpBlock">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</small>
+	                  </div>
+	                  <div class="form-group">
+	                    <button class="btn btn-success btn-lg float-right" type="submit">Register</button>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="addProduct" style="display:none;" class="col main pt-5 mt-3">
+	        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Product Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="0" readonly>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Refundable Type</label>
+	                    <div class="col-lg-9">
+	                      <select class="form-control" id="product_type" size="0">
+	                        <option value="refundable">
+	                          Refundable
+	                        </option>
+	                        <option value="non-refundable">
+	                          Non-Refundable
+	                        </option>
+	                      </select>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="button" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	           </div>
+        </div>
+        <div id="addStaff" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Staff Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Designation</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Employee Code</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="button" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="addContractor" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Contractor Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Department</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Address</label>
+	                    <div class="col-lg-9">
+	                      <textarea class="form-control" id="contractor_address" name="contractor_address" rows="6"></textarea>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="button" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="addVehicle" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Vehicle Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Driver Lisence No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Tyre No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Battery No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Pollution From Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Pollution Expiry Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fitness From Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fitness Expiry Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Insurance From Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Insurance Expiry Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Last Servicing Date(By Kms / BY Hrs)</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="button" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	           </div>
+        </div>
+        <div id="addLocation" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Location</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Location Name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="button" value="Add Location">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="viewProducts" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Products Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Products</h4>
+                            <p class="card-text" style="font-size:50px;"><b>0</b></p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Total Quantity of Product</h3>
+                            <p class="card-text" style="font-size:50px;	"><b>0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Product Unit</th>
+                                    <th>Type</th>
+                                    <th>Quantity(in store)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewStaffs" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Staff Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Staffs</h4>
+                            <p class="card-text" style="font-size:50px;"><b>0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Employee Code</th>
+                                    <th>Employee Name</th>
+                                    <th>Employee Designation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewContractors" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Contractor Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Contractors</h4>
+                            <p class="card-text" style="font-size:50px;"><b>0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Contractor Id</th>
+                                    <th>Contractor Name</th>
+                                    <th>Contractor Department</th>
+                                    <th>Contractor Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewVehicles" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Vehicle Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Vehicles</h4>
+                            <p class="card-text" style="font-size:50px;"><b>0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Vehicle No.</th>
+                                    <th>Driver Lisence No.</th>
+                                    <th>Tyre No.</th>
+                                    <th>Battery No.</th>
+                                    <th>Pollution From Date</th>
+                                    <th>Pollution Expiry Date</th>
+                                    <th>Fitness From Date</th>
+                                    <th>Fitness Expiry Date</th>
+                                    <th>Insurance From Date</th>
+                                    <th>Insurance Expiry Date</th>
+                                    <th>Last Servicing Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewLocations" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Location Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Locations</h4>
+                            <p class="card-text" style="font-size:50px;"><b>0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Location Id.</th>
+                                    <th>Location Name.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/main col-->
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This is a dashboard layout for Bootstrap 4. This is an example of the Modal component which you can use to show content.
+                Any content can be placed inside the modal and it can use the Bootstrap grid classes.</p>
+                <p>
+                    <a href="https://www.codeply.com/go/KrUO8QpyXP" target="_ext">Grab the code at Codeply</a>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

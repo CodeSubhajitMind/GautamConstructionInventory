@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shri Gautam Constructions - Inventory</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://kit.fontawesome.com/c1a8a4a3ac.js" crossorigin="anonymous"></script>
+<style>
+body, html {
+  height:100%;
+}
+/*
+ * Off Canvas sidebar at medium breakpoint
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 992px) {
+
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -33%;
+  }
+
+  .row-offcanvas-left.active {
+    left: 33%;
+    margin-left: -6px;
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 33%;
+    height: 100%;
+  }
+}
+
+/*
+ * Off Canvas wider at sm breakpoint
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 34em) {
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -45%;
+  }
+
+  .row-offcanvas-left.active {
+    left: 45%;
+    margin-left: -6px;
+  }
+  
+  .sidebar-offcanvas {
+    width: 45%;
+  }
+}
+
+.card {
+    overflow:hidden;
+}
+
+.card-body .rotate {
+    z-index: 8;
+    float: right;
+    height: 100%;
+}
+
+.card-body .rotate i {
+    color: rgba(20, 20, 20, 0.15);
+    position: absolute;
+    left: 0;
+    left: auto;
+    right: -10px;
+    bottom: 0;
+    display: block;
+    -webkit-transform: rotate(-44deg);
+    -moz-transform: rotate(-44deg);
+    -o-transform: rotate(-44deg);
+    -ms-transform: rotate(-44deg);
+    transform: rotate(-44deg);
+}
+
+</style>
+<script>
+	$(document).ready(function(){
+		
+		$('#link_sub_admin').click(function(e){
+			$('#addSubAdmin').show();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			
+			$(".nav-item .active").removeClass('active');
+		    $(this).parent().addClass('active'); 
+		    e.preventDefault();
+		});
+		
+		$('#link_dashboard').click(function(e){
+			$('#addSubAdmin').hide();
+			$('#dashboard').show();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			
+			$(".nav-item .active").removeClass('active');
+		    $(this).parent().addClass('active'); 
+		    e.preventDefault();
+		});
+		
+		$('#link_add_products').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').show();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_staffs').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').show();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_contractors').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').show();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_vehicles').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').show();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_add_locations').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').show();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		
+		$('#link_view_product').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').show();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_staff').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').show();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_contractor').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').show();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_vehicle').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').show();
+			$('#viewLocations').hide();
+		});
+		$('#link_view_location').click(function(){
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').show();
+		});
+	});
+</script>
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
+    <div class="flex-row d-flex">
+        <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#" title="Gautam Constructions">Gautam Constructions</a>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="collapsingNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="" data-target="#myModal" data-toggle="modal">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid" id="main">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
+            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
+                <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
+                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
+                       <li id="link_view_product" class="nav-item"><a class="nav-link" href="#">View Product Details</a></li>
+                       <li id="link_view_staff" class="nav-item"><a class="nav-link" href="#">View Staff Details</a></li>
+                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Contractor Details</a></li>
+                       <li id="link_view_vehicle" class="nav-item"><a class="nav-link" href="#">View Vehicle Details</a></li>
+                       <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
+                    </ul>
+                </li>
+                <li id="link_sub_admin" class="nav-item"><a class="nav-link" href="#">Create Sub-Admin</a></li>
+                <li id="link_add_products" class="nav-item"><a class="nav-link" href="#">Add Products</a></li>
+                <li id="link_add_staffs" class="nav-item"><a class="nav-link" href="#">Add Staffs</a></li>
+                <li id="link_add_contractors" class="nav-item"><a class="nav-link" href="#">Add Contractors</a></li>
+                <li id="link_add_vehicles" class="nav-item"><a class="nav-link" href="#">Add Vehicles</a></li>
+                <li id="link_add_locations" class="nav-item"><a class="nav-link" href="#">Add Locations</a></li>
+                <li id="link_analytics" class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+                <li id="link_export" class="nav-item"><a class="nav-link" href="#">Export</a></li>
+            </ul>
+        </div>
+        <!--/col-->
+
+        <div id="dashboard" class="col main pt-5 mt-3">
+            <h1 class="display-4 d-none d-sm-block">
+            	General Inventory Dashboard
+            </h1>
+            <p class="lead d-none d-sm-block">Insight into the over all general store inventory of Shree Gautam Constructions</p>
+
+            <div class="alert alert-warning fade collapse" role="alert" id="myAlert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <strong>Holy guacamole!</strong> this is an example.
+            </div>
+            <div class="row mb-3">
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Products</h6>
+                            <h1 class="display-4">134</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Vehicles</h6>
+                            <h1 class="display-4">20</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-twitter fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Staffs</h6>
+                            <h1 class="display-4">125</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="fa fa-share fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase">Contractors</h6>
+                            <h1 class="display-4">25</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+
+            <hr>
+            <div class="row placeholders mb-3">
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <i class="fa-solid fa-bars fa-xl" style="color: #0562a8;"></i>
+                    <h5>Product Add By Challan</h5>
+                    <span class="text-muted">Average 23 per day</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <i class="fa-solid fa-house-laptop fa-xl" style="color: #0562a8;"></i>
+                    <h5>Product Add By Purchase from Office</h5>
+                    <span class="text-muted">Average 15 per day</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                    <i class="fa-solid fa-globe fa-xl" style="color: #0562a8;"></i>
+                    <h5>Product Add By Local Purchase</h5>
+                    <span class="text-muted">Average 20 per day</span>
+                </div>
+                <div class="col-6 col-sm-3 placeholder text-center">
+                   	<i class="fa-solid fa-door-open fa-xl" style="color: #0562a8;"></i>
+                   	<h5>Product Exit Total</h5>
+                    <span class="text-muted">Average 10 per day</span>
+                </div>
+            </div>
+
+            <a id="features"></a>
+            <hr>
+            <p class="lead mt-5">
+                Insight Into Products Details
+            </p>
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Product In</h4>
+                            <p class="card-text" style="font-size:50px;"><b>20</b></p>
+                            <a href="#" class="btn btn-primary">Get Detailed List</a>
+                        </div>
+                    </div>
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h3 class="card-title">Total Product Out</h3>
+                            <p class="card-text" style="font-size:50px;	"><b>5</b></p>
+                            <a href="#" class="btn btn-primary">Get Detailed List</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Product Unit</th>
+                                    <th>Type</th>
+                                    <th>Quantity(in store)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1,001</td>
+                                    <td>ACC Blocks</td>
+                                    <td>Cubic Meter</td>
+                                    <td>Non-Refundable</td>
+                                    <td>500</td>
+                                </tr>
+                                <tr>
+                                    <td>1,002</td>
+                                    <td>Cement</td>
+                                    <td>Bags</td>
+                                    <td>Refundable</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,003</td>
+                                    <td>Steel Bars</td>
+                                    <td>Kg / meter cube</td>
+                                    <td>Non-Refundable</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,004</td>
+                                    <td>Sand</td>
+                                    <td>Kg</td>
+                                    <td>Non-Refundable</td>
+                                    <td>2000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,005</td>
+                                    <td>Aggregate</td>
+                                    <td>Cubic Meter</td>
+                                    <td>Refundable</td>
+                                    <td>1500</td>
+                                </tr>
+                                <tr>
+                                    <td>1,006</td>
+                                    <td>Titles</td>
+                                    <td>Sq.Ft</td>
+                                    <td>Non-Refundable</td>
+                                    <td>5000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,007</td>
+                                    <td>Titles</td>
+                                    <td>Sq.Ft</td>
+                                    <td>Non-Refundable</td>
+                                    <td>5000</td>
+                                </tr>
+                                <tr>
+                                    <td>1,008</td>
+                                    <td>Titles</td>
+                                    <td>Sq.Ft</td>
+                                    <td>Non-Refundable</td>
+                                    <td>5000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--/row-->
+            
+
+        </div>
+        <div id="addSubAdmin" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Create Sub-Admin</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" class="form" role="form">
+	                  <div class="form-group">
+	                    <label for="sub_admin_name">Name</label> 
+											<input class="form-control" id="sub_admin_name" placeholder="Sub Admin name" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="user_id_sub_admin">UserId</label> 
+											<input class="form-control" id="user_id_sub_admin" placeholder="Email" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="password_sub_admin">Password</label> 
+											<input class="form-control" id="password_sub_admin" placeholder="Password" type="password"> 
+											<small class="form-text text-muted" id="passwordHelpBlock">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</small>
+	                  </div>
+	                  <div class="form-group">
+	                    <button class="btn btn-success btn-lg float-right" type="submit">Register</button>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="addProduct" style="display:none;" class="col main pt-5 mt-3">
+	        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Product Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addProduct}" method="post" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <div class="col-lg-9">
+	                      <input id="product_name" name="product_name" class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit</label>
+	                    <div class="col-lg-9">
+	                      <input id="product_unit" name="product_unit" class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+	                    <div class="col-lg-9">
+	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0" readonly>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Refundable Type</label>
+	                    <div class="col-lg-9">
+	                      <select id="product_type" name="product_type" class="form-control" size="0">
+	                        <option value="refundable">
+	                          Refundable
+	                        </option>
+	                        <option value="non-refundable">
+	                          Non-Refundable
+	                        </option>
+	                      </select>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	           </div>
+        </div>
+        <div id="addStaff" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Staff Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addStaff}" method="post" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="staff_name" name="staff_name" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Designation</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="staff_designation" name="staff_designation" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Employee Code</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="emp_code" name="emp_code" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="addContractor" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Contractor Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addContractor}" method="post" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="contractor_name" name="contractor_name" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Department</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="contractor_department" name="contractor_department" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Address</label>
+	                    <div class="col-lg-9">
+	                      <textarea class="form-control" id="contractor_address" name="contractor_address" rows="6"></textarea>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="addVehicle" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Vehicle Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addVehicle}" method="post" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="vehicle_no" name="vehicle_no" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Driver Lisence No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="driver_lisence_no" name="driver_lisence_no" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Tyre No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="tyre_no" name="tyre_no" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Battery No.</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="battery_no" name="battery_no" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Pollution From Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="pollution_from" name="pollution_from" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Pollution Expiry Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="pollution_expiry" name="pollution_expiry" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fitness From Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="fitness_from" name="fitness_from" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fitness Expiry Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="fitness_expiry" name="fitness_expiry" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Insurance From Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="insurance_from" name="insurance_from" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Insurance Expiry Date</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="insurance_expiry" name="insurance_expiry" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Last Servicing Date(By Kms / BY Hrs)</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="last_servicing" name="last_servicing" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	           </div>
+        </div>
+        <div id="addLocation" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Location</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addLocation}" method="post" class="form" role="form">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Location Name</label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="location_name" name="location_name" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Add Location">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
+        <div id="viewProducts" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Products Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Products</h4>
+                            <p class="card-text" style="font-size:50px;"><b th:text="${productCount}">0</b></p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Total Quantity of Product</h3>
+                            <p class="card-text" style="font-size:50px;	"><b>0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Product Id</th>
+                                    <th>Product Name</th>
+                                    <th>Product Unit</th>
+                                    <th>Type</th>
+                                    <th>Quantity(in store)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<tr th:each="pr : ${productList}">
+                            		<td th:text="${pr.prod_id}"></td>
+                            		<td th:text="${pr.name}"></td>
+                            		<td th:text="${pr.unit}"></td>
+                            		<td th:text="${pr.quantity}"></td>
+                            		<td th:text="${pr.type}"></td>
+                            	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewStaffs" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Staff Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Staffs</h4>
+                            <p class="card-text" style="font-size:50px;"><b th:text="${staffCount}">0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Employee Code</th>
+                                    <th>Employee Name</th>
+                                    <th>Employee Designation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<tr th:each="sr : ${staffList}">
+                            		<td th:text="${sr.emp_code}"></td>
+                            		<td th:text="${sr.name}"></td>
+                            		<td th:text="${sr.designation}"></td>
+                            	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewContractors" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Contractor Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Contractors</h4>
+                            <p class="card-text" style="font-size:50px;"><b th:text="${contractorCount}"></b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Contractor Id</th>
+                                    <th>Contractor Name</th>
+                                    <th>Contractor Department</th>
+                                    <th>Contractor Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<tr th:each="cr : ${contractorList}">
+                            		<td th:text="${cr.contractor_id}"></td>
+                            		<td th:text="${cr.name}"></td>
+                            		<td th:text="${cr.dept}"></td>
+                            		<td th:text="${cr.address}"></td>
+                            	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewVehicles" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Vehicle Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Vehicles</h4>
+                            <p class="card-text" style="font-size:50px;"><b th:text="${vehicleCount}">0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Vehicle No.</th>
+                                    <th>Driver Lisence No.</th>
+                                    <th>Tyre No.</th>
+                                    <th>Battery No.</th>
+                                    <th>Pollution From Date</th>
+                                    <th>Pollution Expiry Date</th>
+                                    <th>Fitness From Date</th>
+                                    <th>Fitness Expiry Date</th>
+                                    <th>Insurance From Date</th>
+                                    <th>Insurance Expiry Date</th>
+                                    <th>Last Servicing Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<tr th:each="vr : ${vehicleList}">
+                            		<td th:text="${vr.vehicle_no}"></td>
+                            		<td th:text="${vr.driver_lisence_no}"></td>
+                            		<td th:text="${vr.tyre_no}"></td>
+                            		<td th:text="${vr.battery_no}"></td>
+                            		<td th:text="${vr.pollution_from_date}"></td>
+                            		<td th:text="${vr.pollution_expiry_date}"></td>
+                            		<td th:text="${vr.fitness_from_date}"></td>
+                            		<td th:text="${vr.fitness_end_date}"></td>
+                            		<td th:text="${vr.insurance_from_date}"></td>
+                            		<td th:text="${vr.insurance_end_date}"></td>
+                            		<td th:text="${vr.last_servicing_date}"></td>
+                            	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="viewLocations" style="display:none;" class="col main pt-5 mt-3">
+                
+                <h3 class="mb-0">Location Details</h3>
+
+            <div class="row my-4">
+                <div class="col-lg-3 col-md-4">
+                    <div class="card card-inverse bg-inverse mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Total Locations</h4>
+                            <p class="card-text" style="font-size:50px;"><b th:text="${locationCount}">0</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Location Id.</th>
+                                    <th>Location Name.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<tr th:each="lr : ${locationList}">
+                            		<td th:text="${lr.id}"></td>
+                            		<td th:text="${lr.location_name}"></td>
+                            	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/main col-->
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This is a dashboard layout for Bootstrap 4. This is an example of the Modal component which you can use to show content.
+                Any content can be placed inside the modal and it can use the Bootstrap grid classes.</p>
+                <p>
+                    <a href="https://www.codeply.com/go/KrUO8QpyXP" target="_ext">Grab the code at Codeply</a>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
