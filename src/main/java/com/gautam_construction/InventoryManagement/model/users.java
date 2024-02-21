@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
 @Entity
-@Table(name = "user")
-public class user {
+@Table(name = "users")
+public class users {
 	@Id
     private Integer user_id;
 	@NonNull
@@ -58,14 +58,14 @@ public class user {
 	public void setUser_roles(Set<user_roles> user_roles) {
 		this.user_roles = user_roles;
 	}
-	public user(Integer user_id, String password, String user_type, String datetime, Set<user_roles> user_roles) {
+	public users(Integer user_id, String password, String user_type, String datetime, Set<user_roles> user_roles) {
 		super();
 		this.user_id = user_id;
 		this.password = password;
 		this.user_type = user_type;
 		this.datetime = datetime;
 	}
-	public user() {
+	public users() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

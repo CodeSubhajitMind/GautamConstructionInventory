@@ -18,7 +18,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.gautam_construction.InventoryManagement.model.user;
+import com.gautam_construction.InventoryManagement.model.users;
 import com.gautam_construction.InventoryManagement.repository.userRepository;
 
 
@@ -44,7 +44,7 @@ public class InventoryAuthenticationSuccessHandler implements AuthenticationSucc
 		for (GrantedAuthority grantedAuthority : authorities) {
 			rolesArray.add(grantedAuthority.getAuthority().toString());
 			System.out.println("role is: "+grantedAuthority.getAuthority());
-			
+			 
 			if(grantedAuthority.getAuthority().equals("ROLE_A")) {
 				hasAdminRole = true;
 				office_name = "Admin";
@@ -62,7 +62,7 @@ public class InventoryAuthenticationSuccessHandler implements AuthenticationSucc
 		request.getSession().setAttribute("isSubAdminUser", hasSubAdminRole);
 		
 		System.out.println("username is: "+authentication.getName());
-		user loggedUser = userRepository.gettingUserId(Integer.parseInt(authentication.getName()));
+		users loggedUser = userRepository.gettingUserId(Integer.parseInt(authentication.getName()));
 		System.out.println("user login credentials :"+loggedUser.getUser_id());
 		
 		

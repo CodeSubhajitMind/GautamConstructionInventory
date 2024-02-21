@@ -3,7 +3,6 @@ package com.gautam_construction.InventoryManagement.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,13 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.gautam_construction.InventoryManagement.model.contractor;
 import com.gautam_construction.InventoryManagement.model.location;
 import com.gautam_construction.InventoryManagement.model.product;
 import com.gautam_construction.InventoryManagement.model.staff;
-import com.gautam_construction.InventoryManagement.model.user;
+import com.gautam_construction.InventoryManagement.model.users;
 import com.gautam_construction.InventoryManagement.model.vehicle;
 import com.gautam_construction.InventoryManagement.repository.ContractorRepository;
 import com.gautam_construction.InventoryManagement.repository.LocationRepository;
@@ -56,7 +54,7 @@ public class AdminController {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
-        List<user> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
+        List<users> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
         return "admin_home";
 	}
 	

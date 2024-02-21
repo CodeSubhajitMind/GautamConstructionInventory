@@ -16,7 +16,7 @@ public class user_roles {
 	private Integer id;
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
-	private user user;
+	private users user;
 	@ManyToOne
 	@JoinColumn(name = "role_id", nullable = false, referencedColumnName = "role_id")
 	private user_role_master user_role_master;
@@ -27,7 +27,7 @@ public class user_roles {
 		// TODO Auto-generated constructor stub
 	}
 
-	public user_roles(Integer id, user user,user_role_master user_role_master) {
+	public user_roles(Integer id, users user,user_role_master user_role_master) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -42,10 +42,10 @@ public class user_roles {
 		this.id = id;
 	}
 
-	public user getUser() {
+	public users getUser() {
 		return user;
 	}
-	public void setUser(user user) {
+	public void setUser(users user) {
 		this.user = user;
 	}
 	public user_role_master getUser_role_master() {

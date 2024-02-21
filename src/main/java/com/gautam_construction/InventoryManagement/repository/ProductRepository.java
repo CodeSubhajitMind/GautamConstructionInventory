@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.gautam_construction.InventoryManagement.model.product;
-import com.gautam_construction.InventoryManagement.model.user;
 
 public interface ProductRepository extends JpaRepository<product, Long>{
 	public final static String GET_ALL_PRODUCTS = "SELECT * FROM product";

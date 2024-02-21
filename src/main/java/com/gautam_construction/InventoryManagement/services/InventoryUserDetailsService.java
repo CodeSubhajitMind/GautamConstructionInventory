@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gautam_construction.InventoryManagement.model.user;
+import com.gautam_construction.InventoryManagement.model.users;
 import com.gautam_construction.InventoryManagement.repository.userRepository;
 import com.gautam_construction.InventoryManagement.repository.user_roles_repository;
 
@@ -27,7 +27,7 @@ public class InventoryUserDetailsService implements UserDetailsService{
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-				user user = userRepo.getUserCredentiaLs(Integer.parseInt(userName)).get(0);
+				users user = userRepo.getUserCredentiaLs(Integer.parseInt(userName)).get(0);
 				if (user == null)
 					throw new UsernameNotFoundException(userName);
 				List<String> userRoles = userRoleRepo.getUserRoles(userName);

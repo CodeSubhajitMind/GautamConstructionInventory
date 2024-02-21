@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Table(name = "staff")
 public class staff {
 	@Id
+    private Integer id;
     private String emp_code;
 	private String name;
 	private String designation;
@@ -18,11 +19,19 @@ public class staff {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public staff(String emp_code, String name, String designation) {
+	public staff(Integer id, String emp_code, String name, String designation) {
 		super();
+		this.id = id;
 		this.emp_code = emp_code;
 		this.name = name;
 		this.designation = designation;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getEmp_code() {
 		return emp_code;
@@ -44,7 +53,7 @@ public class staff {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(designation, emp_code, name);
+		return Objects.hash(designation, emp_code, id, name);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -56,11 +65,11 @@ public class staff {
 			return false;
 		staff other = (staff) obj;
 		return Objects.equals(designation, other.designation) && Objects.equals(emp_code, other.emp_code)
-				&& Objects.equals(name, other.name);
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
 	@Override
 	public String toString() {
-		return "staff [emp_code=" + emp_code + ", name=" + name + ", designation=" + designation + "]";
+		return "staff [id=" + id + ", emp_code=" + emp_code + ", name=" + name + ", designation=" + designation + "]";
 	}
 	
 	
