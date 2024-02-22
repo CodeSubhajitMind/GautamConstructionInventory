@@ -91,7 +91,7 @@ public class AdminController {
 			@RequestParam("product_quantity") String product_quantity,
 			@RequestParam("product_type") String product_type) {
 		pr.InsertProductDetails(product_name, product_unit, product_quantity, product_type);
-		return "admin_general_store";
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@RequestMapping(value="/addStaff",method=RequestMethod.POST)
@@ -99,7 +99,7 @@ public class AdminController {
 			@RequestParam("staff_designation") String staff_designation,
 			@RequestParam("emp_code") String emp_code) {
 		sr.InsertStaffDetails(emp_code, staff_name, staff_designation);
-		return "admin_general_store";
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@RequestMapping(value="/addContractor",method=RequestMethod.POST)
@@ -107,7 +107,7 @@ public class AdminController {
 			@RequestParam("contractor_department") String contractor_department,
 			@RequestParam("contractor_address") String contractor_address) {
 		cr.InsertContractorDetails(contractor_name, contractor_department, contractor_address);
-		return "admin_general_store";
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@RequestMapping(value="/addVehicle",method=RequestMethod.POST)
@@ -124,13 +124,13 @@ public class AdminController {
 			@RequestParam("last_servicing") String last_servicing
 			) {
 		vr.InsertVehicleDetails(vehicle_no, driver_lisence_no, tyre_no, battery_no, pollution_from, pollution_expiry, fitness_from, fitness_expiry, insurance_from, insurance_expiry, last_servicing);
-		return "admin_general_store";
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@RequestMapping(value="/addLocation",method=RequestMethod.POST)
 	public Object addLocation(@RequestParam("location_name") String location_name) {
 		lr.InsertLocationDetails(location_name);
-		return "admin_general_store";
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 }
