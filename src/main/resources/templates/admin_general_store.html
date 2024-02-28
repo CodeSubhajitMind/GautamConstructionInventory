@@ -102,7 +102,25 @@ body, html {
 <script>
 	$(document).ready(function(){
 		
+		$('#link_admin').click(function(e){
+			$('#addAdmin').show();
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		
 		$('#link_sub_admin').click(function(e){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').show();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -116,13 +134,10 @@ body, html {
 			$('#viewContractors').hide();
 			$('#viewVehicles').hide();
 			$('#viewLocations').hide();
-			
-			$(".nav-item .active").removeClass('active');
-		    $(this).parent().addClass('active'); 
-		    e.preventDefault();
 		});
 		
 		$('#link_dashboard').click(function(e){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').show();
 			$('#addProduct').hide();
@@ -143,6 +158,7 @@ body, html {
 		});
 		
 		$('#link_add_products').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').show();
@@ -158,6 +174,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_add_staffs').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -173,6 +190,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_add_contractors').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -188,6 +206,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_add_vehicles').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -203,6 +222,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_add_locations').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -219,6 +239,7 @@ body, html {
 		});
 		
 		$('#link_view_product').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -234,6 +255,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_staff').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -249,6 +271,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_contractor').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -264,6 +287,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_vehicle').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -279,6 +303,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_location').click(function(){
+			$('#addAdmin').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -318,7 +343,7 @@ body, html {
                 <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout" data-target="#myModal" data-toggle="modal">Logout</a>
+                <a class="nav-link" href="/InventoryManagement/logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -338,6 +363,7 @@ body, html {
                        <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
                     </ul>
                 </li>
+                <li id="link_admin" class="nav-item"><a class="nav-link" href="#">Create Admin</a></li>
                 <li id="link_sub_admin" class="nav-item"><a class="nav-link" href="#">Create Sub-Admin</a></li>
                 <li id="link_add_products" class="nav-item"><a class="nav-link" href="#">Add Products</a></li>
                 <li id="link_add_staffs" class="nav-item"><a class="nav-link" href="#">Add Staffs</a></li>
@@ -535,25 +561,42 @@ body, html {
             
 
         </div>
+        <div id="addAdmin" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Create Admin</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addAdmin}" method="post" class="form" role="form">
+	                  <div class="form-group">
+	                    <label for="sub_admin_name">Name</label> 
+											<input class="form-control" id="name_sub_admin" name="name_sub_admin" placeholder="Sub Admin name" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="user_id_sub_admin">UserId</label> 
+											<input class="form-control" id="user_id_sub_admin" name="user_id_sub_admin" placeholder="Email" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <button class="btn btn-success btn-lg float-right" type="submit">Register</button>
+	                  </div>
+	                </form>
+	              </div>
+	        </div>
+        </div>
         <div id="addSubAdmin" style="display:none;" class="col main pt-5 mt-3">
         	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Create Sub-Admin</h3>
 	              </div>
 	              <div class="card-body">
-	                <form autocomplete="off" class="form" role="form">
+	                <form autocomplete="off" th:action="@{/addSubAdmin}" method="post" class="form" role="form">
 	                  <div class="form-group">
 	                    <label for="sub_admin_name">Name</label> 
-											<input class="form-control" id="sub_admin_name" placeholder="Sub Admin name" type="text">
+											<input class="form-control" id="name_sub_admin" name="name_sub_admin" placeholder="Sub Admin name" type="text">
 	                  </div>
 	                  <div class="form-group">
 	                    <label for="user_id_sub_admin">UserId</label> 
-											<input class="form-control" id="user_id_sub_admin" placeholder="Email" type="text">
-	                  </div>
-	                  <div class="form-group">
-	                    <label for="password_sub_admin">Password</label> 
-											<input class="form-control" id="password_sub_admin" placeholder="Password" type="password"> 
-											<small class="form-text text-muted" id="passwordHelpBlock">Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</small>
+											<input class="form-control" id="user_id_sub_admin" name="user_id_sub_admin" placeholder="Email" type="text">
 	                  </div>
 	                  <div class="form-group">
 	                    <button class="btn btn-success btn-lg float-right" type="submit">Register</button>

@@ -19,10 +19,11 @@ public class users {
 	@NonNull
 	private String password;
 	@NonNull
+	private String name;
+	@NonNull
 	private String user_type;
 	@NonNull
 	private String datetime;
-	
 	
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<user_roles> user_roles = new HashSet<user_roles>();
@@ -39,6 +40,12 @@ public class users {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getUser_type() {
 		return user_type;
 	}
@@ -51,17 +58,17 @@ public class users {
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
 	}
-	
 	public Set<user_roles> getUser_roles() {
 		return user_roles;
 	}
 	public void setUser_roles(Set<user_roles> user_roles) {
 		this.user_roles = user_roles;
 	}
-	public users(Integer user_id, String password, String user_type, String datetime, Set<user_roles> user_roles) {
+	public users(Integer user_id, String password, String name, String user_type, String datetime, Set<user_roles> user_roles) {
 		super();
 		this.user_id = user_id;
 		this.password = password;
+		this.name = name;
 		this.user_type = user_type;
 		this.datetime = datetime;
 	}
@@ -71,14 +78,9 @@ public class users {
 	}
 	@Override
 	public String toString() {
-		return "user [user_id=" + user_id + ", password=" + password + ", user_type=" + user_type + ", datetime="
-				+ datetime + ", user_roles=" + user_roles + "]";
+		return "users [user_id=" + user_id + ", password=" + password + ", name=" + name + ", user_type=" + user_type
+				+ ", datetime=" + datetime + ", user_roles=" + user_roles + "]";
 	}
 	
 	
-	
-	
-	
-	
-
 }

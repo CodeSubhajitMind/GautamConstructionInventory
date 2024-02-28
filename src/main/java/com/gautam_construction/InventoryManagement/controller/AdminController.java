@@ -3,6 +3,7 @@ package com.gautam_construction.InventoryManagement.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,12 +27,16 @@ import com.gautam_construction.InventoryManagement.repository.ProductRepository;
 import com.gautam_construction.InventoryManagement.repository.StaffRepository;
 import com.gautam_construction.InventoryManagement.repository.VehicleRepository;
 import com.gautam_construction.InventoryManagement.repository.userRepository;
+import com.gautam_construction.InventoryManagement.repository.user_roles_repository;
+import com.gautam_construction.InventoryManagement.services.loginServices;
 
 
 @Controller
 public class AdminController {
 	@Autowired
 	private userRepository ur;
+	@Autowired
+	private user_roles_repository urr;
 	@Autowired
 	private ProductRepository pr;
 	@Autowired
@@ -42,6 +47,12 @@ public class AdminController {
 	private VehicleRepository vr;
 	@Autowired
 	private LocationRepository lr;
+	
+	
+	@Autowired
+	private loginServices ls;
+	
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
 	
 	@RequestMapping("/AdminHome")
 	public Object AdminHome(HttpSession session,Model model,Authentication authentication) {
@@ -55,7 +66,8 @@ public class AdminController {
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
         List<users> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
-        return "admin_home";
+        //return "admin_home";
+        return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@RequestMapping("/AdminGeneralStoreHome")
@@ -83,6 +95,32 @@ public class AdminController {
         
         System.out.println("product info:"+productList.size());
 		return "admin_general_store";
+	}
+	
+	@RequestMapping(value="/addAdmin",method=RequestMethod.POST)
+	public Object addAdmin(@RequestParam("name_sub_admin") String name_sub_admin,
+			@RequestParam("user_id_sub_admin") String user_id_sub_admin) throws Exception {
+		String pass = "abc123";
+		String usertype = "A";
+		Date now = new Date();
+		String today_str = formatter.format(now);
+		String encryptedPass = ls.hashPassword(pass);
+		ur.registerOfficeDetails(Integer.parseInt(user_id_sub_admin), encryptedPass, name_sub_admin, usertype, today_str);
+		urr.regsiterNewUserRole(Integer.parseInt(user_id_sub_admin), 1);
+		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@RequestMapping(value="/addSubAdmin",method=RequestMethod.POST)
+	public Object addSubAdmin(@RequestParam("name_sub_admin") String name_sub_admin,
+			@RequestParam("user_id_sub_admin") String user_id_sub_admin) throws Exception {
+		String pass = "abc123";
+		String usertype = "SA";
+		Date now = new Date();
+		String today_str = formatter.format(now);
+		String encryptedPass = ls.hashPassword(pass);
+		ur.registerOfficeDetails(Integer.parseInt(user_id_sub_admin), encryptedPass, name_sub_admin, usertype, today_str);
+		urr.regsiterNewUserRole(Integer.parseInt(user_id_sub_admin), 2);
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@RequestMapping(value="/addProduct",method=RequestMethod.POST)
