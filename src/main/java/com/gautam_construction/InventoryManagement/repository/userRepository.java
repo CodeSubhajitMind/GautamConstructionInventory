@@ -14,11 +14,19 @@ import com.gautam_construction.InventoryManagement.model.users;
 
 public interface userRepository extends JpaRepository<users, Long>{
 	public final static String GET_USER_CREDENTIALS = "SELECT * FROM users u WHERE u.user_id = :userid";
+	public final static String GET_ALL_ADMIN_CREDENTIALS = "SELECT * FROM users u where u.user_type='A'";
+	public final static String GET_ALL_SUB_ADMIN_CREDENTIALS = "SELECT * FROM users u where u.user_type='SA'";
 	public final static String INSERT_USER_CREDENTIALS = "insert into users(user_id,password,name,user_type,datetime) VALUES (:user_id,:password,:name,:office_type,:datetime)";
 	public final static String FIND_BY_USER_ID = "SELECT * FROM users u WHERE u.user_id = :userid LIMIT 1";
 	
 	@Query(value=GET_USER_CREDENTIALS,nativeQuery=true)
 	List<users> getUserCredentiaLs(@Param("userid") Integer userid);
+	
+	@Query(value=GET_ALL_ADMIN_CREDENTIALS,nativeQuery=true)
+	List<users> getAllAdminCredentiaLs();
+	
+	@Query(value=GET_ALL_SUB_ADMIN_CREDENTIALS,nativeQuery=true)
+	List<users> getAllSubAdminCredentiaLs();
 	                                             
 	@Modifying
     @Query(value = INSERT_USER_CREDENTIALS, nativeQuery = true)
@@ -28,8 +36,6 @@ public interface userRepository extends JpaRepository<users, Long>{
 	@Query(value=FIND_BY_USER_ID,nativeQuery=true)
 	 users gettingUserId(@Param("userid") Integer userid);
 		
-
-	
 	//@Query(value=FIND_BY_USER_ID,nativeQuery=true)
 	//user findByUserid(@Param("userid") Integer userId);
 }

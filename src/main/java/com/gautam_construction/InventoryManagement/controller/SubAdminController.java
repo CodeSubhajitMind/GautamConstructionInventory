@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gautam_construction.InventoryManagement.model.contractor;
 import com.gautam_construction.InventoryManagement.model.location;
 import com.gautam_construction.InventoryManagement.model.product;
+import com.gautam_construction.InventoryManagement.model.product_add_by_challan;
+import com.gautam_construction.InventoryManagement.model.product_add_by_ghy_office;
 import com.gautam_construction.InventoryManagement.model.product_add_by_local_office;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_challan;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_contractor;
@@ -74,9 +76,9 @@ public class SubAdminController {
 	@Autowired
 	private product_exit_by_miscellaneous_repository pemr;
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/SubAdminHome")
 	public Object SubAdminHome(HttpSession session,Model model,Authentication authentication) {
-		@SuppressWarnings("unchecked")
 		String user_id = session.getAttribute("userId").toString();
 		String user_type = session.getAttribute("userType").toString();
 		String office_name = session.getAttribute("officeName").toString();
@@ -92,6 +94,13 @@ public class SubAdminController {
         List<contractor> contractorList = cr.getAllContractors();
         List<vehicle> vehicleList = vr.getAllVehicles();
         List<location> locationList = lr.getAllLocations();
+        List<product_add_by_challan> prodAddChallanList = pacr.getAllProductAddByChallan();
+        List<product_add_by_ghy_office> prodAddGhyOffice = pagor.getAllProductAddByGhyOffice();
+        List<product_add_by_local_office> prodAddLocalOffice = palor.getAllProductAddByLocalOffice();
+        List<product_exit_by_challan> prodExitChallan = pecr.getAllProductExitByChallan();
+        List<product_exit_by_contractor> prodExitContractor = pecor.getAllProductExitByContractor();
+        List<product_exit_by_miscellaneous> prodExitMiscellaneous = pemr.getAllProductExitByMiscellaneous();
+        List<product_exit_by_staff> prodExitStaff = pesr.getAllProductExitByStaff();
         model.addAttribute("productList", productList);
         model.addAttribute("staffList", staffList);
         model.addAttribute("contractorList", contractorList);
@@ -104,55 +113,90 @@ public class SubAdminController {
         model.addAttribute("vehicleCount", vehicleList.size());
         model.addAttribute("locationCount", locationList.size());
         
+        model.addAttribute("prodAddChallanList", prodAddChallanList);
+        model.addAttribute("prodAddGhyOffice", prodAddGhyOffice);
+        model.addAttribute("prodAddLocalOffice", prodAddLocalOffice);
+        model.addAttribute("prodExitChallan", prodExitChallan);
+        model.addAttribute("prodExitContractor", prodExitContractor);
+        model.addAttribute("prodExitMiscellaneous", prodExitMiscellaneous);
+        model.addAttribute("prodExitStaff", prodExitStaff);
+        
+        
+        
         System.out.println("product info:"+productList.size());
         return "sub_admin_home";
 	}
 	
+	@RequestMapping("/billDetails")
+	public Object addLocation(HttpSession session,Model model,Authentication authentication,
+			@RequestParam("product_id") String product_id,@RequestParam("product_quantity") String product_quantity,@RequestParam("challan_no") String challan_no) {
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        List<product> productList = pr.getProductQuantity(Integer.parseInt(product_id));
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+		model.addAttribute("product_name", productList.get(0).getName());
+		model.addAttribute("product_quantity", product_quantity);
+		model.addAttribute("challan_no", challan_no);
+		return "bill_generate";
+	}
+	
 	@RequestMapping(value="/addProductEntryByChallan",method=RequestMethod.POST)
-	public Object addProductEntryByChallan(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductEntryByChallan(
 			@RequestParam("challan_no") String challan_no,
 			@RequestParam("challan_date") String challan_date,
-			@RequestParam("from_branch") String from_branch,
-			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam("product_id") List<String> product_id,
+			@RequestParam("product_quantity") List<String> product_quantity,
+			@RequestParam("from_branch") List<String> from_branch,
+			@RequestParam("vehicle_no") List<String> vehicle_no,
 			HttpSession session,Model model,Authentication authentication) {
-		Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = quantity + Double.parseDouble(prodList.get(0).getQuantity());
+		for(int i=0;i<product_id.size();i++) {
+			Double quantity = 0.0;
+			List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+			if(prodList.size()>0) {
+				quantity = quantity + Double.parseDouble(prodList.get(0).getQuantity());
+			}
+			quantity = quantity + Double.parseDouble(product_quantity.get(i));
+			pacr.InsertProductAddByChallan(Integer.parseInt(product_id.get(i)), product_quantity.get(i), challan_no, challan_date, from_branch.get(i), vehicle_no.get(i));
+			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
-		quantity = quantity + Double.parseDouble(product_quantity);
-		pacr.InsertProductAddByChallan(Integer.parseInt(product_id), product_quantity, challan_no, challan_date, from_branch, vehicle_no);
-		pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
 		return "redirect:/SubAdminHome";
 	}
 	
 	@RequestMapping(value="/addProductEntryByGhyOffice",method=RequestMethod.POST)
-	public Object addProductEntryByGhyOffice(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductEntryByGhyOffice(
 			@RequestParam("invoice_no") String invoice_no,
 			@RequestParam("invoice_date") String invoice_date,
-			@RequestParam("vendor_name") String vendor_name,
-			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam(value="product_id", required = false) List<String> product_id,
+			@RequestParam(value="product_quantity", required = false) List<String> product_quantity,
+			@RequestParam(value="vendor_name", required = false) List<String> vendor_name,
+			@RequestParam(value="vehicle_no", required = false) List<String> vehicle_no,
 			HttpSession session,Model model,Authentication authentication) {
-		Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = quantity + Double.parseDouble(prodList.get(0).getQuantity());
+		for(int i=0;i<product_id.size();i++) {
+			Double quantity = 0.0;
+			List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+			if(prodList.size()>0) {
+				quantity = quantity + Double.parseDouble(prodList.get(0).getQuantity());
+			}
+			quantity = quantity + Double.parseDouble(product_quantity.get(i));
+			pagor.InsertProductAddByGhyOffice(Integer.parseInt(product_id.get(i)), product_quantity.get(i), invoice_no, invoice_date, vendor_name.get(i), vehicle_no.get(i));
+			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
-		quantity = quantity + Double.parseDouble(product_quantity);
-		pagor.InsertProductAddByGhyOffice(Integer.parseInt(product_id), product_quantity, invoice_no, invoice_date, vendor_name, vehicle_no);
-		pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
 		return "redirect:/SubAdminHome";
 	}
 	
 	@RequestMapping(value="/addProductEntryBylocalOffice",method=RequestMethod.POST)
-	public Object addProductEntryBylocalOffice(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductEntryBylocalOffice(
 			@RequestParam("invoice_no") String invoice_no,
 			@RequestParam("invoice_date") String invoice_date,
-			@RequestParam("vendor_name") String vendor_name,
-			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam(value="product_id", required = false) List<String> product_id,
+			@RequestParam(value="product_quantity", required = false) List<String> product_quantity,
+			@RequestParam(value="vendor_name", required = false) List<String> vendor_name,
+			@RequestParam(value="vehicle_no", required = false) List<String> vehicle_no,
 			HttpSession session,Model model,Authentication authentication) {
 		List<product_add_by_local_office> prodAddList =  palor.getAllProductAddByLocalOffice();
 		Integer serial_no = 100;
@@ -165,26 +209,29 @@ public class SubAdminController {
 		else {
 			new_serial_no = "SGCCL/Noonmati/2023-24/"+serial_no;
 		}
-		
-		Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = quantity + Double.parseDouble(prodList.get(0).getQuantity());
+		for(int i=0;i<product_id.size();i++) {
+			Double quantity = 0.0;
+			List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+			if(prodList.size()>0) {
+				quantity = quantity + Double.parseDouble(prodList.get(0).getQuantity());
+			}
+			quantity = quantity + Double.parseDouble(product_quantity.get(i));
+			
+			palor.InsertProductAddByLocalOffice(Integer.parseInt(product_id.get(i)), product_quantity.get(i), invoice_no, invoice_date, vendor_name.get(i), vehicle_no.get(i), new_serial_no);
+			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
-		quantity = quantity + Double.parseDouble(product_quantity);
-		
-		palor.InsertProductAddByLocalOffice(Integer.parseInt(product_id), product_quantity, invoice_no, invoice_date, vendor_name, vehicle_no, new_serial_no);
-		pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
+
 		return "redirect:/SubAdminHome";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/addProductExitByChallan",method=RequestMethod.POST)
-	public Object addProductExitByChallan(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductExitByChallan(
 			@RequestParam("exit_date") String exit_date,
-			@RequestParam("to_location") String to_location,
-			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam(value="product_id", required = false) List<String> product_id,
+			@RequestParam(value="product_quantity", required = false) List<String> product_quantity,
+			@RequestParam(value="to_location", required = false) List<String> to_location,
+			@RequestParam(value="vehicle_no", required = false) List<String> vehicle_no,
 			HttpSession session,Model model,Authentication authentication) {
 		String challan_no = "SGCCL/";
 		Random random = new Random();
@@ -200,29 +247,32 @@ public class SubAdminController {
         	challan_no = challan_no + formatted_serial_no;
         }
         String bill = "";
+        for(int i=0;i<product_id.size();i++) {
+        	Double quantity = 0.0;
+    		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+    		if(prodList.size()>0) {
+    			quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity.get(i));
+    		}
+            
+            pecr.InsertProductExitByChallan(Integer.parseInt(product_id.get(i)), product_quantity.get(i), challan_no, exit_date, to_location.get(i), vehicle_no.get(i), bill);
+            pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
+        }
         
-        Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity);
-		}
-        
-        pecr.InsertProductExitByChallan(Integer.parseInt(product_id), product_quantity, challan_no, exit_date, to_location, vehicle_no, bill);
-        pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
         List<String> returnList = new ArrayList<>();
         returnList.add(challan_no);
-        returnList.add(prodList.get(0).getName());
-        returnList.add(Double.toString(quantity));
+//        returnList.add(prodList.get(0).getName());
+//        returnList.add(Double.toString(quantity));
         return returnList;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/addProductExitByContractor",method=RequestMethod.POST)
-	public Object addProductExitByContractor(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductExitByContractor(
 			@RequestParam("exit_date") String exit_date,
-			@RequestParam("contractor_name") String contractor_name,
-			@RequestParam("receiving_person") String receiving_person,
+			@RequestParam("product_id") List<String> product_id,
+			@RequestParam("product_quantity") List<String> product_quantity,
+			@RequestParam("contractor_name") List<String> contractor_name,
+			@RequestParam("receiving_person") List<String> receiving_person,
 			HttpSession session,Model model,Authentication authentication) {
 		String challan_no = "SGCCL/";
 		Random random = new Random();
@@ -238,27 +288,31 @@ public class SubAdminController {
         	challan_no = challan_no + formatted_serial_no;
         }
 		String bill = "";
-		Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity);
+		for(int i=0;i<product_id.size();i++) {
+			Double quantity = 0.0;
+			List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+			if(prodList.size()>0) {
+				quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity.get(i));
+			}
+			pecor.InsertProductExitByContractor(Integer.parseInt(product_id.get(i)), product_quantity.get(i), challan_no, exit_date, contractor_name.get(i), receiving_person.get(i), bill);
+			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
-		pecor.InsertProductExitByContractor(Integer.parseInt(product_id), product_quantity, challan_no, exit_date, contractor_name, receiving_person, bill);
-		pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
+		
 		List<String> returnList = new ArrayList<>();
         returnList.add(challan_no);
-        returnList.add(prodList.get(0).getName());
-        returnList.add(Double.toString(quantity));
+        //returnList.add(prodList.get(0).getName());
+        //returnList.add(Double.toString(quantity));
 		return returnList;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/addProductExitByStaff",method=RequestMethod.POST)
-	public Object addProductExitByStaff(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductExitByStaff(
 			@RequestParam("exit_date") String exit_date,
-			@RequestParam("staff_emp_code") String staff_emp_code,
-			@RequestParam("receiving_person") String receiving_person,
+			@RequestParam("product_id") List<String> product_id,
+			@RequestParam("product_quantity") List<String> product_quantity,
+			@RequestParam("staff_emp_code") List<String> staff_emp_code,
+			@RequestParam("receiving_person") List<String> receiving_person,
 			HttpSession session,Model model,Authentication authentication) {
 		String challan_no = "SGCCL/";
 		Random random = new Random();
@@ -274,27 +328,31 @@ public class SubAdminController {
         	challan_no = challan_no + formatted_serial_no;
         }
 		String bill = "";
-		Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity);
+		for(int i=0;i<product_id.size();i++) {
+			Double quantity = 0.0;
+			List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+			if(prodList.size()>0) {
+				quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity.get(i));
+			}
+			pesr.InsertProductExitByStaff(Integer.parseInt(product_id.get(i)), product_quantity.get(i), challan_no, exit_date, staff_emp_code.get(i), receiving_person.get(i), bill);
+			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
-		pesr.InsertProductExitByStaff(Integer.parseInt(product_id), product_quantity, challan_no, exit_date, staff_emp_code, receiving_person, bill);
-		pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
+		
 		List<String> returnList = new ArrayList<>();
         returnList.add(challan_no);
-        returnList.add(prodList.get(0).getName());
-        returnList.add(Double.toString(quantity));
+        //returnList.add(prodList.get(0).getName());
+        //returnList.add(Double.toString(quantity));
 		return returnList;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/addProductExitByMiscellaneous",method=RequestMethod.POST)
-	public Object addProductExitByMiscellaneous(@RequestParam("product_id") String product_id,
-			@RequestParam("product_quantity") String product_quantity,
+	public Object addProductExitByMiscellaneous(
 			@RequestParam("exit_date") String exit_date,
-			@RequestParam("work_name") String work_name,
-			@RequestParam("receiving_person") String receiving_person,
+			@RequestParam("product_id") List<String> product_id,
+			@RequestParam("product_quantity") List<String> product_quantity,
+			@RequestParam("work_name") List<String> work_name,
+			@RequestParam("receiving_person") List<String> receiving_person,
 			HttpSession session,Model model,Authentication authentication) {
 		String challan_no = "SGCCL/";
 		Random random = new Random();
@@ -310,17 +368,20 @@ public class SubAdminController {
         	challan_no = challan_no + formatted_serial_no;
         }
 		String bill = "";
-		Double quantity = 0.0;
-		List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id));
-		if(prodList.size()>0) {
-			quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity);
+		for(int i=0;i<product_id.size();i++) {
+			Double quantity = 0.0;
+			List<product> prodList = pr.getProductQuantity(Integer.parseInt(product_id.get(i)));
+			if(prodList.size()>0) {
+				quantity = Double.parseDouble(prodList.get(0).getQuantity()) - Double.parseDouble(product_quantity.get(i));
+			}
+			pemr.InsertProductExitByMiscellaneous(Integer.parseInt(product_id.get(i)), product_quantity.get(i), challan_no, exit_date, work_name.get(i), receiving_person.get(i), bill);
+			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
-		pemr.InsertProductExitByMiscellaneous(Integer.parseInt(product_id), product_quantity, challan_no, exit_date, work_name, receiving_person, bill);
-		pr.UpdateProductQuantity(Integer.parseInt(product_id), Double.toString(quantity));
+		
 		List<String> returnList = new ArrayList<>();
         returnList.add(challan_no);
-        returnList.add(prodList.get(0).getName());
-        returnList.add(Double.toString(quantity));
+        //returnList.add(prodList.get(0).getName());
+        //returnList.add(Double.toString(quantity));
 		return returnList;
 	}
 	

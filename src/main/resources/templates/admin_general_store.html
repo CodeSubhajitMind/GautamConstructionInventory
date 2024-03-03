@@ -582,16 +582,39 @@ body, html {
 	                </form>
 	              </div>
 	        </div>
+	        <div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">View Admin Users</h3>
+	              </div>
+	              <div class="card-body">
+	              	<table>
+	              		<thead>
+	              			<tr>
+	              				<th>Name</th>
+	              				<th>User ID</th>
+	              				<th>Password</th>
+	              			</tr>
+	              		</thead>
+	              		<tbody>
+	              			<tr th:each="admin:${admin_user_list}">
+	              				<td th:text="${admin.name}"></td>
+	              				<td th:text="${admin.user_id}"></td>
+	              				<td th:text="${admin.password}"></td>
+	              			</tr>
+	              		</tbody>
+	              	</table>
+	              </div> 
+	        </div>
         </div>
-        <div id="addSubAdmin" style="display:none;" class="col main pt-5 mt-3">
+        <div id="addSubAdmin" style="display:none;" class="col main pt-5 mt-3">                  
         	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Create Sub-Admin</h3>
-	              </div>
+	              </div>                                                                
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addSubAdmin}" method="post" class="form" role="form">
 	                  <div class="form-group">
-	                    <label for="sub_admin_name">Name</label> 
+	                    <label for="name_sub_admin">Name</label> 
 											<input class="form-control" id="name_sub_admin" name="name_sub_admin" placeholder="Sub Admin name" type="text">
 	                  </div>
 	                  <div class="form-group">
@@ -603,6 +626,29 @@ body, html {
 	                  </div>
 	                </form>
 	              </div>
+	        </div>
+	        <div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">View Sub Admin Users</h3>
+	              </div>
+	              <div class="card-body">
+	              	<table>
+	              		<thead>
+	              			<tr>
+	              				<th>Name</th>
+	              				<th>User ID</th>
+	              				<th>Password</th>
+	              			</tr>
+	              		</thead>
+	              		<tbody>
+	              			<tr th:each="sub_admin:${sub_admin_user_list}">
+	              				<td th:text="${sub_admin.name}"></td>
+	              				<td th:text="${sub_admin.user_id}"></td>
+	              				<td th:text="${sub_admin.password}"></td>
+	              			</tr>
+	              		</tbody>
+	              	</table>
+	              </div> 
 	        </div>
         </div>
         <div id="addProduct" style="display:none;" class="col main pt-5 mt-3">
@@ -627,7 +673,7 @@ body, html {
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
 	                    <div class="col-lg-9">
-	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0" readonly>
+	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">

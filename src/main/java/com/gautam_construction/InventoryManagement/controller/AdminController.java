@@ -66,6 +66,7 @@ public class AdminController {
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
         List<users> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
+        model.addAttribute("office_name", office_name);
         //return "admin_home";
         return "redirect:/AdminGeneralStoreHome";
 	}
@@ -92,6 +93,11 @@ public class AdminController {
         model.addAttribute("contractorCount", contractorList.size());
         model.addAttribute("vehicleCount", vehicleList.size());
         model.addAttribute("locationCount", locationList.size());
+        
+        List<users> user_info_all_admin = ur.getAllAdminCredentiaLs();
+        List<users> user_info_all_sub_admin = ur.getAllSubAdminCredentiaLs();
+        model.addAttribute("admin_user_list", user_info_all_admin);
+        model.addAttribute("sub_admin_user_list", user_info_all_sub_admin);
         
         System.out.println("product info:"+productList.size());
 		return "admin_general_store";

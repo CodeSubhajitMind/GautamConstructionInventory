@@ -23,6 +23,16 @@
 <script type = "text/javascript"
 			 src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		
+<script th:inline="javascript">
+    /* variable used by index.js */
+    var prodList = [[${productList}]];
+    var locationList = [[${locationList}]];
+    var vehicleList = [[${vehicleList}]];
+    var contractorList = [[${contractorList}]];
+    var staffList = [[${staffList}]];
+</script>
+<script th:inline="javascript" th:src="@{/js/sub_admin.js}"></script> 
 <style>
 body, html {
   height:100%;
@@ -104,7 +114,7 @@ body, html {
 }
 
 </style>
-<script>
+<script th:inline="javascript">
 	$(document).ready(function(){
 		
 		
@@ -414,17 +424,22 @@ body, html {
 	        var form = document.getElementById('formExitByChallan');
 
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelector('[name="product_quantity"]').value;
-	        var product_id = form.querySelector('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
+	        var product_id = form.querySelectorAll('[name="product_id"]').value;
 	        
 	        var status = "failed";
 	        
-	        status = checkAvailableQuantity(product_id,product_quantity);
+	        var i = 0;
+	        for(i=0;i<product_id.length;i++){
+		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+		        
+				 if(status=="failed"){
+					 return;
+				 }
+	        }
 	        
-			 if(status=="failed"){
-				 return;
-			 }
-	
+
+			
 	        // Serialize the form data
 	        var formData = $(this).serialize();
 	        var token = $('#_csrf').attr("content");
@@ -442,7 +457,8 @@ body, html {
 	                // Handle the response from the controller
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
-	                window.location.href = "/SubAdminHome";
+	                //window.location.href = "/SubAdminHome";
+	                window.location.href = '/billDetails?challan_no='+data[0];
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -458,16 +474,19 @@ body, html {
 	        var form = document.getElementById('formExitByContractor');
 	
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelector('[name="product_quantity"]').value;
-	        var product_id = form.querySelector('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
+	        var product_id = form.querySelectorAll('[name="product_id"]').value;
 	        
 	        var status = "failed";
 	        
-	        status = checkAvailableQuantity(product_id,product_quantity);
-	        
-			 if(status=="failed"){
-				 return;
-			 }
+	        var i = 0;
+	        for(i=0;i<product_id.length;i++){
+		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+		        
+				 if(status=="failed"){
+					 return;
+				 }
+	        }
 	
 	        // Serialize the form data
 	        var formData = $(this).serialize();
@@ -486,7 +505,8 @@ body, html {
 	                // Handle the response from the controller
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
-	                window.location.href = "/SubAdminHome";
+	                //window.location.href = "/SubAdminHome";
+	                window.location.href = '/billDetails?challan_no='+data[0];
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -502,16 +522,19 @@ body, html {
 	        var form = document.getElementById('formExitByStaff');
 	
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelector('[name="product_quantity"]').value;
-	        var product_id = form.querySelector('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
+	        var product_id = form.querySelectorAll('[name="product_id"]').value;
 	        
 	        var status = "failed";
 	        
-	        status = checkAvailableQuantity(product_id,product_quantity);
-	        
-			 if(status=="failed"){
-				 return;
-			 }
+	        var i = 0;
+	        for(i=0;i<product_id.length;i++){
+		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+		        
+				 if(status=="failed"){
+					 return;
+				 }
+	        }
 	
 	        // Serialize the form data
 	        var formData = $(this).serialize();
@@ -530,7 +553,8 @@ body, html {
 	                // Handle the response from the controller
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
-	                window.location.href = "/SubAdminHome";
+	                //window.location.href = "/SubAdminHome";
+	                window.location.href = '/billDetails?challan_no='+data[0];
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -546,16 +570,19 @@ body, html {
 	        var form = document.getElementById('formExitByMiscellaneous');
 	
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelector('[name="product_quantity"]').value;
-	        var product_id = form.querySelector('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
+	        var product_id = form.querySelectorAll('[name="product_id"]').value;
 	        
 	        var status = "failed";
 	        
-	        status = checkAvailableQuantity(product_id,product_quantity);
-	        
-			 if(status=="failed"){
-				 return;
-			 }
+	        var i = 0;
+	        for(i=0;i<product_id.length;i++){
+		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+		        
+				 if(status=="failed"){
+					 return;
+				 }
+	        }
 	
 	        // Serialize the form data
 	        var formData = $(this).serialize();
@@ -574,7 +601,8 @@ body, html {
 	                // Handle the response from the controller
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
-	                window.location.href = "/SubAdminHome";
+	                //window.location.href = "/SubAdminHome";
+	                window.location.href = '/billDetails?challan_no='+data[0];
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -582,6 +610,7 @@ body, html {
 	            }
 	        });
 	    });
+		
 		
 	});
 
@@ -636,7 +665,7 @@ body, html {
                 <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout" data-target="#myModal" data-toggle="modal">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
@@ -861,70 +890,81 @@ body, html {
                 </div>
             </div>
             <!--/row-->
-            
-
+               
         </div>
         <div id="addProductEntryByChallan" style="display:none;" class="col main pt-5 mt-3">
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Product Entry By Challan</h3>
 	              </div>
-	              <div class="card-body">
-	                <form autocomplete="off" th:action="@{/addProductEntryByChallan}" method="post" class="form" role="form">
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
-	                    <div class="col-lg-9">
-	                      <select class="form-control" name="product_id" id="product_id">
-							    <option value="">select option</option>
-							    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
-						  </select>
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
-	                    <div class="col-lg-9">
-	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Challan Number</label>
-	                    <div class="col-lg-9">
-	                      <input id="challan_no" name="challan_no" class="form-control" type="text" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Date of Entry</label>
-	                    <div class="col-lg-9">
-	                      <input id="challan_date" name="challan_date" class="form-control" type="date" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Issuing Branch</label>
-	                    <div class="col-lg-9">
-	                      <select class="form-control" name="from_branch" id="from_branch">
-							    <option value="">select option</option>
-							    <option th:each="location : ${locationList}" th:value="${location.location_name}" th:text="${location.location_name}"></option>
-						  </select>
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
-	                    <div class="col-lg-9">
-	                      <select class="form-control" name="vehicle_no" id="vehicle_no">
-							    <option value="">select option</option>
-							    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
-						  </select>
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label"></label>
-	                    <div class="col-lg-9">
-	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
-												<input class="btn btn-primary" type="submit" value="Save Changes">
-	                    </div>
-	                  </div>
-	                </form>
-	              </div>
+		              <div class="card-body">
+		                <form autocomplete="off" th:action="@{/addProductEntryByChallan}" method="post" class="form" role="form">
+		                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Challan Number</label>
+			                    <div class="col-lg-9">
+			                      <input id="challan_no" name="challan_no" class="form-control" type="text" value="">
+			                    </div>
+			              </div>
+			              <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Date of Entry</label>
+			                    <div class="col-lg-9">
+			                      <input id="challan_date" name="challan_date" class="form-control" type="date" value="">
+			                    </div>
+			              </div>
+			              <hr>
+			              <h3><b>#1</b></h3>
+		                  <div class="addByChallan">
+			                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+			                    <div class="col-lg-9">
+			                      <select class="form-control" name="product_id" id="product_id">
+									    <option value="">select option</option>
+									    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+								  </select>
+			                    </div>
+			                  </div>
+			                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+			                    <div class="col-lg-9">
+			                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
+			                    </div>
+			                  </div>
+			                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Issuing Branch</label>
+			                    <div class="col-lg-9">
+			                      <select class="form-control" name="from_branch" id="from_branch">
+									    <option value="">select option</option>
+									    <option th:each="location : ${locationList}" th:value="${location.location_name}" th:text="${location.location_name}"></option>
+								  </select>
+			                    </div>
+			                  </div>
+			                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+			                    <div class="col-lg-9">
+			                      <select class="form-control" name="vehicle_no" id="vehicle_no">
+									    <option value="">select option</option>
+									    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
+								  </select>
+			                    </div>
+			                  </div>
+			                   <hr>
+			               </div>
+			                 
+			                  <div class="form-group row">
+			                    <div class="col-lg-2">
+			                      <button id="btn_prod_add_challan" type="button" class="btn btn-info">Add Product(s)</button>
+			                    </div>
+			                    <div class="col-lg-10"></div>
+			                  </div>
+			                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label"></label>
+			                    <div class="col-lg-9">
+			                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+														<input class="btn btn-primary" type="submit" value="Save Changes">
+			                    </div>
+			                  </div>
+		                </form>
+		              </div>
 	           </div>
         </div>
         <div id="addProductEntryByGhyOffice" style="display:none;" class="col main pt-5 mt-3">
@@ -935,6 +975,21 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addProductEntryByGhyOffice}" method="post" class="form" role="form">
 	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
+	                    <div class="col-lg-9">
+	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <hr>
+			          <h3><b>#1</b></h3>
+			          <div class="addByGhyOffice">
+	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="product_id" id="product_id">
@@ -947,18 +1002,6 @@ body, html {
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
-	                    <div class="col-lg-9">
-	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
-	                    <div class="col-lg-9">
-	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -975,6 +1018,14 @@ body, html {
 							    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
 						  </select>
 	                    </div>
+	                  </div>
+	                  	<hr>
+	                  </div>
+	                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_prod_add_ghy_office" type="button" class="btn btn-info">Add Product(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
@@ -995,6 +1046,21 @@ body, html {
               <div class="card-body">
                 <form autocomplete="off" th:action="@{/addProductEntryBylocalOffice}" method="post" class="form" role="form">
                   <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
+                    <div class="col-lg-9">
+                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
+                    <div class="col-lg-9">
+                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
+                    </div>
+                  </div>
+                  <hr>
+		          <h3><b>#1</b></h3>
+		          <div class="addByLocalOffice">
+                  <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Product name</label>
                     <div class="col-lg-9">
                       <select class="form-control" name="product_id" id="product_id">
@@ -1007,18 +1073,6 @@ body, html {
                     <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
                     <div class="col-lg-9">
                       <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
-                    <div class="col-lg-9">
-                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
-                    <div class="col-lg-9">
-                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -1036,6 +1090,14 @@ body, html {
 					  </select>
                     </div>
                   </div>
+                  <hr>
+                  </div>
+                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_prod_add_local" type="button" class="btn btn-info">Add Product(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
+	                  </div>
                   <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
@@ -1116,6 +1178,15 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByChallan" class="form" role="form">
 	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="exit_date" name="exit_date" class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <hr>
+			          <h3><b>#1</b></h3>
+			          <div class="exitByChallan">
+	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="product_id" id="product_id">
@@ -1128,12 +1199,6 @@ body, html {
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity1" name="product_quantity" class="form-control" type="text" value="0">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
-	                    <div class="col-lg-9">
-	                      <input id="exit_date" name="exit_date" class="form-control" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1154,6 +1219,14 @@ body, html {
 						  </select>
 	                    </div>
 	                  </div>
+	                  <hr>
+	                  </div>
+	                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_prod_exit_challan" type="button" class="btn btn-info">Add Product(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
+	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
 	                    <div class="col-lg-9">
@@ -1173,6 +1246,15 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByContractor" th:action="@{/addProductExitByContractor}" method="post" class="form" role="form">
 	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
+	                    </div>
+	                  </div>
+	                  <hr>
+			          <h3><b>#1</b></h3>
+			          <div class="exitByContractor">
+	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="product_id" id="product_id">
@@ -1185,12 +1267,6 @@ body, html {
 	                    <label class="col-lg-3 col-form-label form-control-label">product Quantity</label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity2" name="product_quantity" class="form-control" type="text" value="0" onclick="checkAvailableQuantity(event)">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
-	                    <div class="col-lg-9">
-	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1207,6 +1283,14 @@ body, html {
 	                    <div class="col-lg-9">
 	                      <input id="receiving_person" name="receiving_person" class="form-control" type="text" value="0">
 	                    </div>
+	                  </div>
+	                  <hr>
+	                  </div>
+	                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_prod_exit_contractor" type="button" class="btn btn-info">Add Product(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
@@ -1227,6 +1311,15 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByStaff" th:action="@{/addProductExitByStaff}" method="post" class="form" role="form">
 	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
+	                    </div>
+	                  </div>
+	                  <hr>
+			          <h3><b>#1</b></h3>
+			          <div class="exitByStaff">
+	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="product_id" id="product_id">
@@ -1239,12 +1332,6 @@ body, html {
 	                    <label class="col-lg-3 col-form-label form-control-label">product Quantity</label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity3" name="product_quantity" class="form-control" type="text" value="0" onclick="checkAvailableQuantity(event)">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
-	                    <div class="col-lg-9">
-	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1261,6 +1348,14 @@ body, html {
 	                    <div class="col-lg-9">
 	                      <input id="receiving_person" name="receiving_person" class="form-control" type="text" value="0">
 	                    </div>
+	                  </div>
+	                  <hr>
+	                  </div>
+	                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_prod_exit_staff" type="button" class="btn btn-info">Add Product(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
@@ -1281,6 +1376,15 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByMiscellaneous" th:action="@{/addProductExitByMiscellaneous}" method="post" class="form" role="form">
 	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
+	                    </div>
+	                  </div>
+	                  <hr>
+			          <h3><b>#1</b></h3>
+			          <div class="exitByMisc">
+	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="product_id" id="product_id">
@@ -1296,12 +1400,6 @@ body, html {
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
-	                    <div class="col-lg-9">
-	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Name of Work</label>
 	                    <div class="col-lg-9">
 	                      <input id="work_name" name="work_name" class="form-control" type="text" value="">
@@ -1312,6 +1410,14 @@ body, html {
 	                    <div class="col-lg-9">
 	                      <input id="receiving_person" name="receiving_person" class="form-control" type="text" value="">
 	                    </div>
+	                  </div>
+	                  <hr>
+	                  </div>
+	                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_prod_exit_misc" type="button" class="btn btn-info">Add Product(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
