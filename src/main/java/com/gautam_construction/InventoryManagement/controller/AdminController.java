@@ -15,9 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
 import com.gautam_construction.InventoryManagement.model.contractor;
+import com.gautam_construction.InventoryManagement.model.fuel_entry;
 import com.gautam_construction.InventoryManagement.model.location;
 import com.gautam_construction.InventoryManagement.model.product;
+import com.gautam_construction.InventoryManagement.model.product_add_by_challan;
+import com.gautam_construction.InventoryManagement.model.product_add_by_ghy_office;
+import com.gautam_construction.InventoryManagement.model.product_add_by_local_office;
+import com.gautam_construction.InventoryManagement.model.product_exit_by_challan;
+import com.gautam_construction.InventoryManagement.model.product_exit_by_contractor;
+import com.gautam_construction.InventoryManagement.model.product_exit_by_miscellaneous;
+import com.gautam_construction.InventoryManagement.model.product_exit_by_staff;
 import com.gautam_construction.InventoryManagement.model.staff;
 import com.gautam_construction.InventoryManagement.model.users;
 import com.gautam_construction.InventoryManagement.model.vehicle;
@@ -26,6 +35,15 @@ import com.gautam_construction.InventoryManagement.repository.LocationRepository
 import com.gautam_construction.InventoryManagement.repository.ProductRepository;
 import com.gautam_construction.InventoryManagement.repository.StaffRepository;
 import com.gautam_construction.InventoryManagement.repository.VehicleRepository;
+import com.gautam_construction.InventoryManagement.repository.fuel_entry_repository;
+import com.gautam_construction.InventoryManagement.repository.fuel_repository;
+import com.gautam_construction.InventoryManagement.repository.product_add_by_challan_repository;
+import com.gautam_construction.InventoryManagement.repository.product_add_by_ghy_office_repository;
+import com.gautam_construction.InventoryManagement.repository.product_add_by_local_office_repository;
+import com.gautam_construction.InventoryManagement.repository.product_exit_by_challan_repository;
+import com.gautam_construction.InventoryManagement.repository.product_exit_by_contractor_repository;
+import com.gautam_construction.InventoryManagement.repository.product_exit_by_miscellaneous_repository;
+import com.gautam_construction.InventoryManagement.repository.product_exit_by_staff_repository;
 import com.gautam_construction.InventoryManagement.repository.userRepository;
 import com.gautam_construction.InventoryManagement.repository.user_roles_repository;
 import com.gautam_construction.InventoryManagement.services.loginServices;
@@ -51,6 +69,28 @@ public class AdminController {
 	
 	@Autowired
 	private loginServices ls;
+	
+	@Autowired
+	private product_add_by_challan_repository pacr;
+	@Autowired
+	private product_add_by_ghy_office_repository pagor;
+	@Autowired
+	private product_add_by_local_office_repository palor;
+	
+	@Autowired
+	private product_exit_by_challan_repository pecr;
+	@Autowired
+	private product_exit_by_contractor_repository pecor;
+	@Autowired
+	private product_exit_by_staff_repository pesr;
+	@Autowired
+	private product_exit_by_miscellaneous_repository pemr;
+	
+	@Autowired
+	private fuel_repository fr;
+	
+	@Autowired
+	private fuel_entry_repository fer;
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
 	
@@ -99,8 +139,78 @@ public class AdminController {
         model.addAttribute("admin_user_list", user_info_all_admin);
         model.addAttribute("sub_admin_user_list", user_info_all_sub_admin);
         
+        List<brief_product_challan_dto> briefProdAddChallanList = pacr.getBriefProductAddByChallan();
+        List<brief_product_challan_dto> briefProdAddGhyOfficeList = pagor.getBriefProductAddByGhyOffice();
+        List<brief_product_challan_dto> briefProdAddLocalOfficeList = palor.getBriefProductAddByLocalOffice();
+        
+        List<brief_product_challan_dto> briefProdExitChallanList = pecr.getBriefProductExitByChallan();
+        List<brief_product_challan_dto> briefProdExitContractorList = pecor.getBriefProductExitByContractor();
+        List<brief_product_challan_dto> briefProdExitStaffList = pesr.getBriefProductExitByStaff();
+        List<brief_product_challan_dto> briefProdExitMiscList = pemr.getBriefProductExitByMiscellaneous();
+        
+        
+        model.addAttribute("briefProdAddChallanList", briefProdAddChallanList);
+        model.addAttribute("briefProdAddGhyOfficeList", briefProdAddGhyOfficeList);
+        model.addAttribute("briefProdAddLocalOfficeList", briefProdAddLocalOfficeList);
+        
+        model.addAttribute("briefProdExitChallanList", briefProdExitChallanList);
+        model.addAttribute("briefProdExitContractorList", briefProdExitContractorList);
+        model.addAttribute("briefProdExitStaffList", briefProdExitStaffList);
+        model.addAttribute("briefProdExitMiscList", briefProdExitMiscList);
+        
+        List<product_add_by_challan> prodAddChallanList = pacr.getAllProductAddByChallan();
+        List<product_add_by_ghy_office> prodAddGhyOffice = pagor.getAllProductAddByGhyOffice();
+        List<product_add_by_local_office> prodAddLocalOffice = palor.getAllProductAddByLocalOffice();
+        List<product_exit_by_challan> prodExitChallan = pecr.getAllProductExitByChallan();
+        List<product_exit_by_contractor> prodExitContractor = pecor.getAllProductExitByContractor();
+        List<product_exit_by_miscellaneous> prodExitMiscellaneous = pemr.getAllProductExitByMiscellaneous();
+        List<product_exit_by_staff> prodExitStaff = pesr.getAllProductExitByStaff();
+        
+        model.addAttribute("prodAddChallanCount", prodAddChallanList.size());
+        model.addAttribute("prodAddGhyOfficeCount", prodAddGhyOffice.size());
+        model.addAttribute("prodAddLocalOfficeCount", prodAddLocalOffice.size());
+        model.addAttribute("prodExitChallanCount", prodExitChallan.size());
+        model.addAttribute("prodExitContractorCount", prodExitContractor.size());
+        model.addAttribute("prodExitMiscellaneousCount", prodExitMiscellaneous.size());
+        model.addAttribute("prodExitStaffCount", prodExitStaff.size());
+        
+        
+        List<fuel_entry> fuelEntryList = fer.getAllFuelEntry();
+        model.addAttribute("fuelEntryList", fuelEntryList);
+        
+        String petrol_quantity = fr.getFuelDetailsByType("petrol").get(0).getQuantity();
+        String diesel_quantity = fr.getFuelDetailsByType("diesel").get(0).getQuantity();
+        
+        model.addAttribute("petrol_quantity", petrol_quantity);
+        model.addAttribute("diesel_quantity", diesel_quantity);
+        
+        
         System.out.println("product info:"+productList.size());
 		return "admin_general_store";
+	}
+	
+	@RequestMapping(value="/editProduct",method=RequestMethod.GET)
+	public Object editProduct(@RequestParam("prod_id") String prod_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
+        model.addAttribute("office_name", office_name);
+        List<product> prodList = pr.getProductQuantity(Integer.parseInt(prod_id));
+        model.addAttribute("prod_id", prod_id);
+        model.addAttribute("prod_name", prodList.get(0).getName());
+        model.addAttribute("prod_unit", prodList.get(0).getUnit());
+        model.addAttribute("prod_quantity", prodList.get(0).getQuantity());
+        model.addAttribute("prod_type", prodList.get(0).getType());
+        //return "admin_home";
+        return "edit_product";
 	}
 	
 	@RequestMapping(value="/addAdmin",method=RequestMethod.POST)
@@ -135,6 +245,16 @@ public class AdminController {
 			@RequestParam("product_quantity") String product_quantity,
 			@RequestParam("product_type") String product_type) {
 		pr.InsertProductDetails(product_name, product_unit, product_quantity, product_type);
+		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@RequestMapping(value="/updateProduct",method=RequestMethod.POST)
+	public Object updateProduct(@RequestParam("product_id") String product_id,
+			@RequestParam("product_name") String product_name,
+			@RequestParam("product_unit") String product_unit,
+			@RequestParam("product_quantity") String product_quantity,
+			@RequestParam("product_type") String product_type) {
+		pr.UpdateProductAllAttr(Integer.parseInt(product_id),product_name, product_unit, product_quantity, product_type);
 		return "redirect:/AdminGeneralStoreHome";
 	}
 	

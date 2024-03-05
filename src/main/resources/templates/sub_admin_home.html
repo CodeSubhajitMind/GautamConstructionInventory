@@ -424,14 +424,27 @@ body, html {
 	        var form = document.getElementById('formExitByChallan');
 
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
-	        var product_id = form.querySelectorAll('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]');
+	        var product_id = form.querySelectorAll('[name="product_id"]');
+	        
+	        var product_quantity_arr = [];
+	        var product_id_arr = [];
+	        
+	        for (var i = 0; i < product_quantity.length; i++) {
+	        	product_quantity_arr.push(product_quantity[i].value);
+	        }
+	        
+	        for (var i = 0; i < product_id.length; i++) {
+	        	product_id_arr.push(product_id[i].value);
+	        }
+	        
+	        //form.getElementsByName('product_quantity')
 	        
 	        var status = "failed";
 	        
 	        var i = 0;
-	        for(i=0;i<product_id.length;i++){
-		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+	        for(i=0;i<product_id_arr.length;i++){
+		        status = checkAvailableQuantity(product_id_arr[i],product_quantity_arr[i]);
 		        
 				 if(status=="failed"){
 					 return;
@@ -458,7 +471,7 @@ body, html {
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
 	                //window.location.href = "/SubAdminHome";
-	                window.location.href = '/billDetails?challan_no='+data[0];
+	                window.location.href = '/billDetails?challan_no='+data[0]+'&type=byChallan';
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -474,14 +487,27 @@ body, html {
 	        var form = document.getElementById('formExitByContractor');
 	
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
-	        var product_id = form.querySelectorAll('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]');
+	        var product_id = form.querySelectorAll('[name="product_id"]');
+	        
+	        var product_quantity_arr = [];
+	        var product_id_arr = [];
+	        
+	        for (var i = 0; i < product_quantity.length; i++) {
+	        	product_quantity_arr.push(product_quantity[i].value);
+	        }
+	        
+	        for (var i = 0; i < product_id.length; i++) {
+	        	product_id_arr.push(product_id[i].value);
+	        }
+	        
+	        //form.getElementsByName('product_quantity')
 	        
 	        var status = "failed";
 	        
 	        var i = 0;
-	        for(i=0;i<product_id.length;i++){
-		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+	        for(i=0;i<product_id_arr.length;i++){
+		        status = checkAvailableQuantity(product_id_arr[i],product_quantity_arr[i]);
 		        
 				 if(status=="failed"){
 					 return;
@@ -506,7 +532,7 @@ body, html {
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
 	                //window.location.href = "/SubAdminHome";
-	                window.location.href = '/billDetails?challan_no='+data[0];
+	                window.location.href = '/billDetails?challan_no='+data[0]+'&type=byContractor';
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -522,14 +548,27 @@ body, html {
 	        var form = document.getElementById('formExitByStaff');
 	
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
-	        var product_id = form.querySelectorAll('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]');
+	        var product_id = form.querySelectorAll('[name="product_id"]');
+	        
+	        var product_quantity_arr = [];
+	        var product_id_arr = [];
+	        
+	        for (var i = 0; i < product_quantity.length; i++) {
+	        	product_quantity_arr.push(product_quantity[i].value);
+	        }
+	        
+	        for (var i = 0; i < product_id.length; i++) {
+	        	product_id_arr.push(product_id[i].value);
+	        }
+	        
+	        //form.getElementsByName('product_quantity')
 	        
 	        var status = "failed";
 	        
 	        var i = 0;
-	        for(i=0;i<product_id.length;i++){
-		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+	        for(i=0;i<product_id_arr.length;i++){
+		        status = checkAvailableQuantity(product_id_arr[i],product_quantity_arr[i]);
 		        
 				 if(status=="failed"){
 					 return;
@@ -554,7 +593,7 @@ body, html {
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
 	                //window.location.href = "/SubAdminHome";
-	                window.location.href = '/billDetails?challan_no='+data[0];
+	                window.location.href = '/billDetails?challan_no='+data[0]+'&type=byStaff';
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -570,14 +609,27 @@ body, html {
 	        var form = document.getElementById('formExitByMiscellaneous');
 	
 	        // Get the element by its name within the form
-	        var product_quantity = form.querySelectorAll('[name="product_quantity"]').value;
-	        var product_id = form.querySelectorAll('[name="product_id"]').value;
+	        var product_quantity = form.querySelectorAll('[name="product_quantity"]');
+	        var product_id = form.querySelectorAll('[name="product_id"]');
+	        
+	        var product_quantity_arr = [];
+	        var product_id_arr = [];
+	        
+	        for (var i = 0; i < product_quantity.length; i++) {
+	        	product_quantity_arr.push(product_quantity[i].value);
+	        }
+	        
+	        for (var i = 0; i < product_id.length; i++) {
+	        	product_id_arr.push(product_id[i].value);
+	        }
+	        
+	        //form.getElementsByName('product_quantity')
 	        
 	        var status = "failed";
 	        
 	        var i = 0;
-	        for(i=0;i<product_id.length;i++){
-		        status = checkAvailableQuantity(product_id[i],product_quantity[i]);
+	        for(i=0;i<product_id_arr.length;i++){
+		        status = checkAvailableQuantity(product_id_arr[i],product_quantity_arr[i]);
 		        
 				 if(status=="failed"){
 					 return;
@@ -602,7 +654,7 @@ body, html {
 	               // $('#result').html(response);
 	                alert("Order created with challan number: "+data[0]);
 	                //window.location.href = "/SubAdminHome";
-	                window.location.href = '/billDetails?challan_no='+data[0];
+	                window.location.href = '/billDetails?challan_no='+data[0]+'&type=byMisc';
 	            },
 	            error: function(xhr, status, error){
 	                // Handle errors
@@ -649,7 +701,7 @@ body, html {
         <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#" title="Gautam Constructions">Gautam Constructions</a>
+        <a class="navbar-brand" href="#" title="Gautam Constructions"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -662,14 +714,14 @@ body, html {
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
+                <a class="nav-link" href="#myAlert" data-toggle="collapse"><span th:text="${office_name}"></span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
-</nav>
+</nav><br>
 <div class="container-fluid" id="main">
     <div class="row row-offcanvas row-offcanvas-left">
         <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
@@ -679,8 +731,8 @@ body, html {
                     <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
                     <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
                        <li id="link_view_product" class="nav-item"><a class="nav-link" href="#">View Product Details</a></li>
-                       <li id="link_view_staff" class="nav-item"><a class="nav-link" href="#">View Staff Details</a></li>
-                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Contractor Details</a></li>
+                       <li id="link_view_staff" class="nav-item"><a class="nav-link" href="#">View Employee Details</a></li>
+                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Sub-Contractor Details</a></li>
                        <li id="link_view_vehicle" class="nav-item"><a class="nav-link" href="#">View Vehicle Details</a></li>
                        <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
                     </ul>
@@ -697,8 +749,8 @@ body, html {
 	                <a class="nav-link" href="#submenu3" data-toggle="collapse" data-target="#submenu3">Add Product Exit▾</a>
 	                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu3" aria-expanded="false">
 	                       <li id="link_prod_exit_by_challan" class="nav-item"><a class="nav-link" href="#">By Challan</a></li>
-	                       <li id="link_prod_exit_by_contractor" class="nav-item"><a class="nav-link" href="#">By Sub Contractor</a></li>
-	                       <li id="link_prod_exit_by_staff" class="nav-item"><a class="nav-link" href="#">By Staff</a></li>
+	                       <li id="link_prod_exit_by_contractor" class="nav-item"><a class="nav-link" href="#">By Sub-Contractor</a></li>
+	                       <li id="link_prod_exit_by_staff" class="nav-item"><a class="nav-link" href="#">By Employee</a></li>
 	                       <li id="link_prod_exit_by_miscellaneous" class="nav-item"><a class="nav-link" href="#">By Miscellaneous</a></li>
 	                    </ul>
                 </li>
@@ -710,7 +762,7 @@ body, html {
 
         <div id="dashboard" class="col main pt-5 mt-3">
             <h1 class="display-4 d-none d-sm-block">
-            	General Inventory Dashboard
+            	Shree Gautam Construction Co Ltd.
             </h1>
             <p class="lead d-none d-sm-block">Insight into the over all general store inventory of Shree Gautam Constructions</p>
 
@@ -729,7 +781,7 @@ body, html {
                                 <i class="fa fa-user fa-4x"></i>
                             </div>
                             <h6 class="text-uppercase">Products</h6>
-                            <h1 class="display-4">134</h1>
+                            <h1 class="display-4" th:text="${productCount}"></h1>
                         </div>
                     </div>
                 </div>
@@ -740,7 +792,7 @@ body, html {
                                 <i class="fa fa-list fa-4x"></i>
                             </div>
                             <h6 class="text-uppercase">Vehicles</h6>
-                            <h1 class="display-4">20</h1>
+                            <h1 class="display-4" th:text="${vehicleCount}"></h1>
                         </div>
                     </div>
                 </div>
@@ -750,8 +802,8 @@ body, html {
                             <div class="rotate">
                                 <i class="fa fa-twitter fa-4x"></i>
                             </div>
-                            <h6 class="text-uppercase">Staffs</h6>
-                            <h1 class="display-4">125</h1>
+                            <h6 class="text-uppercase">Employees</h6>
+                            <h1 class="display-4" th:text="${staffCount}"></h1>
                         </div>
                     </div>
                 </div>
@@ -761,8 +813,8 @@ body, html {
                             <div class="rotate">
                                 <i class="fa fa-share fa-4x"></i>
                             </div>
-                            <h6 class="text-uppercase">Contractors</h6>
-                            <h1 class="display-4">25</h1>
+                            <h6 class="text-uppercase">Sub-Contractors</h6>
+                            <h1 class="display-4" th:text="${contractorCount}"></h1>
                         </div>
                     </div>
                 </div>
@@ -773,23 +825,23 @@ body, html {
             <div class="row placeholders mb-3">
                 <div class="col-6 col-sm-3 placeholder text-center">
                     <i class="fa-solid fa-bars fa-xl" style="color: #0562a8;"></i>
-                    <h5>Product Add By Challan</h5>
-                    <span class="text-muted">Average 23 per day</span>
+                    <h5>Product Added By Challan</h5>
+                    <span class="text-muted" th:text="${prodAddChallanCount}"></span>
                 </div>
                 <div class="col-6 col-sm-3 placeholder text-center">
                     <i class="fa-solid fa-house-laptop fa-xl" style="color: #0562a8;"></i>
-                    <h5>Product Add By Purchase from Office</h5>
-                    <span class="text-muted">Average 15 per day</span>
+                    <h5>Product Added By Office Purchase</h5>
+                    <span class="text-muted" th:text="${prodAddGhyOfficeCount}"></span>
                 </div>
                 <div class="col-6 col-sm-3 placeholder text-center">
                     <i class="fa-solid fa-globe fa-xl" style="color: #0562a8;"></i>
-                    <h5>Product Add By Local Purchase</h5>
-                    <span class="text-muted">Average 20 per day</span>
+                    <h5>Product Added By Local Purchase</h5>
+                    <span class="text-muted" th:text="${prodAddLocalOfficeCount}"></span>
                 </div>
                 <div class="col-6 col-sm-3 placeholder text-center">
                    	<i class="fa-solid fa-door-open fa-xl" style="color: #0562a8;"></i>
-                   	<h5>Product Exit Total</h5>
-                    <span class="text-muted">Average 10 per day</span>
+                   	<h5>Product Exited Total</h5>
+                    <span class="text-muted" th:text="${prodExitChallanCount+prodExitContractorCount+prodExitMiscellaneousCount+prodExitStaffCount}"></span>
                 </div>
             </div>
 
@@ -803,14 +855,14 @@ body, html {
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Total Product In</h4>
-                            <p class="card-text" style="font-size:50px;"><b>20</b></p>
+                            <p class="card-text" style="font-size:50px;"><b th:text="${prodAddChallanCount+prodAddGhyOfficeCount+prodAddLocalOfficeCount}"></b></p>
                             <a href="#" class="btn btn-primary">Get Detailed List</a>
                         </div>
                     </div>
                     <div class="card card-inverse bg-inverse mt-3">
                         <div class="card-body">
                             <h3 class="card-title">Total Product Out</h3>
-                            <p class="card-text" style="font-size:50px;	"><b>5</b></p>
+                            <p class="card-text" style="font-size:50px;	"><b th:text="${prodExitChallanCount+prodExitContractorCount+prodExitMiscellaneousCount+prodExitStaffCount}"></b></p>
                             <a href="#" class="btn btn-primary">Get Detailed List</a>
                         </div>
                     </div>
@@ -823,67 +875,18 @@ body, html {
                                     <th>Product Id</th>
                                     <th>Product Name</th>
                                     <th>Product Unit</th>
+                                    <th>Quantity(in store)</th>                                    
                                     <th>Type</th>
-                                    <th>Quantity(in store)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1,001</td>
-                                    <td>ACC Blocks</td>
-                                    <td>Cubic Meter</td>
-                                    <td>Non-Refundable</td>
-                                    <td>500</td>
-                                </tr>
-                                <tr>
-                                    <td>1,002</td>
-                                    <td>Cement</td>
-                                    <td>Bags</td>
-                                    <td>Refundable</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>1,003</td>
-                                    <td>Steel Bars</td>
-                                    <td>Kg / meter cube</td>
-                                    <td>Non-Refundable</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>1,004</td>
-                                    <td>Sand</td>
-                                    <td>Kg</td>
-                                    <td>Non-Refundable</td>
-                                    <td>2000</td>
-                                </tr>
-                                <tr>
-                                    <td>1,005</td>
-                                    <td>Aggregate</td>
-                                    <td>Cubic Meter</td>
-                                    <td>Refundable</td>
-                                    <td>1500</td>
-                                </tr>
-                                <tr>
-                                    <td>1,006</td>
-                                    <td>Titles</td>
-                                    <td>Sq.Ft</td>
-                                    <td>Non-Refundable</td>
-                                    <td>5000</td>
-                                </tr>
-                                <tr>
-                                    <td>1,007</td>
-                                    <td>Titles</td>
-                                    <td>Sq.Ft</td>
-                                    <td>Non-Refundable</td>
-                                    <td>5000</td>
-                                </tr>
-                                <tr>
-                                    <td>1,008</td>
-                                    <td>Titles</td>
-                                    <td>Sq.Ft</td>
-                                    <td>Non-Refundable</td>
-                                    <td>5000</td>
-                                </tr>
+                            	<tr th:each="pr : ${productList}">
+                            		<td th:text="${pr.prod_id}"></td>
+                            		<td th:text="${pr.name}"></td>
+                            		<td th:text="${pr.unit}"></td>
+                            		<td th:text="${pr.quantity}"></td>
+                            		<td th:text="${pr.type}"></td>
+                            	</tr>
                             </tbody>
                         </table>
                     </div>
@@ -893,6 +896,33 @@ body, html {
                
         </div>
         <div id="addProductEntryByChallan" style="display:none;" class="col main pt-5 mt-3">
+        		<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddChallan">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseAddChallan" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdAddChallanList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Product Entry By Challan</h3>
@@ -968,6 +998,33 @@ body, html {
 	           </div>
         </div>
         <div id="addProductEntryByGhyOffice" style="display:none;" class="col main pt-5 mt-3">
+        		<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddGhyOffice">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseAddGhyOffice" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdAddGhyOfficeList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Product Entry By Purchase From Guwahati Office</h3>
@@ -1039,6 +1096,33 @@ body, html {
 	           </div>
         </div>
         <div id="addProductEntryBylocalOffice" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddLocalOffice">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseAddLocalOffice" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdAddLocalOfficeList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
         	<div class="card card-outline-secondary">
               <div class="card-header">
                 <h3 class="mb-0">Add Product Entry By Purchase From Local Purchase</h3>
@@ -1110,6 +1194,59 @@ body, html {
            </div>
        </div>
        <div id="addFuelEntry" style="display:none;" class="col main pt-5 mt-3">
+       			<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddFuel">
+				      	View Fuel Entry&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseAddFuel" class="collapse">
+				      <div class="card-body">
+				        	<div class="row my-4">
+				                <div class="col-lg-3 col-md-4">
+				                    <div class="card">
+				                        <div class="card-body">
+				                            <h4 class="card-title">Total Petrol Availability</h4>
+				                            <p class="card-text" style="font-size:50px;"><b th:text="${petrol_quantity}"></b></p>
+				                        </div>
+				                    </div>
+				                    <div class="card card-inverse bg-inverse mt-3">
+				                        <div class="card-body">
+				                            <h3 class="card-title">Total Diesel Availability</h3>
+				                            <p class="card-text" style="font-size:50px;	"><b th:text="${diesel_quantity}"></b></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-lg-9 col-md-8">
+				                    <div class="table-responsive">
+				                        <table class="table table-striped">
+				                            <thead class="thead-inverse">
+				                                <tr>
+				                                    <th>Fuel Type</th>
+				                                    <th>Quantity</th>
+				                                    <th>Invoice No</th>
+				                                    <th>Invoice Date</th>
+				                                    <th>Vendor Name</th>
+				                                    <th>Vehicle No.</th>
+				                                </tr>
+				                            </thead>
+				                            <tbody>
+				                            	<tr th:each="fer : ${fuelEntryList}">
+				                            		<td th:text="${fer.fuel_type}"></td>
+				                            		<td th:text="${fer.quantity}"></td>
+				                            		<td th:text="${fer.invoice_no}"></td>
+				                            		<td th:text="${fer.invoice_date}"></td>
+				                            		<td th:text="${fer.vendor_name}"></td>
+				                            		<td th:text="${fer.vehicle_no}"></td>
+				                            	</tr>
+				                            </tbody>
+				                        </table>
+				                    </div>
+				                </div>
+				            </div>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Fuel Entry</h3>
@@ -1119,17 +1256,17 @@ body, html {
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type</label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" id="fuel_type">
+	                      <select class="form-control" name="fuel_type" id="fuel_type">
 							    <option value="">select option</option>
-							    <option value="Diesel">Diesel</option>
-							    <option value="Petrol">Petrol</option>
+							    <option value="diesel">Diesel</option>
+							    <option value="petrol">Petrol</option>
 						  </select>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Quantity</label>
 	                    <div class="col-lg-9">
-	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
+	                      <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" value="0">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1171,6 +1308,33 @@ body, html {
 	           </div>
         </div>
         <div id="addProductExitByChallan" style="display:none;" class="col main pt-5 mt-3">
+        		<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitChallan">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseExitChallan" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdExitChallanList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Product Exit By Challan</h3>
@@ -1239,6 +1403,33 @@ body, html {
 	           </div>
         </div>
         <div id="addProductExitByContractor" style="display:none;" class="col main pt-5 mt-3">
+        		<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitContractor">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseExitContractor" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdExitContractorList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Product Exit By Sub - Contractor</h3>
@@ -1304,9 +1495,36 @@ body, html {
 	           </div>
         </div>
         <div id="addProductExitByStaff" style="display:none;" class="col main pt-5 mt-3">
+        		<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitStaff">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseExitStaff" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdExitStaffList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
-	                <h3 class="mb-0">Add Product Exit By Staff</h3>
+	                <h3 class="mb-0">Add Product Exit By Employee</h3>
 	              </div>
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByStaff" th:action="@{/addProductExitByStaff}" method="post" class="form" role="form">
@@ -1369,6 +1587,33 @@ body, html {
 	           </div>
         </div>
         <div id="addProductExitByMiscellaneous" style="display:none;" class="col main pt-5 mt-3">
+        		<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitMisc">
+				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseExitMisc" class="collapse">
+				      <div class="card-body">
+				        	<table class="table table-striped">
+								<thead style="background-color:#5c6499;color:#ffffff;">
+									<tr>
+										<th>Challan No</th>
+										<th>Total Products</th>
+										<th>Total Quantity</th>
+									</tr>
+								</thead>
+							    <tbody>
+							      <tr th:each="challan: ${briefProdExitMiscList}">
+							        <td><p th:text="${challan.challan_no}"></p></td>
+							        <td><p th:text="${challan.total_prod}"></p></td>
+							        <td><p th:text="${challan.total_quantity}"></p></td>
+							      </tr>
+							    </tbody>
+					  		</table>
+				      </div>
+				    </div>
+				  </div><br>
 	        	<div class="card card-outline-secondary">
 	              <div class="card-header">
 	                <h3 class="mb-0">Add Product Exit By Miscellaneous</h3>
@@ -1477,7 +1722,7 @@ body, html {
         </div>
         <div id="viewStaffs" style="display:none;" class="col main pt-5 mt-3">
                 
-                <h3 class="mb-0">Staff Details</h3>
+                <h3 class="mb-0">Employee Details</h3>
 
             <div class="row my-4">
                 <div class="col-lg-3 col-md-4">
@@ -1512,7 +1757,7 @@ body, html {
         </div>
         <div id="viewContractors" style="display:none;" class="col main pt-5 mt-3">
                 
-                <h3 class="mb-0">Contractor Details</h3>
+                <h3 class="mb-0">Sub-Contractor Details</h3>
 
             <div class="row my-4">
                 <div class="col-lg-3 col-md-4">

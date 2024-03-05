@@ -16,6 +16,7 @@ public interface ProductRepository extends JpaRepository<product, Long>{
 	public final static String INSERT_PRODUCT_DETAILS = "insert into product(name,unit,quantity,type) VALUES (:name,:unit,:quantity,:type)";
 	public final static String GET_PRODUCT_QUANTITY = "SELECT * FROM product where prod_id=:prod_id";
 	public final static String UPDATE_PRODUCT_QUANTITY = "update product set quantity=:quantity where prod_id=:prod_id";
+	public final static String UPDATE_PRODUCT_ALL_ATTR = "update product set name=:name,unit=:unit,quantity=:quantity,type=:type where prod_id=:prod_id";
 	
 
 	@Query(value=GET_ALL_PRODUCTS,nativeQuery=true)
@@ -33,6 +34,11 @@ public interface ProductRepository extends JpaRepository<product, Long>{
     @Query(value = UPDATE_PRODUCT_QUANTITY, nativeQuery = true)
     @Transactional
 	void UpdateProductQuantity(@Param("prod_id") Integer prod_id, @Param("quantity") String quantity);
+	
+	@Modifying
+    @Query(value = UPDATE_PRODUCT_ALL_ATTR, nativeQuery = true)
+    @Transactional
+	void UpdateProductAllAttr(@Param("prod_id") Integer prod_id, @Param("name") String name, @Param("unit") String unit, @Param("quantity") String quantity, @Param("type") String type);
     
 	
 }

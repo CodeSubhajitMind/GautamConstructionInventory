@@ -18,7 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_challan_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_contractor_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_misc_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_staff_dto;
 import com.gautam_construction.InventoryManagement.model.contractor;
+import com.gautam_construction.InventoryManagement.model.fuel;
+import com.gautam_construction.InventoryManagement.model.fuel_entry;
 import com.gautam_construction.InventoryManagement.model.location;
 import com.gautam_construction.InventoryManagement.model.product;
 import com.gautam_construction.InventoryManagement.model.product_add_by_challan;
@@ -36,6 +43,8 @@ import com.gautam_construction.InventoryManagement.repository.LocationRepository
 import com.gautam_construction.InventoryManagement.repository.ProductRepository;
 import com.gautam_construction.InventoryManagement.repository.StaffRepository;
 import com.gautam_construction.InventoryManagement.repository.VehicleRepository;
+import com.gautam_construction.InventoryManagement.repository.fuel_entry_repository;
+import com.gautam_construction.InventoryManagement.repository.fuel_repository;
 import com.gautam_construction.InventoryManagement.repository.product_add_by_challan_repository;
 import com.gautam_construction.InventoryManagement.repository.product_add_by_ghy_office_repository;
 import com.gautam_construction.InventoryManagement.repository.product_add_by_local_office_repository;
@@ -75,6 +84,13 @@ public class SubAdminController {
 	private product_exit_by_staff_repository pesr;
 	@Autowired
 	private product_exit_by_miscellaneous_repository pemr;
+	
+	@Autowired
+	private fuel_repository fr;
+	
+	@Autowired
+	private fuel_entry_repository fer;
+	
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/SubAdminHome")
@@ -121,6 +137,40 @@ public class SubAdminController {
         model.addAttribute("prodExitMiscellaneous", prodExitMiscellaneous);
         model.addAttribute("prodExitStaff", prodExitStaff);
         
+        model.addAttribute("prodAddChallanCount", prodAddChallanList.size());
+        model.addAttribute("prodAddGhyOfficeCount", prodAddGhyOffice.size());
+        model.addAttribute("prodAddLocalOfficeCount", prodAddLocalOffice.size());
+        model.addAttribute("prodExitChallanCount", prodExitChallan.size());
+        model.addAttribute("prodExitContractorCount", prodExitContractor.size());
+        model.addAttribute("prodExitMiscellaneousCount", prodExitMiscellaneous.size());
+        model.addAttribute("prodExitStaffCount", prodExitStaff.size());
+        
+        List<brief_product_challan_dto> briefProdAddChallanList = pacr.getBriefProductAddByChallan();
+        List<brief_product_challan_dto> briefProdAddGhyOfficeList = pagor.getBriefProductAddByGhyOffice();
+        List<brief_product_challan_dto> briefProdAddLocalOfficeList = palor.getBriefProductAddByLocalOffice();
+        
+        List<brief_product_challan_dto> briefProdExitChallanList = pecr.getBriefProductExitByChallan();
+        List<brief_product_challan_dto> briefProdExitContractorList = pecor.getBriefProductExitByContractor();
+        List<brief_product_challan_dto> briefProdExitStaffList = pesr.getBriefProductExitByStaff();
+        List<brief_product_challan_dto> briefProdExitMiscList = pemr.getBriefProductExitByMiscellaneous();
+
+        model.addAttribute("briefProdAddChallanList", briefProdAddChallanList);
+        model.addAttribute("briefProdAddGhyOfficeList", briefProdAddGhyOfficeList);
+        model.addAttribute("briefProdAddLocalOfficeList", briefProdAddLocalOfficeList);
+        
+        model.addAttribute("briefProdExitChallanList", briefProdExitChallanList);
+        model.addAttribute("briefProdExitContractorList", briefProdExitContractorList);
+        model.addAttribute("briefProdExitStaffList", briefProdExitStaffList);
+        model.addAttribute("briefProdExitMiscList", briefProdExitMiscList);
+        
+        List<fuel_entry> fuelEntryList = fer.getAllFuelEntry();
+        model.addAttribute("fuelEntryList", fuelEntryList);
+        
+        String petrol_quantity = fr.getFuelDetailsByType("petrol").get(0).getQuantity();
+        String diesel_quantity = fr.getFuelDetailsByType("diesel").get(0).getQuantity();
+        
+        model.addAttribute("petrol_quantity", petrol_quantity);
+        model.addAttribute("diesel_quantity", diesel_quantity);
         
         
         System.out.println("product info:"+productList.size());
@@ -128,20 +178,35 @@ public class SubAdminController {
 	}
 	
 	@RequestMapping("/billDetails")
-	public Object addLocation(HttpSession session,Model model,Authentication authentication,
-			@RequestParam("product_id") String product_id,@RequestParam("product_quantity") String product_quantity,@RequestParam("challan_no") String challan_no) {
+	public Object billDetails(HttpSession session,Model model,Authentication authentication,
+			@RequestParam("challan_no") String challan_no,@RequestParam("type") String type) {
 		String user_id = session.getAttribute("userId").toString();
 		String user_type = session.getAttribute("userType").toString();
 		String office_name = session.getAttribute("officeName").toString();
 		model.addAttribute("office_name", office_name);
 		Date currentDate=new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        List<product> productList = pr.getProductQuantity(Integer.parseInt(product_id));
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
-		model.addAttribute("product_name", productList.get(0).getName());
-		model.addAttribute("product_quantity", product_quantity);
 		model.addAttribute("challan_no", challan_no);
+        if(type.equals("byChallan")) {
+        	List<product_exit_by_challan_dto> challan_list = pecr.getAllProductExitByChallanChNo(challan_no);
+        	model.addAttribute("challan_list", challan_list);
+        }
+        else if(type.equals("byContractor")) {
+        	List<product_exit_by_contractor_dto> challan_list = pecor.getAllProductExitByContractorChNo(challan_no);
+        	model.addAttribute("challan_list", challan_list);
+        }
+        else if(type.equals("byStaff")) {
+        	List<product_exit_by_staff_dto> challan_list = pesr.getAllProductExitByStaff_ChNo(challan_no);
+        	model.addAttribute("challan_list", challan_list);
+        }
+        else {
+        	List<product_exit_by_misc_dto> challan_list = pemr.getAllProductExitByMiscellaneousChNo(challan_no);
+        	model.addAttribute("challan_list", challan_list);
+        }
+       
+		
 		return "bill_generate";
 	}
 	
@@ -186,6 +251,26 @@ public class SubAdminController {
 			pagor.InsertProductAddByGhyOffice(Integer.parseInt(product_id.get(i)), product_quantity.get(i), invoice_no, invoice_date, vendor_name.get(i), vehicle_no.get(i));
 			pr.UpdateProductQuantity(Integer.parseInt(product_id.get(i)), Double.toString(quantity));
 		}
+		return "redirect:/SubAdminHome";
+	}
+	
+	@RequestMapping(value="/addFuelEntry",method=RequestMethod.POST)
+	public Object addFuelEntry(
+			@RequestParam("fuel_type") String fuel_type,
+			@RequestParam("fuel_quantity") String fuel_quantity,
+			@RequestParam("invoice_no") String invoice_no,
+			@RequestParam("invoice_date") String invoice_date,
+			@RequestParam("vendor_name") String vendor_name,
+			@RequestParam("vehicle_no") String vehicle_no,
+			HttpSession session,Model model,Authentication authentication) {
+			Double quantity = 0.0;
+			List<fuel> fuelList = fr.getFuelDetailsByType(fuel_type);
+			if(fuelList.size()>0) {
+				quantity = quantity + Double.parseDouble(fuelList.get(0).getQuantity());
+			}
+			quantity = quantity + Double.parseDouble(fuel_quantity);
+			fer.InsertFuelAdd(fuel_type, fuel_quantity, invoice_no, invoice_date, vendor_name, vehicle_no);
+			fr.UpdateFuelQuantity(fuel_type, fuel_quantity);
 		return "redirect:/SubAdminHome";
 	}
 	

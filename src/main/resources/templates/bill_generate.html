@@ -70,7 +70,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-3">
-				<img src="https://i.ibb.co/4t0xgty/logo.jpg" class="brand_logo" alt="Logo" width="200" height="200">
+				<img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="200" height="200"/>
 				<div class="row">
 					<div class="col-md-3"><p><b>GAUTAMGROUP</b></p></div>
 					<div class="col-md-9"></div>
@@ -126,10 +126,10 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		      <tr>
+		      <tr th:each="prod:${challan_list}">
 		        <td></td>
-		        <td th:text="${product_name}"></td>
-		        <td th:text="${product_quantity}"></td>
+		        <td th:text="${prod.prod_name}"></td>
+		        <td th:text="${prod.quantity}"></td>
 		        <td></td>
 		        <td></td>
 		        <td></td>
