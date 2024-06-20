@@ -1,6 +1,7 @@
 package com.gautam_construction.InventoryManagement.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -14,10 +15,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_add_by_challan_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_add_by_ghy_office_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_add_by_local_office_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_challan_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_contractor_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_misc_dto;
+import com.gautam_construction.InventoryManagement.DTO.product_exit_by_staff_dto;
+import com.gautam_construction.InventoryManagement.DTO.userLoginDetailsDTO;
 import com.gautam_construction.InventoryManagement.model.contractor;
 import com.gautam_construction.InventoryManagement.model.fuel_entry;
+import com.gautam_construction.InventoryManagement.model.fuel_exit;
 import com.gautam_construction.InventoryManagement.model.location;
 import com.gautam_construction.InventoryManagement.model.product;
 import com.gautam_construction.InventoryManagement.model.product_add_by_challan;
@@ -36,6 +47,7 @@ import com.gautam_construction.InventoryManagement.repository.ProductRepository;
 import com.gautam_construction.InventoryManagement.repository.StaffRepository;
 import com.gautam_construction.InventoryManagement.repository.VehicleRepository;
 import com.gautam_construction.InventoryManagement.repository.fuel_entry_repository;
+import com.gautam_construction.InventoryManagement.repository.fuel_exit_repository;
 import com.gautam_construction.InventoryManagement.repository.fuel_repository;
 import com.gautam_construction.InventoryManagement.repository.product_add_by_challan_repository;
 import com.gautam_construction.InventoryManagement.repository.product_add_by_ghy_office_repository;
@@ -92,6 +104,9 @@ public class AdminController {
 	@Autowired
 	private fuel_entry_repository fer;
 	
+	@Autowired
+	private fuel_exit_repository fexr;
+	
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
 	
 	@RequestMapping("/AdminHome")
@@ -105,7 +120,7 @@ public class AdminController {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
-        List<users> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
         model.addAttribute("office_name", office_name);
         //return "admin_home";
         return "redirect:/AdminGeneralStoreHome";
@@ -136,6 +151,14 @@ public class AdminController {
         
         List<users> user_info_all_admin = ur.getAllAdminCredentiaLs();
         List<users> user_info_all_sub_admin = ur.getAllSubAdminCredentiaLs();
+        
+        List<userLoginDetailsDTO> user_info_all_admin_dto = new ArrayList<>();
+        List<userLoginDetailsDTO> user_info_all_sub_admin_dto = new ArrayList<>();
+        
+//        for(users u : user_info_all_admin) {
+//        	userLoginDetailsDTO ul = new userLoginDetailsDTO(u.getName(),u.getUser_id(),ls.);
+//        }
+        
         model.addAttribute("admin_user_list", user_info_all_admin);
         model.addAttribute("sub_admin_user_list", user_info_all_sub_admin);
         
@@ -178,6 +201,9 @@ public class AdminController {
         List<fuel_entry> fuelEntryList = fer.getAllFuelEntry();
         model.addAttribute("fuelEntryList", fuelEntryList);
         
+        List<fuel_exit> fuelExitList = fexr.getAllFuelExit();
+        model.addAttribute("fuelExitList", fuelExitList);
+        
         String petrol_quantity = fr.getFuelDetailsByType("petrol").get(0).getQuantity();
         String diesel_quantity = fr.getFuelDetailsByType("diesel").get(0).getQuantity();
         
@@ -201,7 +227,7 @@ public class AdminController {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
-        List<users> user_info = ur.getUserCredentiaLs(Integer.parseInt(user_id));
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
         model.addAttribute("office_name", office_name);
         List<product> prodList = pr.getProductQuantity(Integer.parseInt(prod_id));
         model.addAttribute("prod_id", prod_id);
@@ -209,33 +235,144 @@ public class AdminController {
         model.addAttribute("prod_unit", prodList.get(0).getUnit());
         model.addAttribute("prod_quantity", prodList.get(0).getQuantity());
         model.addAttribute("prod_type", prodList.get(0).getType());
+        model.addAttribute("prod_material", prodList.get(0).getMaterial());
         //return "admin_home";
         return "edit_product";
 	}
 	
+	@RequestMapping(value="/editStaff",method=RequestMethod.GET)
+	public Object editStaff(@RequestParam("staff_id") String staff_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+        List<staff> staffList = sr.getAllStaffsById(Integer.parseInt(staff_id));
+        model.addAttribute("staff_id", staff_id);
+        model.addAttribute("name", staffList.get(0).getName());
+        model.addAttribute("emp_code", staffList.get(0).getEmp_code());
+        model.addAttribute("designation", staffList.get(0).getDesignation());
+        //return "admin_home";
+        return "edit_staff";
+	}
+	
+	@RequestMapping(value="/editContractor",method=RequestMethod.GET)
+	public Object editContractor(@RequestParam("contractor_id") String contractor_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+        List<contractor> contractorList = cr.getAllContractorsById(Integer.parseInt(contractor_id));
+        model.addAttribute("contractor_id", contractor_id);
+        model.addAttribute("name", contractorList.get(0).getName());
+        model.addAttribute("dept", contractorList.get(0).getDept());
+        model.addAttribute("address", contractorList.get(0).getAddress());
+        //return "admin_home";
+        return "edit_contractor";
+	}
+	
+	@RequestMapping(value="/editLocation",method=RequestMethod.GET)
+	public Object editLocation(@RequestParam("location_id") String location_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+        model.addAttribute("location_id", location_id);
+        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        return "edit_location";
+	}
+	
+	@RequestMapping(value="/editVehicle",method=RequestMethod.GET)
+	public Object editVehicle(@RequestParam("vehicle_id") String vehicle_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+        List<vehicle> vehicleList = vr.getAllVehiclesById(Integer.parseInt(vehicle_id));
+        model.addAttribute("vehicle_id", vehicle_id);
+        model.addAttribute("vehicle_no", vehicleList.get(0).getVehicle_no());
+        model.addAttribute("driver_lisence_no", vehicleList.get(0).getDriver_lisence_no());
+        model.addAttribute("tyre_no", vehicleList.get(0).getTyre_no());
+        model.addAttribute("battery_no", vehicleList.get(0).getBattery_no());
+        model.addAttribute("pollution_from_date", vehicleList.get(0).getPollution_from_date());
+        model.addAttribute("pollution_end_date", vehicleList.get(0).getPollution_expiry_date());
+        model.addAttribute("fittness_from_date", vehicleList.get(0).getFitness_from_date());
+        model.addAttribute("fittness_end_date", vehicleList.get(0).getFitness_end_date());
+        model.addAttribute("insurance_from_date", vehicleList.get(0).getInsurance_from_date());
+        model.addAttribute("insurance_end_date", vehicleList.get(0).getInsurance_end_date());
+        model.addAttribute("last_service_date", vehicleList.get(0).getLast_servicing_date());
+        model.addAttribute("vehicle_type", vehicleList.get(0).getVehicle_type());
+        //return "admin_home";
+        return "edit_vehicle";
+	}
+	
 	@RequestMapping(value="/addAdmin",method=RequestMethod.POST)
 	public Object addAdmin(@RequestParam("name_sub_admin") String name_sub_admin,
-			@RequestParam("user_id_sub_admin") String user_id_sub_admin) throws Exception {
-		String pass = "abc123";
+			@RequestParam("user_id_sub_admin") String user_id_sub_admin,
+			@RequestParam("password_sub_admin") String password_sub_admin) throws Exception {
+		//String pass = "abc123";
 		String usertype = "A";
 		Date now = new Date();
 		String today_str = formatter.format(now);
-		String encryptedPass = ls.hashPassword(pass);
-		ur.registerOfficeDetails(Integer.parseInt(user_id_sub_admin), encryptedPass, name_sub_admin, usertype, today_str);
-		urr.regsiterNewUserRole(Integer.parseInt(user_id_sub_admin), 1);
+		String encryptedPass = ls.hashPassword(password_sub_admin);
+		ur.registerOfficeDetails(user_id_sub_admin, encryptedPass, name_sub_admin, usertype, today_str);
+		urr.regsiterNewUserRole(user_id_sub_admin, 1);
 		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteUser",method=RequestMethod.POST)
+	public Object deleteUser(@RequestParam("user_id") String user_id) throws Exception {
+		//String pass = "abc123";
+		ur.DeleteUserId(user_id);
+		urr.deleteUserRole(user_id);
+		return "success";
 	}
 	
 	@RequestMapping(value="/addSubAdmin",method=RequestMethod.POST)
 	public Object addSubAdmin(@RequestParam("name_sub_admin") String name_sub_admin,
-			@RequestParam("user_id_sub_admin") String user_id_sub_admin) throws Exception {
-		String pass = "abc123";
+			@RequestParam("user_id_sub_admin") String user_id_sub_admin,
+			@RequestParam("password_sub_admin") String password_sub_admin) throws Exception {
+		//String pass = "abc123";
 		String usertype = "SA";
 		Date now = new Date();
 		String today_str = formatter.format(now);
-		String encryptedPass = ls.hashPassword(pass);
-		ur.registerOfficeDetails(Integer.parseInt(user_id_sub_admin), encryptedPass, name_sub_admin, usertype, today_str);
-		urr.regsiterNewUserRole(Integer.parseInt(user_id_sub_admin), 2);
+		String encryptedPass = ls.hashPassword(password_sub_admin);
+		ur.registerOfficeDetails(user_id_sub_admin, encryptedPass, name_sub_admin, usertype, today_str);
+		urr.regsiterNewUserRole(user_id_sub_admin, 2);
 		return "redirect:/AdminGeneralStoreHome";
 	}
 	
@@ -243,8 +380,9 @@ public class AdminController {
 	public Object addProduct(@RequestParam("product_name") String product_name,
 			@RequestParam("product_unit") String product_unit,
 			@RequestParam("product_quantity") String product_quantity,
-			@RequestParam("product_type") String product_type) {
-		pr.InsertProductDetails(product_name, product_unit, product_quantity, product_type);
+			@RequestParam("product_type") String product_type,
+			@RequestParam("product_material") String product_material) {
+		pr.InsertProductDetails(product_name, product_unit, product_quantity, product_type, product_material);
 		return "redirect:/AdminGeneralStoreHome";
 	}
 	
@@ -253,9 +391,18 @@ public class AdminController {
 			@RequestParam("product_name") String product_name,
 			@RequestParam("product_unit") String product_unit,
 			@RequestParam("product_quantity") String product_quantity,
-			@RequestParam("product_type") String product_type) {
-		pr.UpdateProductAllAttr(Integer.parseInt(product_id),product_name, product_unit, product_quantity, product_type);
+			@RequestParam("product_type") String product_type,
+			@RequestParam("prod_material") String prod_material) {
+		pr.UpdateProductAllAttr(Integer.parseInt(product_id),product_name, product_unit, product_quantity, product_type,prod_material);
 		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteProduct",method=RequestMethod.POST)
+	public Object deleteProduct(@RequestParam("prod_id") String prod_id) throws Exception {
+		//String pass = "abc123";
+		pr.deleteProductId(Integer.parseInt(prod_id));
+		return "success";
 	}
 	
 	@RequestMapping(value="/addStaff",method=RequestMethod.POST)
@@ -266,6 +413,23 @@ public class AdminController {
 		return "redirect:/AdminGeneralStoreHome";
 	}
 	
+	@RequestMapping(value="/updateStaff",method=RequestMethod.POST)
+	public Object updateStaff(@RequestParam("staff_id") String staff_id,
+							@RequestParam("staff_name") String staff_name,
+							@RequestParam("staff_designation") String staff_designation,
+							@RequestParam("emp_code") String emp_code) {
+		sr.UpdateStaffDetailsAllAttr(Integer.parseInt(staff_id), emp_code, staff_name, staff_designation);
+		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteStaff",method=RequestMethod.POST)
+	public Object deleteStaff(@RequestParam("staff_id") String staff_id) throws Exception {
+		//String pass = "abc123";
+		sr.DeleteStaffId(Integer.parseInt(staff_id));
+		return "success";
+	}
+	
 	@RequestMapping(value="/addContractor",method=RequestMethod.POST)
 	public Object addContractor(@RequestParam("contractor_name") String contractor_name,
 			@RequestParam("contractor_department") String contractor_department,
@@ -274,8 +438,26 @@ public class AdminController {
 		return "redirect:/AdminGeneralStoreHome";
 	}
 	
+	@RequestMapping(value="/updateContractor",method=RequestMethod.POST)
+	public Object updateContractor(@RequestParam("contractor_id") String contractor_id,
+			@RequestParam("contractor_name") String contractor_name,
+			@RequestParam("contractor_department") String contractor_department,
+			@RequestParam("contractor_address") String contractor_address) {
+		cr.UpdateContractorDetailsAllAttr(Integer.parseInt(contractor_id), contractor_name, contractor_department, contractor_address);
+		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteContractor",method=RequestMethod.POST)
+	public Object deleteContractor(@RequestParam("contractor_id") String contractor_id) throws Exception {
+		//String pass = "abc123";
+		cr.DeleteContractorId(Integer.parseInt(contractor_id));
+		return "success";
+	}
+	
 	@RequestMapping(value="/addVehicle",method=RequestMethod.POST)
 	public Object addVehicle(@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam("vehicle_type") String vehicle_type,
 			@RequestParam("driver_lisence_no") String driver_lisence_no,
 			@RequestParam("tyre_no") String tyre_no,
 			@RequestParam("battery_no") String battery_no,
@@ -287,14 +469,372 @@ public class AdminController {
 			@RequestParam("insurance_expiry") String insurance_expiry,
 			@RequestParam("last_servicing") String last_servicing
 			) {
-		vr.InsertVehicleDetails(vehicle_no, driver_lisence_no, tyre_no, battery_no, pollution_from, pollution_expiry, fitness_from, fitness_expiry, insurance_from, insurance_expiry, last_servicing);
+		vr.InsertVehicleDetails(vehicle_no, driver_lisence_no, tyre_no, battery_no, pollution_from, pollution_expiry, fitness_from, fitness_expiry, insurance_from, insurance_expiry, last_servicing,vehicle_type);
 		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@RequestMapping(value="/updateVehicle",method=RequestMethod.POST)
+	public Object updateVehicle(@RequestParam("vehicle_id") String vehicle_id,
+			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam("vehicle_type") String vehicle_type,
+			@RequestParam("driver_lisence_no") String driver_lisence_no,
+			@RequestParam("tyre_no") String tyre_no,
+			@RequestParam("battery_no") String battery_no,
+			@RequestParam("pollution_from") String pollution_from,
+			@RequestParam("pollution_expiry") String pollution_expiry,
+			@RequestParam("fitness_from") String fitness_from,
+			@RequestParam("fitness_expiry") String fitness_expiry,
+			@RequestParam("insurance_from") String insurance_from,
+			@RequestParam("insurance_expiry") String insurance_expiry,
+			@RequestParam("last_servicing") String last_servicing
+			) {
+		vr.UpdateVehicleDetailsAllAttr(Integer.parseInt(vehicle_id), vehicle_no, driver_lisence_no, tyre_no, battery_no, pollution_from, pollution_expiry, fitness_from, fitness_expiry, insurance_from, insurance_expiry, last_servicing, vehicle_type);
+		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteVehicle",method=RequestMethod.POST)
+	public Object deleteVehicle(@RequestParam("vehicle_id") String vehicle_id) throws Exception {
+		//String pass = "abc123";
+		vr.DeleteVehicleId(Integer.parseInt(vehicle_id));
+		return "success";
 	}
 	
 	@RequestMapping(value="/addLocation",method=RequestMethod.POST)
 	public Object addLocation(@RequestParam("location_name") String location_name) {
 		lr.InsertLocationDetails(location_name);
 		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@RequestMapping(value="/updateLocation",method=RequestMethod.POST)
+	public Object updateLocation(@RequestParam("location_id") String location_id,
+			@RequestParam("location_name") String location_name) {
+		lr.UpdateLocationDetailsAllAttr(Integer.parseInt(location_id), location_name);
+		return "redirect:/AdminGeneralStoreHome";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteLocation",method=RequestMethod.POST)
+	public Object deleteLocation(@RequestParam("location_id") String location_id) throws Exception {
+		//String pass = "abc123";
+		lr.DeleteLocationId(Integer.parseInt(location_id));
+		return "success";
+	}
+	
+	@RequestMapping(value="/editFuelEntry",method=RequestMethod.GET)
+	public Object editFuelEntry(@RequestParam("fuel_id") String fuel_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+        List<fuel_entry> fuel_entry_list = fer.getAllFuelEntryById(Integer.parseInt(fuel_id));
+        //return "admin_home";
+        model.addAttribute("fuel_entry_obj", fuel_entry_list.get(0));
+        return "edit_staff";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteFuelEntry",method=RequestMethod.POST)
+	public Object deleteFuelEntry(@RequestParam("fuel_id") String fuel_id) throws Exception {
+		//String pass = "abc123";
+		fer.deleteFuelEntryId(Integer.parseInt(fuel_id));
+		return "success";
+	}
+	
+	@RequestMapping(value="/editFuelExit",method=RequestMethod.GET)
+	public Object editFuelExit(@RequestParam("fuel_id") String fuel_id,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+        List<fuel_exit> fuel_exit_list = fexr.getAllFuelExitById(Integer.parseInt(fuel_id));
+        //return "admin_home";
+        model.addAttribute("fuel_exit_obj", fuel_exit_list.get(0));
+        return "edit_staff";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteFuelExit",method=RequestMethod.POST)
+	public Object deleteFuelExit(@RequestParam("fuel_id") String fuel_id) throws Exception {
+		//String pass = "abc123";
+		fexr.deleteFuelExitId(Integer.parseInt(fuel_id));
+		return "success";
+	}
+	
+	
+	
+	@RequestMapping(value="/editProdAddChallan",method=RequestMethod.GET)
+	public Object editProdAddChallan(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_add_by_challan_dto> prodAddChallanList = pacr.getAllProductAddByChallanChNo(challan_no);
+        model.addAttribute("prodAddChallanList", prodAddChallanList);
+        model.addAttribute("remarks", prodAddChallanList.get(0).getRemarks());
+        return "prod_add_by_challan";
+	}
+	
+	@RequestMapping(value="/editProdAddGhyOffice",method=RequestMethod.GET)
+	public Object editProdAddGhyOffice(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_add_by_ghy_office_dto> prodAddGhyOffice = pagor.getAllProductAddByGhyOfficeChNo(challan_no);
+        model.addAttribute("prodAddGhyOffice", prodAddGhyOffice);
+        model.addAttribute("remarks", prodAddGhyOffice.get(0).getRemarks());
+        return "prod_add_by_ghy_office";
+	}
+	
+	@RequestMapping(value="/editProdAddLocalOffice",method=RequestMethod.GET)
+	public Object editProdAddLocalOffice(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_add_by_local_office_dto> prodAddLocalOffice = palor.getAllProductAddByLocalOfficeChNo(challan_no);
+        model.addAttribute("prodAddLocalOffice", prodAddLocalOffice);
+        model.addAttribute("remarks", prodAddLocalOffice.get(0).getRemarks());
+        return "prod_add_by_local_office";
+	}
+	
+	@RequestMapping(value="/editProdExitChallan",method=RequestMethod.GET)
+	public Object editProdExitChallan(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_exit_by_challan_dto> prodExitChallan = pecr.getAllProductExitByChallanChNo(challan_no);
+        model.addAttribute("prodExitChallan", prodExitChallan);
+        return "prod_exit_by_challan";
+	}
+	
+	@RequestMapping(value="/editProdExitBySubContractor",method=RequestMethod.GET)
+	public Object editProdExitBySubContractor(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_exit_by_contractor_dto> prodExitContractor = pecor.getAllProductExitByContractorChNo(challan_no);
+        model.addAttribute("prodExitContractor", prodExitContractor);
+        return "prod_exit_by_contractor";
+	}
+	
+	@RequestMapping(value="/editProdExitByStaff",method=RequestMethod.GET)
+	public Object editProdExitByStaff(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_exit_by_staff_dto> prodExitStaff = pesr.getAllProductExitByStaff_ChNo(challan_no);
+        model.addAttribute("prodExitStaff", prodExitStaff);
+        return "prod_exit_by_staff";
+	}
+	
+	@RequestMapping(value="/editProdExitByMisc",method=RequestMethod.GET)
+	public Object editProdExitByMisc(@RequestParam("challan_no") String challan_no,
+			HttpSession session,Model model,Authentication authentication) {
+		@SuppressWarnings("unchecked")
+		String user_id = session.getAttribute("userId").toString();
+		String user_type = session.getAttribute("userType").toString();
+		String office_name = session.getAttribute("officeName").toString();
+		model.addAttribute("office_name", office_name);
+		Date currentDate=new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        model.addAttribute("currentDate",formatter.format(currentDate));
+		model.addAttribute("office_name", office_name);
+        List<users> user_info = ur.getUserCredentiaLs(user_id);
+        model.addAttribute("office_name", office_name);
+//        List<location> locationList = lr.getAllLocationsById(Integer.parseInt(location_id));
+//        model.addAttribute("location_id", location_id);
+//        model.addAttribute("location_name", locationList.get(0).getLocation_name());
+        //return "admin_home";
+        model.addAttribute("challan_no", challan_no);
+        List<product_exit_by_misc_dto> prodExitMiscellaneous = pemr.getAllProductExitByMiscellaneousChNo(challan_no);
+        model.addAttribute("prodExitMiscellaneous", prodExitMiscellaneous);
+        return "prod_exit_by_misc";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteChallan",method=RequestMethod.POST)
+	public Object deleteChallan(@RequestParam("challan_no") String challan_no,
+			@RequestParam("type") String type,
+			HttpSession session,Model model,Authentication authentication) throws Exception {
+		//String pass = "abc123";
+		if(type.equals("prod_add_by_challan")) {
+			List<product_add_by_challan_dto> prodAddChallanList = pacr.getAllProductAddByChallanChNo(challan_no);
+			for(product_add_by_challan_dto pacd : prodAddChallanList) {
+				Integer prod_id = pacd.getProd_id();
+				String prod_challan_qty = pacd.getQuantity();
+				String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+				String reseted_qty = Double.toString(Double.parseDouble(prod_qty) - Double.parseDouble(prod_challan_qty));
+				pr.UpdateProductQuantity(prod_id, reseted_qty);
+			}
+			pacr.DeleteAllProductAddByChallan(challan_no);
+		}
+		else if(type.equals("prod_add_by_ghy_office")) {
+			List<product_add_by_ghy_office_dto> prodAddGhyOffice = pagor.getAllProductAddByGhyOfficeChNo(challan_no);
+			for(product_add_by_ghy_office_dto pagod : prodAddGhyOffice) {
+				Integer prod_id = pagod.getProd_id();
+				String prod_challan_qty = pagod.getQuantity();
+				String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+				String reseted_qty = Double.toString(Double.parseDouble(prod_qty) - Double.parseDouble(prod_challan_qty));
+				pr.UpdateProductQuantity(prod_id, reseted_qty);
+			}
+			//deldete challan
+			pagor.DeleteAllProductAddByGhyOffice(challan_no);
+		}
+		else if(type.equals("prod_add_by_local_office")) {
+			List<product_add_by_local_office_dto> prodAddLocalOffice = palor.getAllProductAddByLocalOfficeChNo(challan_no);
+			for(product_add_by_local_office_dto palod : prodAddLocalOffice) {
+				Integer prod_id = palod.getProd_id();
+				String prod_challan_qty = palod.getQuantity();
+				String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+				String reseted_qty = Double.toString(Double.parseDouble(prod_qty) - Double.parseDouble(prod_challan_qty));
+				pr.UpdateProductQuantity(prod_id, reseted_qty);
+			}
+			palor.DeleteAllProductAddByLocalOffice(challan_no);		
+		}
+		else if(type.equals("prod_exit_by_challan")) {
+			List<product_exit_by_challan_dto> prodExitChallan = pecr.getAllProductExitByChallanChNo(challan_no);
+			for(product_exit_by_challan_dto pecd : prodExitChallan) {
+				Integer prod_id = pecd.getProd_id();
+				String prod_challan_qty = pecd.getQuantity();
+				String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+				String reseted_qty = Double.toString(Double.parseDouble(prod_qty) + Double.parseDouble(prod_challan_qty));
+				pr.UpdateProductQuantity(prod_id, reseted_qty);
+			}
+			pecr.DeleteAllProductExitByChallan(challan_no);
+		}
+		else if(type.equals("prod_exit_by_sub_contractor")) {
+			 List<product_exit_by_contractor_dto> prodExitContractor = pecor.getAllProductExitByContractorChNo(challan_no);
+			 for(product_exit_by_contractor_dto pecod : prodExitContractor) {
+					Integer prod_id = pecod.getProd_id();
+					String prod_challan_qty = pecod.getQuantity();
+					String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+					String reseted_qty = Double.toString(Double.parseDouble(prod_qty) + Double.parseDouble(prod_challan_qty));
+					pr.UpdateProductQuantity(prod_id, reseted_qty);
+				}
+			 pecor.DeleteAllProductExitByContractor(challan_no);
+		}
+		else if(type.equals("prod_exit_by_staff")) {
+			List<product_exit_by_staff_dto> prodExitStaff = pesr.getAllProductExitByStaff_ChNo(challan_no);
+			for(product_exit_by_staff_dto pesd : prodExitStaff) {
+				Integer prod_id = pesd.getProd_id();
+				String prod_challan_qty = pesd.getQuantity();
+				String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+				String reseted_qty = Double.toString(Double.parseDouble(prod_qty) + Double.parseDouble(prod_challan_qty));
+				pr.UpdateProductQuantity(prod_id, reseted_qty);
+			}
+			pesr.DeleteAllProductExitByStaff(challan_no);
+		}
+		else if(type.equals("prod_exit_by_misc")) {
+			 List<product_exit_by_misc_dto> prodExitMiscellaneous = pemr.getAllProductExitByMiscellaneousChNo(challan_no);
+			 for(product_exit_by_misc_dto pemd : prodExitMiscellaneous) {
+					Integer prod_id = pemd.getProd_id();
+					String prod_challan_qty = pemd.getQuantity();
+					String prod_qty = pr.getProductQuantity(prod_id).get(0).getQuantity();
+					String reseted_qty = Double.toString(Double.parseDouble(prod_qty) + Double.parseDouble(prod_challan_qty));
+					pr.UpdateProductQuantity(prod_id, reseted_qty);
+				}
+			 pemr.DeleteAllProductExitByMisc(challan_no);
+		}
+		return "success";
 	}
 	
 }

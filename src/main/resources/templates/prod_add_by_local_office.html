@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="_csrf" id="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" id="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Shri Gautam Constructions - Inventory</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://kit.fontawesome.com/c1a8a4a3ac.js" crossorigin="anonymous"></script>
+<script type = "text/javascript"
+			 src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+<body>
+	<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
+	    <div class="flex-row d-flex">
+	        <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <a class="navbar-brand" href="#" title="Gautam Constructions"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
+	    </div>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="navbar-collapse collapse" id="collapsingNavbar">
+	        <ul class="navbar-nav">
+	            <li class="nav-item active">
+	                <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
+	            </li>
+	        </ul>
+	        <ul class="navbar-nav ml-auto">
+	            <li class="nav-item">
+	                <a class="nav-link" href="#myAlert" data-toggle="collapse"><span th:text="${office_name}"></span></a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="/logout">Logout</a>
+	            </li>
+	        </ul>
+	    </div>
+	</nav><br>
+	<div class="container-fluid col main pt-5 mt-3" id="main">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
+                    <div class="col-lg-9">
+                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" th:value="${challan_no}" readonly>
+                    </div>
+                  </div>
+				<div th:each="pc,iter:${prodAddLocalOffice}">
+					
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
+                    <div class="col-lg-9">
+                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" th:value="${pc.invoice_date}" readonly>
+                    </div>
+                  </div>
+                  <hr>
+		          <h3><b>#<span th:text="${iter.count}"></span></b></h3>
+		          <div class="addByLocalOffice">
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+                    <div class="col-lg-9">
+                    	<input id="product_id" name="product_id" class="form-control" type="text" th:value="${pc.prod_name}" readonly>
+                      
+                    </div>
+                  </div>
+                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit</label>
+	                    <div class="col-lg-9">
+	                    	<input id="product_unit" name="product_unit" class="form-control" type="text" th:value="${pc.prod_unit}" readonly>
+	                      
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Type</label>
+	                    <div class="col-lg-9">
+	                    	<input id="product_type" name="product_type" class="form-control" type="text" th:value="${pc.prod_type}" readonly>
+	                      
+	                    </div>
+	                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+                    <div class="col-lg-9">
+                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" th:value="${pc.quantity}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name</label>
+                    <div class="col-lg-9">
+                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" th:value="${pc.vendor_name}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+                    <div class="col-lg-9">
+                    	<input id="vehicle_no" name="vehicle_no" class="form-control" type="text" th:value="${pc.vehicle_no}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Serial No.</label>
+                    <div class="col-lg-9">
+                    	<input id="serial_no" name="serial_no" class="form-control" type="text" th:value="${pc.serial_no}" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Sub-Admin.</label>
+			                    <div class="col-lg-9">
+			                    	<input id="sub_admin" name="sub_admin" class="form-control" type="text" th:value="${pc.sub_admin}" readonly>
+			                      
+			                    </div>
+			                  </div>
+			       
+                  <hr>
+                  </div>
+                  
+			</div>
+			<hr>
+			<div class="form-group row">
+                 <label class="col-lg-3 col-form-label form-control-label">Remarks</label>
+                 <div class="col-lg-9">
+                   <input id="remarks" name="remarks" class="form-control" type="text" th:value="${remarks}" readonly>
+                 </div>
+                 
+            </div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -62,7 +62,7 @@ public class InventoryAuthenticationSuccessHandler implements AuthenticationSucc
 		request.getSession().setAttribute("isSubAdminUser", hasSubAdminRole);
 		
 		System.out.println("username is: "+authentication.getName());
-		users loggedUser = userRepository.gettingUserId(Integer.parseInt(authentication.getName()));
+		users loggedUser = userRepository.gettingUserId(authentication.getName());
 		System.out.println("user login credentials :"+loggedUser.getUser_id());
 		
 		
@@ -83,12 +83,12 @@ public class InventoryAuthenticationSuccessHandler implements AuthenticationSucc
 		
 		if(hasAdminRole) {
 			request.getSession().setAttribute("userType", "A");
-			request.getSession().setAttribute("officeName", office_name);
+			request.getSession().setAttribute("officeName", loggedUser.getName());
 			redirectStrategy.sendRedirect(request, response, "/AdminHome");
 		}
 		else if(hasSubAdminRole) {
 			request.getSession().setAttribute("userType", "SA");
-			request.getSession().setAttribute("officeName", office_name);
+			request.getSession().setAttribute("officeName", loggedUser.getName());
 			redirectStrategy.sendRedirect(request, response, "/SubAdminHome");
 		}
 		 		

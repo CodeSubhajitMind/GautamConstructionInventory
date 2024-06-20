@@ -10,16 +10,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
+import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_challan_dto;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_challan;
 
 
 public interface product_exit_by_challan_repository extends JpaRepository<product_exit_by_challan, Long>{
 	public final static String GET_ALL_PRODUCT_EXIT_BY_CHALLAN = "SELECT * FROM product_exit_by_challan";
-	public final static String GET_ALL_PRODUCT_EXIT_BY_CHALLAN_CHNO = "SELECT new com.gautam_construction.InventoryManagement.DTO.product_exit_by_challan_dto(pe.prod_id,p.name,pe.quantity,pe.challan_no,pe.exit_date,pe.to_location,pe.vehicle_no) FROM product_exit_by_challan pe inner join product p on pe.prod_id=p.prod_id where pe.challan_no=:challan_no";
-	public final static String GET_BRIEF_PRODUCT_EXIT_BY_CHALLAN = "SELECT new com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto(challan_no,COUNT(prod_id) as total_prod,SUM(quantity) as total_quantity) FROM product_exit_by_challan GROUP BY challan_no";
+	public final static String GET_ALL_PRODUCT_EXIT_BY_CHALLAN_CHNO = "SELECT new com.gautam_construction.InventoryManagement.DTO.product_exit_by_challan_dto(pe.prod_id,p.name,p.unit,p.type,pe.quantity,pe.challan_no,pe.exit_date,pe.to_location,pe.vehicle_no,pe.from,pe.sub_admin) FROM product_exit_by_challan pe inner join product p on pe.prod_id=p.prod_id where pe.challan_no=:challan_no";
+	public final static String GET_BRIEF_PRODUCT_EXIT_BY_CHALLAN = "SELECT new com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto(challan_no,challan_no,COUNT(prod_id) as total_prod,SUM(quantity) as total_quantity) FROM product_exit_by_challan GROUP BY challan_no";
 	public final static String GET_MAX_CHALLAN_NO = "SELECT max(challan_no) FROM product_exit_by_challan";
-	public final static String INSERT_PRODUCT_EXIT_BY_CHALLAN = "insert into product_exit_by_challan(prod_id,quantity,challan_no,exit_date,to_location,vehicle_no,bill) VALUES (:prod_id,:quantity,:challan_no,:exit_date,:to_location,:vehicle_no,:bill)";
+	public final static String INSERT_PRODUCT_EXIT_BY_CHALLAN = "insert into product_exit_by_challan(prod_id,quantity,challan_no,exit_date,to_location,vehicle_no,bill,sub_admin) VALUES (:prod_id,:quantity,:challan_no,:exit_date,:to_location,:vehicle_no,:bill,:sub_admin)";
 	
 	@Query(value=GET_ALL_PRODUCT_EXIT_BY_CHALLAN,nativeQuery=true)
 	List<product_exit_by_challan> getAllProductExitByChallan();
@@ -33,9 +34,18 @@ public interface product_exit_by_challan_repository extends JpaRepository<produc
 	@Query(value=GET_BRIEF_PRODUCT_EXIT_BY_CHALLAN)
 	List<brief_product_challan_dto> getBriefProductExitByChallan();
 	                                             
-	@Modifying
+	@Modifying(clearAutomatically = true)
     @Query(value = INSERT_PRODUCT_EXIT_BY_CHALLAN, nativeQuery = true)
     @Transactional
-	void InsertProductExitByChallan(@Param("prod_id") Integer prod_id,@Param("quantity") String quantity,@Param("challan_no") String challan_no,@Param("exit_date") String exit_date,@Param("to_location") String to_location,@Param("vehicle_no") String vehicle_no,@Param("bill") String bill);
+	void InsertProductExitByChallan(@Param("prod_id") Integer prod_id,@Param("quantity") String quantity,@Param("challan_no") String challan_no,@Param("exit_date") String exit_date,@Param("to_location") String to_location,@Param("vehicle_no") String vehicle_no,@Param("bill") String bill,@Param("sub_admin") String sub_admin);
 
+	public final static String DELETE_ALL_PRODUCT_EXIT_BY_CHALLAN = "delete from product_exit_by_challan where challan_no=:challan_no";
+	@Modifying(clearAutomatically = true)
+    @Query(value = DELETE_ALL_PRODUCT_EXIT_BY_CHALLAN, nativeQuery = true)
+    @Transactional
+	void DeleteAllProductExitByChallan(@Param("challan_no") String challan_no);
+	
+	public final static String GET_PRODUCT_FILTER_BY_SEARCH = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto(pe.prod_id,p.name,p.unit,pe.quantity,pe.challan_no,pe.exit_date,'Exit By Challan') FROM product_exit_by_challan pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (:date IS NULL OR :date = '' OR pe.exit_date=:date)";
+	@Query(value=GET_PRODUCT_FILTER_BY_SEARCH)
+	List<filter_product_search_dto> getProductFilterBySearch(@Param("prod_id") String prod_id,@Param("date") String date);
 }

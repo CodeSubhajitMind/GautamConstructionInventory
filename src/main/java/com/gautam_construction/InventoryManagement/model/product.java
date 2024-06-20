@@ -15,17 +15,19 @@ public class product {
 	private String unit;
 	private String quantity;
 	private String type;
+	private String material;
 	public product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public product(Integer prod_id, String name, String unit, String quantity, String type) {
+	public product(Integer prod_id, String name, String unit, String quantity, String type, String material) {
 		super();
 		this.prod_id = prod_id;
 		this.name = name;
 		this.unit = unit;
 		this.quantity = quantity;
 		this.type = type;
+		this.material = material;
 	}
 	public Integer getProd_id() {
 		return prod_id;
@@ -57,9 +59,15 @@ public class product {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public String getMaterial() {
+		return material;
+	}
+	public void setMaterial(String material) {
+		this.material = material;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, prod_id, quantity, type, unit);
+		return Objects.hash(material, name, prod_id, quantity, type, unit);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -70,15 +78,16 @@ public class product {
 		if (getClass() != obj.getClass())
 			return false;
 		product other = (product) obj;
-		return Objects.equals(name, other.name) && Objects.equals(prod_id, other.prod_id)
-				&& Objects.equals(quantity, other.quantity) && Objects.equals(type, other.type)
-				&& Objects.equals(unit, other.unit);
+		return Objects.equals(material, other.material) && Objects.equals(name, other.name)
+				&& Objects.equals(prod_id, other.prod_id) && Objects.equals(quantity, other.quantity)
+				&& Objects.equals(type, other.type) && Objects.equals(unit, other.unit);
 	}
 	@Override
 	public String toString() {
 		return "product [prod_id=" + prod_id + ", name=" + name + ", unit=" + unit + ", quantity=" + quantity
-				+ ", type=" + type + "]";
+				+ ", type=" + type + ", material=" + material + "]";
 	}
+	
 	
 	
 }

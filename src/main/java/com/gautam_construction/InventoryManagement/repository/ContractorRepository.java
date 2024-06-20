@@ -13,14 +13,30 @@ import com.gautam_construction.InventoryManagement.model.contractor;
 
 public interface ContractorRepository extends JpaRepository<contractor, Long>{
 	public final static String GET_ALL_CONTRACTORS = "SELECT * FROM contractor";
-	public final static String INSERT_PRODUCT_DETAILS = "insert into contractor(name,dept,address) VALUES (:name,:dept,:address)";
+	public final static String GET_ALL_CONTRACTORS_BY_ID = "SELECT * FROM contractor where contractor_id=:contractor_id";
+	public final static String INSERT_CONTRACTOR_DETAILS = "insert into contractor(name,dept,address) VALUES (:name,:dept,:address)";
+	public final static String UPDATE_CONTRACTOR_ALL_ATTR = "update contractor set name=:name,dept=:dept,address=:address where contractor_id=:contractor_id";
+	public final static String DELETE_CONTRACTOR_ID = "delete from contractor where contractor_id=:contractor_id";
 	
 	@Query(value=GET_ALL_CONTRACTORS,nativeQuery=true)
 	List<contractor> getAllContractors();
+	
+	@Query(value=GET_ALL_CONTRACTORS_BY_ID,nativeQuery=true)
+	List<contractor> getAllContractorsById(@Param("contractor_id") Integer contractor_id);
 	                                             
-	@Modifying
-    @Query(value = INSERT_PRODUCT_DETAILS, nativeQuery = true)
+	@Modifying(clearAutomatically = true)
+    @Query(value = INSERT_CONTRACTOR_DETAILS, nativeQuery = true)
     @Transactional
 	void InsertContractorDetails(@Param("name") String name, @Param("dept") String dept, @Param("address") String address);
+    
+	@Modifying(clearAutomatically = true)
+    @Query(value = UPDATE_CONTRACTOR_ALL_ATTR, nativeQuery = true)
+    @Transactional
+	void UpdateContractorDetailsAllAttr(@Param("contractor_id") Integer contractor_id, @Param("name") String name, @Param("dept") String dept, @Param("address") String address);
+    
+	@Modifying(clearAutomatically = true)
+    @Query(value = DELETE_CONTRACTOR_ID, nativeQuery = true)
+    @Transactional
+	void DeleteContractorId(@Param("contractor_id") Integer contractor_id);
     
 }

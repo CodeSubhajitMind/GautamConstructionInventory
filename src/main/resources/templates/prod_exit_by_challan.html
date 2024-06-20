@@ -54,56 +54,84 @@
 	<div class="container-fluid col main pt-5 mt-3" id="main">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="card card-outline-secondary">
-	              <div class="card-header">
-	                <h3 class="mb-0">Edit Product Information</h3>
-	              </div>
-	              <div class="card-body">
-	                <form autocomplete="off" th:action="@{/updateProduct}" method="post" class="form" role="form">
-	                	<input id="product_id" name="product_id" class="form-control" type="hidden" th:value="${prod_id}">
+				<div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Challan Number</label>
+		                    <div class="col-lg-9">
+		                      <input id="challan_no" name="challan_no" class="form-control" type="text" th:value="${challan_no}" readonly>
+		                    </div>
+		        </div>
+				<div th:each="pc,iter:${prodExitChallan}">
+					<div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="exit_date" name="exit_date" class="form-control" type="date" th:value="${pc.exit_date}" readonly>
+	                    </div>
+	                  </div>
+	                  <hr>
+			          <h3><b>#<span th:text="${iter.count}"></span></b></h3>
+			          <div class="exitByChallan">
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
 	                    <div class="col-lg-9">
-	                      <input id="product_name" name="product_name" class="form-control" type="text" th:value="${prod_name}">
+	                    	<input id="product_id" name="product_id" class="form-control" type="text" th:value="${pc.prod_name}" readonly>
+	                      
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit</label>
 	                    <div class="col-lg-9">
-	                      <input id="product_unit" name="product_unit" class="form-control" type="text" th:value="${prod_unit}">
+	                    	<input id="product_unit" name="product_unit" class="form-control" type="text" th:value="${pc.prod_unit}" readonly>
+	                      
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Type</label>
+	                    <div class="col-lg-9">
+	                    	<input id="product_type" name="product_type" class="form-control" type="text" th:value="${pc.prod_type}" readonly>
+	                      
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
 	                    <div class="col-lg-9">
-	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" th:value="${prod_quantity}">
+	                      <input id="product_quantity1" name="product_quantity" class="form-control" type="text" th:value="${pc.quantity}" readonly>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Type</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">To Location</label>
 	                    <div class="col-lg-9">
-	                      <input id="product_type" name="product_type" class="form-control" type="text" th:value="${prod_type}">
+	                    	<input id="to_location" name="to_location" class="form-control" type="text" th:value="${pc.to_location}" readonly>
+	                      
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Type</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
 	                    <div class="col-lg-9">
-	                      <input id="prod_material" name="prod_material" class="form-control" type="text" th:value="${prod_material}">
+	                    	<input id="vehicle_no" name="vehicle_no" class="form-control" type="text" th:value="${pc.vehicle_no}" readonly>
+	                      
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label"></label>
-	                    <div class="col-lg-9">
-	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
-												<input class="btn btn-primary" type="submit" value="Save Changes">
-	                    </div>
+			                    <label class="col-lg-3 col-form-label form-control-label">From Location.</label>
+			                    <div class="col-lg-9">
+			                    	<input id="from" name="from" class="form-control" type="text" th:value="${pc.from}" readonly>
+			                      
+			                    </div>
+			                  </div>
+			                  <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Sub-Admin.</label>
+			                    <div class="col-lg-9">
+			                    	<input id="sub_admin" name="sub_admin" class="form-control" type="text" th:value="${pc.sub_admin}" readonly>
+			                      
+			                    </div>
+			                  </div>
+	                  <hr>
 	                  </div>
-	                </form>
-	              </div>
-	           </div>
+	                  
+				</div>
 			</div>
-			
 		</div>
 	</div>
+
 </body>
 </html>

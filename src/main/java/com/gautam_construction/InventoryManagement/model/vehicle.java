@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.repository.query.Param;
+
 @Entity
 @Table(name = "vehicle")
 public class vehicle {
@@ -23,13 +25,14 @@ public class vehicle {
 	private String insurance_from_date;
 	private String insurance_end_date;
 	private String last_servicing_date;
+	private String vehicle_type;
 	public vehicle() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public vehicle(Integer id, String vehicle_no, String driver_lisence_no, String tyre_no, String battery_no,
 			String pollution_from_date, String pollution_expiry_date, String fitness_from_date, String fitness_end_date,
-			String insurance_from_date, String insurance_end_date, String last_servicing_date) {
+			String insurance_from_date, String insurance_end_date, String last_servicing_date, String vehicle_type) {
 		super();
 		this.id = id;
 		this.vehicle_no = vehicle_no;
@@ -43,6 +46,7 @@ public class vehicle {
 		this.insurance_from_date = insurance_from_date;
 		this.insurance_end_date = insurance_end_date;
 		this.last_servicing_date = last_servicing_date;
+		this.vehicle_type = vehicle_type;
 	}
 	public Integer getId() {
 		return id;
@@ -116,11 +120,18 @@ public class vehicle {
 	public void setLast_servicing_date(String last_servicing_date) {
 		this.last_servicing_date = last_servicing_date;
 	}
+	
+	public String getVehicle_type() {
+		return vehicle_type;
+	}
+	public void setVehicle_type(String vehicle_type) {
+		this.vehicle_type = vehicle_type;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(battery_no, driver_lisence_no, fitness_end_date, fitness_from_date, id, insurance_end_date,
 				insurance_from_date, last_servicing_date, pollution_expiry_date, pollution_from_date, tyre_no,
-				vehicle_no);
+				vehicle_no, vehicle_type);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -140,7 +151,8 @@ public class vehicle {
 				&& Objects.equals(last_servicing_date, other.last_servicing_date)
 				&& Objects.equals(pollution_expiry_date, other.pollution_expiry_date)
 				&& Objects.equals(pollution_from_date, other.pollution_from_date)
-				&& Objects.equals(tyre_no, other.tyre_no) && Objects.equals(vehicle_no, other.vehicle_no);
+				&& Objects.equals(tyre_no, other.tyre_no) && Objects.equals(vehicle_no, other.vehicle_no)
+				&& Objects.equals(vehicle_type, other.vehicle_type);
 	}
 	@Override
 	public String toString() {
@@ -148,7 +160,8 @@ public class vehicle {
 				+ ", tyre_no=" + tyre_no + ", battery_no=" + battery_no + ", pollution_from_date=" + pollution_from_date
 				+ ", pollution_expiry_date=" + pollution_expiry_date + ", fitness_from_date=" + fitness_from_date
 				+ ", fitness_end_date=" + fitness_end_date + ", insurance_from_date=" + insurance_from_date
-				+ ", insurance_end_date=" + insurance_end_date + ", last_servicing_date=" + last_servicing_date + "]";
+				+ ", insurance_end_date=" + insurance_end_date + ", last_servicing_date=" + last_servicing_date
+				+ ", vehicle_type=" + vehicle_type + "]";
 	}
 	
 	

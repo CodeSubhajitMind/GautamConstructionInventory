@@ -18,7 +18,7 @@ public interface fuel_repository extends JpaRepository<fuel, Long>{
 	@Query(value=GET_FUEL_DETAILS_BY_TYPE,nativeQuery=true)
 	List<fuel> getFuelDetailsByType(@Param("fuel_type") String fuel_type);
 	                                             
-	@Modifying
+	@Modifying(clearAutomatically = true)
     @Query(value = UPDATE_FUEL_QUANTITY, nativeQuery = true)
     @Transactional
 	void UpdateFuelQuantity(@Param("fuel_type") String fuel_type,@Param("quantity") String quantity);

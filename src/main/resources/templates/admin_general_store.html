@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shri Gautam Constructions - Inventory</title>
+<meta name="_csrf" id="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" id="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Shri Gautam Construction - Inventory</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
@@ -18,6 +20,31 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://kit.fontawesome.com/c1a8a4a3ac.js" crossorigin="anonymous"></script>
+<script type = "text/javascript"
+			 src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!-- 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+ -->
+ <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Buttons extension CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <!-- Buttons extension JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <!-- JSZip (required for Excel export) -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <!-- HTML5 export buttons -->
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <style>
 body, html {
   height:100%;
@@ -99,11 +126,51 @@ body, html {
 }
 
 </style>
-<script>
+<script th:inline="javascript">
 	$(document).ready(function(){
+		
+		$('.table').DataTable();
+		
+		$('#product_table').DataTable().destroy(); 
+		
+		// Add Excel export button only to table1
+	    $('#product_table').DataTable({
+	        dom: 'Bfrtip',
+	        buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                title: 'Product List'
+	            }
+	        ]
+	    });
+		
+		$('#link_prod_report').click(function(e){
+			$('#prod_report').show();
+			$('#addAdmin').hide();
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			$('#viewChallan').hide();
+			$('#viewFuel').hide();
+			
+			$(".nav-item .active").removeClass('active');
+		    $(this).parent().addClass('active'); 
+		    e.preventDefault();
+		});
 		
 		$('#link_admin').click(function(e){
 			$('#addAdmin').show();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -123,6 +190,7 @@ body, html {
 		
 		$('#link_sub_admin').click(function(e){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').show();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -142,6 +210,7 @@ body, html {
 		
 		$('#link_dashboard').click(function(e){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').show();
 			$('#addProduct').hide();
@@ -165,6 +234,7 @@ body, html {
 		
 		$('#link_add_products').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').show();
@@ -183,6 +253,7 @@ body, html {
 		});
 		$('#link_add_staffs').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -201,6 +272,7 @@ body, html {
 		});
 		$('#link_add_contractors').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -219,6 +291,7 @@ body, html {
 		});
 		$('#link_add_vehicles').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -237,6 +310,7 @@ body, html {
 		});
 		$('#link_add_locations').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -256,6 +330,7 @@ body, html {
 		
 		$('#link_view_product').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -274,6 +349,7 @@ body, html {
 		});
 		$('#link_view_staff').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -292,6 +368,7 @@ body, html {
 		});
 		$('#link_view_contractor').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -310,6 +387,7 @@ body, html {
 		});
 		$('#link_view_vehicle').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -328,6 +406,7 @@ body, html {
 		});
 		$('#link_view_location').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -348,6 +427,7 @@ body, html {
 		
 		$('#link_view_Challan').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -367,6 +447,7 @@ body, html {
 		
 		$('#link_view_fuel_details').click(function(){
 			$('#addAdmin').hide();
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -382,8 +463,336 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').show();
+
 		});
+		
+		
+		/*
+		$('.btn_sub_admin_del').click(function(){
+			jQuery.noConflict();
+			var $btn = $(this);
+		    var rowId = $btn.attr('data-id');
+		    $('#myModal').modal('show');
+			$('#modal_close').click(function(){
+				$('#myModal').modal('hide');
+		    });
+			$('#modal_submit').click(function(){
+				 var token = $('#_csrf').attr("content");
+				 var header = $('#_csrf_header').attr("content");
+				 $.ajax({  
+					 type: "POST",
+					 async: false,
+		             url: "/InventoryManagement/deleteUser",
+		             data: {user_id:rowId}, 
+		             beforeSend: function(xhr){
+							xhr.setRequestHeader(header,token);
+					  },
+		             success: function(data){ 
+		            	 if(data=="success"){ 
+		            		  alert("Data Saved Successfully");
+		            		  window.location.href = '/InventoryManagement/AdminGeneralStoreHome';
+		            		 
+		            	 }
+		             }   
+			   }); 
+		    });
+		    
+		});
+		*/
+		
+		
+		
 	});
+	
+	function deleteUser(user_id){  	
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 $.ajax({  
+			 type: "POST",
+			 async: false,
+             url: "/deleteUser",
+             data: {user_id:user_id}, 
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){ 
+            	 if(data=="success"){ 
+            		  alert("Data Saved Successfully");
+            		  window.location.href = '/AdminGeneralStoreHome';       		 
+            	 }
+             }   
+	   }); 
+		 
+	}
+		 
+	function deleteProduct(prod_id){  	
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 $.ajax({  
+			 type: "POST",
+			 async: false,
+             url: "/deleteProduct",
+             data: {prod_id:prod_id}, 
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){ 
+            	 if(data=="success"){ 
+            		  alert("Data Saved Successfully");
+            		  window.location.href = '/AdminGeneralStoreHome';       		 
+            	 }
+             }   
+	   });
+	}
+	
+	function deleteStaff(staff_id){  	
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 $.ajax({  
+			 type: "POST",
+			 async: false,
+             url: "/deleteStaff",
+             data: {staff_id:staff_id}, 
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){ 
+            	 if(data=="success"){ 
+            		  alert("Data Saved Successfully");
+            		  window.location.href = '/AdminGeneralStoreHome';       		 
+            	 }
+             }   
+	   });
+		 
+	}
+		 
+ function deleteContractor(contractor_id){  	
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 $.ajax({  
+			 type: "POST",
+			 async: false,
+             url: "/deleteContractor",
+             data: {contractor_id:contractor_id}, 
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){ 
+            	 if(data=="success"){ 
+            		  alert("Data Saved Successfully");
+            		  window.location.href = '/AdminGeneralStoreHome';       		 
+            	 }
+             }   
+	   });
+ }
+		 
+		 
+ function deleteVehicle(vehicle_id){  	
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 $.ajax({  
+			 type: "POST",
+			 async: false,
+             url: "/deleteVehicle",
+             data: {vehicle_id:vehicle_id}, 
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){ 
+            	 if(data=="success"){ 
+            		  alert("Data Saved Successfully");
+            		  window.location.href = '/AdminGeneralStoreHome';       		 
+            	 }
+             }   
+	   });
+ }
+ 
+ function deleteLocation(location_id){  	
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 $.ajax({  
+			 type: "POST",
+			 async: false,
+          url: "/deleteLocation",
+          data: {location_id:location_id}, 
+          beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+          success: function(data){ 
+         	 if(data=="success"){ 
+         		  alert("Data Saved Successfully");
+         		  window.location.href = '/AdminGeneralStoreHome';       		 
+         	 }
+          }   
+	   });
+}
+ 
+function deleteChallan(challan_no,type){
+	var token = $('#_csrf').attr("content");
+	 var header = $('#_csrf_header').attr("content");
+	 $.ajax({  
+		 type: "POST",
+		 async: false,
+     url: "/deleteChallan",
+     data: {challan_no:challan_no,type:type}, 
+     beforeSend: function(xhr){
+				xhr.setRequestHeader(header,token);
+		  },
+     success: function(data){ 
+    	 if(data=="success"){ 
+    		  alert("Data Saved Successfully");
+    		  window.location.href = '/AdminGeneralStoreHome';       		 
+    	 }
+     }   
+  });
+}
+
+function deleteFuelEntry(fuel_id){  	
+	var token = $('#_csrf').attr("content");
+	 var header = $('#_csrf_header').attr("content");
+	 $.ajax({  
+		 type: "POST",
+		 async: false,
+         url: "/deleteFuelEntry",
+         data: {fuel_id:fuel_id}, 
+         beforeSend: function(xhr){
+				xhr.setRequestHeader(header,token);
+		  },
+         success: function(data){ 
+        	 if(data=="success"){ 
+        		  alert("Data Saved Successfully");
+        		  window.location.href = '/AdminGeneralStoreHome';       		 
+        	 }
+         }   
+   });
+	 
+}
+
+function deleteFuelExit(fuel_id){  	
+	var token = $('#_csrf').attr("content");
+	 var header = $('#_csrf_header').attr("content");
+	 $.ajax({  
+		 type: "POST",
+		 async: false,
+         url: "/deleteFuelExit",
+         data: {fuel_id:fuel_id}, 
+         beforeSend: function(xhr){
+				xhr.setRequestHeader(header,token);
+		  },
+         success: function(data){ 
+        	 if(data=="success"){ 
+        		  alert("Data Saved Successfully");
+        		  window.location.href = '/AdminGeneralStoreHome';       		 
+        	 }
+         }   
+   });
+	 
+}
+
+function searchEntry(){
+	var token = $('#_csrf').attr("content");
+	 var header = $('#_csrf_header').attr("content");
+	 
+	 var entry_type = $('#entry_type').val();
+	 var entry_date = $('#entry_date').val();
+	 var entry_product_id = $('#entry_product_id').val();
+
+	 $.ajax({                                                                                                           
+		 type: "GET",                                                           
+		 async: false,
+         url: "/getProductEntryDetails",
+         data: {entry_type:entry_type,entry_date:entry_date,entry_product_id:entry_product_id},
+         beforeSend: function(xhr){
+				xhr.setRequestHeader(header,token);
+		  },
+         success: function(data){
+        	 /*
+        	 var table = $('#entry_table').DataTable({
+                 // Initial setup options
+             });
+        	 */
+        	 //table.clear();
+        	 $("#entry_table tbody").empty();
+        	 for (let i = 0; i < data.length; i++) {
+                 var filteredProductObj = data[i];
+                 
+                 /*
+                 table.row.add([
+                	 filteredProductObj.prod_id,
+                	 filteredProductObj.prod_name,
+                	 filteredProductObj.prod_unit,
+                	 filteredProductObj.prod_quantity,
+                	 filteredProductObj.challan_no,
+                     filteredProductObj.challan_date,
+                     filteredProductObj.challan_type
+                 ]);
+                 
+                 table.draw(); 
+                 */
+                 
+                
+                 // For example, append to a div
+                 $('#entry_data').append(
+                     '<tr>' +
+                     '<td>' + filteredProductObj.prod_id + '</td>' +
+                     '<td>' + filteredProductObj.prod_name + '</td>' +
+                     '<td>' + filteredProductObj.prod_unit + '</td>' +
+                     '<td>' + filteredProductObj.prod_quantity + '</td>' +
+                     '<td>' + filteredProductObj.challan_no + '</td>' +
+                     '<td>' + filteredProductObj.challan_date + '</td>' +
+                     '<td>' + filteredProductObj.challan_type + '</td>' +
+                     '</tr>'
+                 );
+               
+                 
+                 $('#view_entry_data').show();
+             }
+         }                                                                    
+   });
+}
+
+function searchExit(){
+	
+	var token = $('#_csrf').attr("content");
+	 var header = $('#_csrf_header').attr("content");
+	 
+	 var exit_type = $('#exit_type').val();
+	 var exit_date = $('#exit_date').val();
+	 var exit_product_id = $('#exit_product_id').val();
+	 
+	 $.ajax({                                                                                                           
+		 type: "GET",                                                           
+		 async: false,
+         url: "/getProductExitDetails",
+         data: {exit_type:exit_type,exit_date:exit_date,exit_product_id:exit_product_id},
+         beforeSend: function(xhr){
+				xhr.setRequestHeader(header,token);
+		  },
+         success: function(data){
+        	 $("#exit_table tbody").empty();
+        	 for (let i = 0; i < data.length; i++) {
+                 var filteredProductObj = data[i];
+                 
+                 // For example, append to a div
+                 $('#exit_data').append(
+                         '<tr>' +
+                         '<td>' + filteredProductObj.prod_id + '</td>' +
+                         '<td>' + filteredProductObj.prod_name + '</td>' +
+                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+                         '<td>' + filteredProductObj.challan_no + '</td>' +
+                         '<td>' + filteredProductObj.challan_date + '</td>' +
+                         '<td>' + filteredProductObj.challan_type + '</td>' +
+                         '</tr>'
+                     );
+                     $('#view_exit_data').show();
+             }
+         }                                                                    
+   });
+}
+
+
+
 </script>
 </head>
 <body>
@@ -392,7 +801,7 @@ body, html {
         <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#" title="Gautam Constructions"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
+        <a class="navbar-brand" href="#" title="Gautam Construction"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -408,47 +817,50 @@ body, html {
                 <a class="nav-link" href="#myAlert" data-toggle="collapse"><span th:text="${office_name}"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/InventoryManagement/logout">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
 </nav><br>
 <div class="container-fluid" id="main">
     <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
-            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
-                <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
-                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
-                       <li id="link_view_product" class="nav-item"><a class="nav-link" href="#">View Product Details</a></li>
-                       <li id="link_view_staff" class="nav-item"><a class="nav-link" href="#">View Employee Details</a></li>
-                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Sub-Contractor Details</a></li>
-                       <li id="link_view_vehicle" class="nav-item"><a class="nav-link" href="#">View Vehicle Details</a></li>
-                       <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
-                       <li id="link_view_Challan" class="nav-item"><a class="nav-link" href="#">View All Challan(s)</a></li>
-                       <li id="link_view_fuel_details" class="nav-item"><a class="nav-link" href="#">View Fuel Details</a></li>
-                    </ul>
-                </li>
-                <li id="link_admin" class="nav-item"><a class="nav-link" href="#">Create Admin</a></li>
-                <li id="link_sub_admin" class="nav-item"><a class="nav-link" href="#">Create Sub-Admin</a></li>
-                <li id="link_add_products" class="nav-item"><a class="nav-link" href="#">Add Products</a></li>
-                <li id="link_add_staffs" class="nav-item"><a class="nav-link" href="#">Add Employees</a></li>
-                <li id="link_add_contractors" class="nav-item"><a class="nav-link" href="#">Add Sub-Contractors</a></li>
-                <li id="link_add_vehicles" class="nav-item"><a class="nav-link" href="#">Add Vehicles</a></li>
-                <li id="link_add_locations" class="nav-item"><a class="nav-link" href="#">Add Locations</a></li>
-                <li id="link_analytics" class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
-                <li id="link_export" class="nav-item"><a class="nav-link" href="#">Export</a></li>
-            </ul>
-        </div>
+    
+    		<div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
+	            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
+	                <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
+	                <li id="link_prod_report" class="nav-item"><a class="nav-link" href="#">Product Report</a></li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
+	                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
+	                       <li id="link_view_product" class="nav-item"><a class="nav-link" href="#">View Product Details</a></li>
+	                       <li id="link_view_staff" class="nav-item"><a class="nav-link" href="#">View Employee Details</a></li>
+	                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Sub-Contractor Details</a></li>
+	                       <li id="link_view_vehicle" class="nav-item"><a class="nav-link" href="#">View Vehicle Details</a></li>
+	                       <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
+	                       <li id="link_view_Challan" class="nav-item"><a class="nav-link" href="#">View All Challan(s)</a></li>
+	                       <li id="link_view_fuel_details" class="nav-item"><a class="nav-link" href="#">View Fuel Details</a></li>
+	                    </ul>
+	                </li>
+	                <li id="link_admin" class="nav-item"><a class="nav-link" href="#">Create Admin</a></li>
+	                <li id="link_sub_admin" class="nav-item"><a class="nav-link" href="#">Create Sub-Admin</a></li>
+	                <li id="link_add_products" class="nav-item"><a class="nav-link" href="#">Add Products</a></li>
+	                <li id="link_add_staffs" class="nav-item"><a class="nav-link" href="#">Add Employees</a></li>
+	                <li id="link_add_contractors" class="nav-item"><a class="nav-link" href="#">Add Sub-Contractors</a></li>
+	                <li id="link_add_vehicles" class="nav-item"><a class="nav-link" href="#">Add Vehicles</a></li>
+	                <li id="link_add_locations" class="nav-item"><a class="nav-link" href="#">Add Locations</a></li>
+	                <li id="link_analytics" class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+	                <li id="link_export" class="nav-item"><a class="nav-link" href="#">Export</a></li>
+	            </ul>
+	        </div>
+    	
+        
         <!--/col-->
 
         <div id="dashboard" class="col main pt-5 mt-3">
             <h1 class="display-4 d-none d-sm-block">
-            	Shree Gautam Construction Co Ltd.
+            	Shree Gautam Construction Co Ltd.(Noonmati Flyover)
             </h1>
-            <p class="lead d-none d-sm-block">Insight into the over all general store inventory of Shree Gautam Constructions</p>
-
+            
             <div class="alert alert-warning fade collapse" role="alert" id="myAlert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -558,8 +970,9 @@ body, html {
                                     <th>Product Id</th>
                                     <th>Product Name</th>
                                     <th>Product Unit</th>
-                                    <th>Quantity(in store)</th>
+                                    <th>Total Balance Quantity</th>
                                     <th>Type</th>
+                                    <th>Material</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -569,6 +982,7 @@ body, html {
                             		<td th:text="${pr.unit}"></td>
                             		<td th:text="${pr.quantity}"></td>
                             		<td th:text="${pr.type}"></td>
+                            		<td th:text="${pr.material}"></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -579,6 +993,126 @@ body, html {
             
 
         </div>
+        
+        
+        <div id="prod_report" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card">
+				    <div class="card-header">
+				      	<h3>Filter Products &nbsp&nbsp&nbsp&nbsp&nbsp</h3>
+				    </div>
+			      <div class="card-body">
+			        	<ul class="nav nav-tabs nav-justified" role="tablist">
+						    <li class="nav-item">
+						      <a class="nav-link active" data-toggle="tab" href="#by_entry" role="tab" aria-controls="by_entry" aria-selected="true">By Entry</a>
+						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" href="#by_exit" role="tab" aria-controls="by_exit" aria-selected="false">By Exit</a>
+						    </li>
+						</ul>
+						
+						<div class="tab-content mt-3">
+					          <div class="tab-pane active" id="by_entry" role="tabpanel" aria-labelledby="entry-tab">
+					                <h6>Filter Product Entry</h6>
+					                <div class="row">
+					                	<div class="col-md-3">
+					                		<label for="entry_type">Select Entry Type:</label>
+					                		<select class="form-control select2" name="entry_type" id="entry_type" style="width:100%;">
+												    <option value="">select option</option>
+												    <option value="by_challan">Entry By Challan</option>
+												    <option value="by_ghy_office">Entry By Purchase from Ghy. Office</option>
+												    <option value="by_local_purchase">Entry By local Purchase</option>
+											 </select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="entry_date">Select Entry Date:</label>
+											<input type="date" id="entry_date" name="entry_date" placeholder="Entry Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="entry_product_id">Select Product:</label>
+					                		<select class="form-control select2" name="entry_product_id" id="entry_product_id" style="width:100%;">
+												    <option value="">select option</option>
+												    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+											</select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<br><button type="button" id="search_entry" class="btn btn-info" onclick="searchEntry()">Search</button>
+					                	</div>
+					                </div>
+					                <div id="view_entry_data" style="display:none;">
+					          			<table id="entry_table" class="table table-striped">
+											<thead style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No/Invoice No</th>
+													<th>Entry Date</th>
+													<th>Entry Type</th>
+												</tr>
+											</thead>
+										    <tbody id="entry_data">
+										      
+										    </tbody>
+								  		</table>
+					          		</div>
+					                
+					          </div>
+					          <div class="tab-pane" id="by_exit" role="tabpanel" aria-labelledby="exit-tab">
+					            	<h6>Filter Product Exit</h6>
+					            	<div class="row">
+					                	<div class="col-md-3">
+					                		<label for="exit_type">Select Exit Type:</label>
+					                		<select class="form-control select2" name="exit_type" id="exit_type" style="width:100%;">
+												    <option value="">select option</option>
+												    <option value="by_challan">Exit By Challan</option>
+												    <option value="by_staff">Exit By Employee</option>
+												    <option value="by_contractor">Exit By Sub-Contractor</option>
+												    <option value="by_misc">Exit By Miscellaneous</option>
+											 </select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="exit_date">Select Exit Date:</label>
+											<input type="date" id="exit_date" name="exit_date" placeholder="Exit Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="exit_product_id">Select Product:</label>
+					                		<select class="form-control select2" name="exit_product_id" id="exit_product_id" style="width:100%;">
+												    <option value="">select option</option>
+												    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+											 </select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<br><button type="button" id="search_exit" class="btn btn-info" onclick="searchExit()">Search</button>
+					                	</div>
+					                </div>
+					                <div id="view_exit_data" style="display:none;">
+					          			<table id="exit_table" class="table table-striped">
+											<thead style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No</th>
+													<th>Entry Date</th>
+													<th>Entry Type</th>
+												</tr>
+											</thead>
+										    <tbody id="exit_data">
+										      
+										    </tbody>
+								  		</table>
+					          		</div>
+					          </div>
+					          
+				        </div>
+			      </div>
+				
+			</div><br>
+        </div>
+        
+        
         <div id="addAdmin" style="display:none;" class="col main pt-5 mt-3">
         	<div class="card card-outline-secondary">
 	              <div class="card-header">
@@ -587,12 +1121,16 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addAdmin}" method="post" class="form" role="form">
 	                  <div class="form-group">
-	                    <label for="sub_admin_name">Name</label> 
+	                    <label for="sub_admin_name">Name<span><b>*</b></span></label> 
 											<input class="form-control" id="name_sub_admin" name="name_sub_admin" placeholder="Sub Admin name" type="text">
 	                  </div>
 	                  <div class="form-group">
-	                    <label for="user_id_sub_admin">UserId</label> 
-											<input class="form-control" id="user_id_sub_admin" name="user_id_sub_admin" placeholder="Email" type="text">
+	                    <label for="user_id_sub_admin">UserId<span><b>*</b></span></label> 
+											<input class="form-control" id="user_id_sub_admin" name="user_id_sub_admin" placeholder="User Id" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="user_id_sub_admin">Password<span><b>*</b></span></label> 
+											<input class="form-control" id="password_sub_admin" name="password_sub_admin" placeholder="Password" type="password">
 	                  </div>
 	                  <div class="form-group">
 	                    <button class="btn btn-success btn-lg float-right" type="submit">Register</button>
@@ -611,12 +1149,14 @@ body, html {
 	              			<tr>
 	              				<th>Name</th>
 	              				<th>User ID</th>
+	              				<th></th>
 	              			</tr>
 	              		</thead>
 	              		<tbody>
 	              			<tr th:each="admin:${admin_user_list}">
 	              				<td th:text="${admin.name}"></td>
 	              				<td th:text="${admin.user_id}"></td>
+	              				<td><a class="btn_admin_del" th:data-id="${admin.user_id}" th:onclick="deleteUser(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
 	              			</tr>
 	              		</tbody>
 	              	</table>
@@ -633,12 +1173,16 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addSubAdmin}" method="post" class="form" role="form">
 	                  <div class="form-group">
-	                    <label for="name_sub_admin">Name</label> 
+	                    <label for="name_sub_admin">Name<span><b>*</b></span></label> 
 											<input class="form-control" id="name_sub_admin" name="name_sub_admin" placeholder="Sub Admin name" type="text">
 	                  </div>
 	                  <div class="form-group">
-	                    <label for="user_id_sub_admin">UserId</label> 
-											<input class="form-control" id="user_id_sub_admin" name="user_id_sub_admin" placeholder="Email" type="text">
+	                    <label for="user_id_sub_admin">UserId<span><b>*</b></span></label> 
+											<input class="form-control" id="user_id_sub_admin" name="user_id_sub_admin" placeholder="User Id" type="text">
+	                  </div>
+	                  <div class="form-group">
+	                    <label for="user_id_sub_admin">Password<span><b>*</b></span></label> 
+											<input class="form-control" id="password_sub_admin" name="password_sub_admin" placeholder="Password" type="password">
 	                  </div>
 	                  <div class="form-group">
 	                    <button class="btn btn-success btn-lg float-right" type="submit">Register</button>
@@ -657,12 +1201,14 @@ body, html {
 	              			<tr>
 	              				<th>Name</th>
 	              				<th>User ID</th>
+	              				<th></th>
 	              			</tr>
 	              		</thead>
 	              		<tbody>
 	              			<tr th:each="sub_admin:${sub_admin_user_list}">
 	              				<td th:text="${sub_admin.name}"></td>
 	              				<td th:text="${sub_admin.user_id}"></td>
+	              				<td><a class="btn_sub_admin_del" th:data-id="${sub_admin.user_id}" th:onclick="deleteUser(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
 	              			</tr>
 	              		</tbody>
 	              	</table>
@@ -679,25 +1225,25 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addProduct}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_name" name="product_name" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_unit" name="product_unit" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Refundable Type</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Refundable Type<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <select id="product_type" name="product_type" class="form-control" size="0">
 	                        <option value="refundable">
@@ -707,6 +1253,12 @@ body, html {
 	                          Non-Refundable
 	                        </option>
 	                      </select>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Material<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <input id="product_material" name="product_material" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -728,19 +1280,19 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addStaff}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="staff_name" name="staff_name" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Staff Designation</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Designation<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="staff_designation" name="staff_designation" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Employee Code</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Employee Code<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="emp_code" name="emp_code" type="text" value="">
 	                    </div>
@@ -764,19 +1316,19 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addContractor}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="contractor_name" name="contractor_name" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Department</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Department<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="contractor_department" name="contractor_department" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Address</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Address<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <textarea class="form-control" id="contractor_address" name="contractor_address" rows="6"></textarea>
 	                    </div>
@@ -800,67 +1352,73 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addVehicle}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="vehicle_no" name="vehicle_no" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Driver Lisence No.</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle Type<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <input class="form-control" id="vehicle_type" name="vehicle_type" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Driver Lisence No.<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="driver_lisence_no" name="driver_lisence_no" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Tyre No.</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Tyre No.<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="tyre_no" name="tyre_no" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Battery No.</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Battery No.<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="battery_no" name="battery_no" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Pollution From Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Pollution From Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="pollution_from" name="pollution_from" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Pollution Expiry Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Pollution Expiry Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="pollution_expiry" name="pollution_expiry" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Fitness From Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Fitness From Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="fitness_from" name="fitness_from" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Fitness Expiry Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Fitness Expiry Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="fitness_expiry" name="fitness_expiry" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Insurance From Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Insurance From Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="insurance_from" name="insurance_from" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Insurance Expiry Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Insurance Expiry Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="insurance_expiry" name="insurance_expiry" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Last Servicing Date(By Kms / BY Hrs)</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Last Servicing Date(By Kms / BY Hrs)<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="last_servicing" name="last_servicing" type="date" value="">
 	                    </div>
@@ -884,7 +1442,7 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addLocation}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Location Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Location Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input class="form-control" id="location_name" name="location_name" type="text" value="">
 	                    </div>
@@ -903,7 +1461,7 @@ body, html {
         
         <div id="viewProducts" style="display:none;" class="col main pt-5 mt-3">
                 
-                <h3 class="mb-0">Products Details</h3>
+            <h3 class="mb-0">Products Details</h3>
 
             <div class="row my-4">
                 <div class="col-lg-3 col-md-4">
@@ -922,14 +1480,16 @@ body, html {
                 </div>
                 <div class="col-lg-9 col-md-8">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table id="product_table" class="table table-striped">
                             <thead class="thead-inverse">
                                 <tr>
                                     <th>Product Id</th>
                                     <th>Product Name</th>
                                     <th>Product Unit</th>
+                                    <th>Total Balance Quantity</th>
                                     <th>Type</th>
-                                    <th>Quantity(in store)</th>
+                                    <th>Material</th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -940,7 +1500,9 @@ body, html {
                             		<td th:text="${pr.unit}"></td>
                             		<td th:text="${pr.quantity}"></td>
                             		<td th:text="${pr.type}"></td>
-                            		<td><a th:href="@{/editProduct(prod_id=${pr.prod_id})}"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            		<td th:text="${pr.material}"></td>
+                            		<td><a th:href="@{/editProduct(prod_id=${pr.prod_id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${pr.prod_id}" th:onclick="deleteProduct(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -950,7 +1512,7 @@ body, html {
         </div>
         <div id="viewStaffs" style="display:none;" class="col main pt-5 mt-3">
                 
-                <h3 class="mb-0">Employee Details</h3>
+            <h3 class="mb-0">Employee Details</h3>
 
             <div class="row my-4">
                 <div class="col-lg-3 col-md-4">
@@ -969,6 +1531,8 @@ body, html {
                                     <th>Employee Code</th>
                                     <th>Employee Name</th>
                                     <th>Employee Designation</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -976,6 +1540,8 @@ body, html {
                             		<td th:text="${sr.emp_code}"></td>
                             		<td th:text="${sr.name}"></td>
                             		<td th:text="${sr.designation}"></td>
+                            		<td><a th:href="@{/editStaff(staff_id=${sr.id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${sr.id}" th:onclick="deleteStaff(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -985,7 +1551,7 @@ body, html {
         </div>
         <div id="viewContractors" style="display:none;" class="col main pt-5 mt-3">
                 
-                <h3 class="mb-0">Sub-Contractor Details</h3>
+            <h3 class="mb-0">Sub-Contractor Details</h3>
 
             <div class="row my-4">
                 <div class="col-lg-3 col-md-4">
@@ -1005,6 +1571,8 @@ body, html {
                                     <th>Contractor Name</th>
                                     <th>Contractor Department</th>
                                     <th>Contractor Address</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1013,6 +1581,8 @@ body, html {
                             		<td th:text="${cr.name}"></td>
                             		<td th:text="${cr.dept}"></td>
                             		<td th:text="${cr.address}"></td>
+                            		<td><a th:href="@{/editContractor(contractor_id=${cr.contractor_id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${cr.contractor_id}" th:onclick="deleteContractor(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -1039,6 +1609,7 @@ body, html {
                             <thead class="thead-inverse">
                                 <tr>
                                     <th>Vehicle No.</th>
+                                    <th>Vehicle Type.</th>
                                     <th>Driver Lisence No.</th>
                                     <th>Tyre No.</th>
                                     <th>Battery No.</th>
@@ -1049,11 +1620,14 @@ body, html {
                                     <th>Insurance From Date</th>
                                     <th>Insurance Expiry Date</th>
                                     <th>Last Servicing Date</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                             	<tr th:each="vr : ${vehicleList}">
                             		<td th:text="${vr.vehicle_no}"></td>
+                            		<td th:text="${vr.vehicle_type}"></td>
                             		<td th:text="${vr.driver_lisence_no}"></td>
                             		<td th:text="${vr.tyre_no}"></td>
                             		<td th:text="${vr.battery_no}"></td>
@@ -1064,6 +1638,8 @@ body, html {
                             		<td th:text="${vr.insurance_from_date}"></td>
                             		<td th:text="${vr.insurance_end_date}"></td>
                             		<td th:text="${vr.last_servicing_date}"></td>
+                            		<td><a th:href="@{/editVehicle(vehicle_id=${vr.id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${vr.id}" th:onclick="deleteVehicle(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -1091,12 +1667,16 @@ body, html {
                                 <tr>
                                     <th>Location Id.</th>
                                     <th>Location Name.</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                             	<tr th:each="lr : ${locationList}">
                             		<td th:text="${lr.id}"></td>
                             		<td th:text="${lr.location_name}"></td>
+                            		<td><a th:href="@{/editLocation(location_id=${lr.id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${lr.id}" th:onclick="deleteLocation(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -1135,11 +1715,13 @@ body, html {
 				                            <thead class="thead-inverse">
 				                                <tr>
 				                                    <th>Fuel Type</th>
-				                                    <th>Quantity</th>
+				                                    <th>Issue Quantity</th>
 				                                    <th>Invoice No</th>
 				                                    <th>Invoice Date</th>
 				                                    <th>Vendor Name</th>
 				                                    <th>Vehicle No.</th>
+				                                    <th></th>
+				                                    <th></th>
 				                                </tr>
 				                            </thead>
 				                            <tbody>
@@ -1150,6 +1732,69 @@ body, html {
 				                            		<td th:text="${fer.invoice_date}"></td>
 				                            		<td th:text="${fer.vendor_name}"></td>
 				                            		<td th:text="${fer.vehicle_no}"></td>
+				                            		<td><a th:href="@{/editFuelEntry(fuel_id=${fer.id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            						<td><a class="btn_admin_del" th:data-id="${fer.id}" th:onclick="deleteFuelEntry(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
+				                            	</tr>
+				                            </tbody>
+				                        </table>
+				                    </div>
+				                </div>
+				            </div>
+				      </div>
+				    </div>
+				  </div><br>
+				  <div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitFuel">
+				      	View Fuel Exit&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseExitFuel" class="collapse">
+				      <div class="card-body">
+				        	<div class="row my-4">
+				                <div class="col-lg-3 col-md-4">
+				                    <div class="card">
+				                        <div class="card-body">
+				                            <h4 class="card-title">Total Petrol Availability</h4>
+				                            <p class="card-text" style="font-size:50px;"><b th:text="${petrol_quantity}"></b></p>
+				                        </div>
+				                    </div>
+				                    <div class="card card-inverse bg-inverse mt-3">
+				                        <div class="card-body">
+				                            <h3 class="card-title">Total Diesel Availability</h3>
+				                            <p class="card-text" style="font-size:50px;	"><b th:text="${diesel_quantity}"></b></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-lg-9 col-md-8">
+				                    <div class="table-responsive">
+				                        <table class="table table-striped">
+				                            <thead class="thead-inverse">
+				                                <tr>
+				                                	<th>Fuel Exit Type</th>
+				                                    <th>Fuel Type</th>
+				                                    <th>Vehicle No.</th>
+				                                    <th>Opening Reading</th>
+				                                    <th>Mileage</th>
+				                                    <th>Fuel Issue</th>
+				                                    <th>Issue Date</th>
+				                                    <th>Vehicle Type</th>
+				                                    <th></th>
+				                                    <th></th>
+				                                </tr>
+				                            </thead>
+				                            <tbody>
+				                            	<tr th:each="fexr : ${fuelExitList}">
+				                            		<td th:text="${fexr.exit_type}"></td>
+				                            		<td th:text="${fexr.fuel_type}"></td>
+				                            		<td th:text="${fexr.vehicle_no}"></td>
+				                            		<td th:text="${fexr.opening_reading}"></td>
+				                            		<td th:text="${fexr.mileage}"></td>
+				                            		<td th:text="${fexr.fuel_issue}"></td>
+				                            		<td th:text="${fexr.issue_date}"></td>
+				                            		<td th:text="${fexr.vehicle_type}"></td>
+				                            		<td><a th:href="@{/editFuelExit(fuel_id=${fexr.id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
+                            						<td><a class="btn_admin_del" th:data-id="${fexr.id}" th:onclick="deleteFuelExit(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
 				                            	</tr>
 				                            </tbody>
 				                        </table>
@@ -1173,16 +1818,22 @@ body, html {
 				        	<table class="table table-striped">
 								<thead style="background-color:#5c6499;color:#ffffff;">
 									<tr>
+										<th>Bill No</th>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
 							      <tr th:each="challan: ${briefProdAddChallanList}">
+							      	<td><p th:text="${challan.bill_no}"></p></td>
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdAddChallan(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_add_by_challan')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1200,16 +1851,22 @@ body, html {
 				        	<table class="table table-striped">
 								<thead style="background-color:#5c6499;color:#ffffff;">
 									<tr>
+										<th>Bill No</th>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
 							      <tr th:each="challan: ${briefProdAddGhyOfficeList}">
+							      	<td><p th:text="${challan.bill_no}"></p></td>
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdAddGhyOffice(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_add_by_ghy_office')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1227,16 +1884,23 @@ body, html {
 				        	<table class="table table-striped">
 								<thead style="background-color:#5c6499;color:#ffffff;">
 									<tr>
+										<th>Bill No</th>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
 							      <tr th:each="challan: ${briefProdAddLocalOfficeList}">
+							      	<td><p th:text="${challan.bill_no}"></p></td>
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdAddLocalOffice(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_add_by_local_office')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
+							     
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1256,7 +1920,10 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1264,6 +1931,10 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitChallan(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byChallan')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_exit_by_challan')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
+							     
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1283,7 +1954,10 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1291,6 +1965,10 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitBySubContractor(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byContractor')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_exit_by_sub_contractor')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
+							     
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1310,7 +1988,10 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1318,6 +1999,10 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitByStaff(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byStaff')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_exit_by_staff')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
+							     
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1337,7 +2022,10 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1345,6 +2033,10 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitByMisc(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+                            		<td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byMisc')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
+                            		<td><a class="btn_admin_del" th:data-id="${challan.challan_no}" th:onclick="deleteChallan(this.getAttribute('data-id'),'prod_exit_by_misc')"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
+							     
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1369,18 +2061,17 @@ body, html {
                 </button>
             </div>
             <div class="modal-body">
-                <p>This is a dashboard layout for Bootstrap 4. This is an example of the Modal component which you can use to show content.
-                Any content can be placed inside the modal and it can use the Bootstrap grid classes.</p>
-                <p>
-                    <a href="https://www.codeply.com/go/KrUO8QpyXP" target="_ext">Grab the code at Codeply</a>
-                </p>
+                <p>Are you sure, you want to delete this entry?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
+                <button type="button" id="modal_close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="modal_submit" class="btn btn-primary-outline" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $('.select2').select2();
+</script>
 </body>
 </html>

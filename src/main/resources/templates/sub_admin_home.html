@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="_csrf" id="_csrf" th:content="${_csrf.token}" />
         <meta name="_csrf_header" id="_csrf_header" th:content="${_csrf.headerName}" />
-<title>Shri Gautam Constructions - Inventory</title>
+<title>Shri Gautam Construction - Inventory</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
@@ -24,6 +24,28 @@
 			 src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		
+<!-- 		
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+-->
+<!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- DataTables JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- Buttons extension CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <!-- Buttons extension JS -->
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <!-- JSZip (required for Excel export) -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <!-- HTML5 export buttons -->
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+		
 <script th:inline="javascript">
     /* variable used by index.js */
     var prodList = [[${productList}]];
@@ -31,6 +53,8 @@
     var vehicleList = [[${vehicleList}]];
     var contractorList = [[${contractorList}]];
     var staffList = [[${staffList}]];
+    
+    
 </script>
 <script th:inline="javascript" th:src="@{/js/sub_admin.js}"></script> 
 <style>
@@ -112,20 +136,71 @@ body, html {
     -ms-transform: rotate(-44deg);
     transform: rotate(-44deg);
 }
-
+         
 </style>
 <script th:inline="javascript">
 	$(document).ready(function(){
 		
+		$('.table').DataTable();
 		
-		$('#link_dashboard').click(function(e){
-			$('#dashboard').show();
+		$('#product_table').DataTable().destroy(); 
+		
+		// Add Excel export button only to table1
+	    $('#product_table').DataTable({
+	        dom: 'Bfrtip',
+	        buttons: [
+	            {
+	                extend: 'excelHtml5',
+	                title: 'Product List'
+	            }
+	        ]
+	    });
+		
+		var fuel_stockout = [[${fuel_stockout}]];
+		
+		if(fuel_stockout==1){
+			alert("Not Sufficient Stock to Issue Fuel");
+		}
+		$('#link_prod_report').click(function(e){
+			$('#dashboard').hide();
+			$('#prod_report').show();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
+			
+			//exit product
+			$('#addProductExitByChallan').hide();
+			$('#addProductExitByContractor').hide();
+			$('#addProductExitByStaff').hide();
+			$('#addProductExitByMiscellaneous').hide();
+			
+			//view entries
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			
+			$(".nav-item .active").removeClass('active');
+		    $(this).parent().addClass('active'); 
+		    e.preventDefault();
+		});
+		$('#link_dashboard').click(function(e){
+			$('#dashboard').show();
+			$('#prod_report').hide();
+			//add product
+			$('#addProductEntryByChallan').hide();
+			$('#addProductEntryByGhyOffice').hide();
+			$('#addProductEntryBylocalOffice').hide();
+			//add fuel
+			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -149,12 +224,15 @@ body, html {
 		
 		$('#link_prod_add_by_challan').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').show();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -172,12 +250,15 @@ body, html {
 		
 		$('#link_prod_add_by_ghy_office').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').show();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -195,12 +276,15 @@ body, html {
 		
 		$('#link_prod_add_by_local_office').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').show();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -220,12 +304,15 @@ body, html {
 		
 		$('#link_prod_exit_by_challan').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').show();
@@ -242,12 +329,15 @@ body, html {
 		});
 		$('#link_prod_exit_by_contractor').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -264,12 +354,15 @@ body, html {
 		});
 		$('#link_prod_exit_by_staff').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -286,12 +379,15 @@ body, html {
 		});
 		$('#link_prod_exit_by_miscellaneous').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -310,12 +406,15 @@ body, html {
 		//Fuel add 
 		$('#link_fuel_entry').click(function(){
 			$('#dashboard').hide();
+			$('#prod_report').hide();
 			//add product
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
 			//add fuel
 			$('#addFuelEntry').show();
+			//exit fuel
+			$('#addFuelExit').hide();
 			
 			//exit product
 			$('#addProductExitByChallan').hide();
@@ -333,13 +432,36 @@ body, html {
 		
 		//fuel exit
 		$('#link_fuel_exit').click(function(){
-			//to be added
+			$('#dashboard').hide();
+			$('#prod_report').hide();
+			//add product
+			$('#addProductEntryByChallan').hide();
+			$('#addProductEntryByGhyOffice').hide();
+			$('#addProductEntryBylocalOffice').hide();
+			//add fuel
+			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').show();
+			
+			//exit product
+			$('#addProductExitByChallan').hide();
+			$('#addProductExitByContractor').hide();
+			$('#addProductExitByStaff').hide();
+			$('#addProductExitByMiscellaneous').hide();
+			
+			//view entries
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
 		});
 		
 		
 		//View Items
 		
 		$('#link_view_product').click(function(){
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -355,6 +477,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_staff').click(function(){
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -370,6 +493,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_contractor').click(function(){
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -385,6 +509,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_vehicle').click(function(){
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -400,6 +525,7 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		$('#link_view_location').click(function(){
+			$('#prod_report').hide();
 			$('#addSubAdmin').hide();
 			$('#dashboard').hide();
 			$('#addProduct').hide();
@@ -668,6 +794,7 @@ body, html {
 
 	
 	function checkAvailableQuantity(product_id,product_quantity){
+		
 		var status = "failed";
 		var token = $('#_csrf').attr("content");
 		 var header = $('#_csrf_header').attr("content");
@@ -693,6 +820,109 @@ body, html {
 		   });
 		  return status;
 	}
+	
+	function searchEntry(){
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 
+		 var entry_type = $('#entry_type').val();
+		 var entry_date = $('#entry_date').val();
+		 var entry_product_id = $('#entry_product_id').val();
+
+		 $.ajax({                                                                                                           
+			 type: "GET",                                                           
+			 async: false,
+             url: "/getProductEntryDetails",
+             data: {entry_type:entry_type,entry_date:entry_date,entry_product_id:entry_product_id},
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){
+            	 /*
+            	 var table = $('#entry_table').DataTable({
+                     // Initial setup options
+                 });
+            	 */
+            	 //table.clear();
+            	 $("#entry_table tbody").empty();
+            	 for (let i = 0; i < data.length; i++) {
+                     var filteredProductObj = data[i];
+                     
+                     /*
+                     table.row.add([
+                    	 filteredProductObj.prod_id,
+                    	 filteredProductObj.prod_name,
+                    	 filteredProductObj.prod_unit,
+                    	 filteredProductObj.prod_quantity,
+                    	 filteredProductObj.challan_no,
+                         filteredProductObj.challan_date,
+                         filteredProductObj.challan_type
+                     ]);
+                     
+                     table.draw(); 
+                     */
+                     
+                    
+                     // For example, append to a div
+                     $('#entry_data').append(
+                         '<tr>' +
+                         '<td>' + filteredProductObj.prod_id + '</td>' +
+                         '<td>' + filteredProductObj.prod_name + '</td>' +
+                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+                         '<td>' + filteredProductObj.challan_no + '</td>' +
+                         '<td>' + filteredProductObj.challan_date + '</td>' +
+                         '<td>' + filteredProductObj.challan_type + '</td>' +
+                         '</tr>'
+                     );
+                   
+                     
+                     $('#view_entry_data').show();
+                 }
+             }                                                                    
+	   });
+	}
+	
+	function searchExit(){
+		
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 
+		 var exit_type = $('#exit_type').val();
+		 var exit_date = $('#exit_date').val();
+		 var exit_product_id = $('#exit_product_id').val();
+		 
+		 $.ajax({                                                                                                           
+			 type: "GET",                                                           
+			 async: false,
+             url: "/getProductExitDetails",
+             data: {exit_type:exit_type,exit_date:exit_date,exit_product_id:exit_product_id},
+             beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+             success: function(data){
+            	 $("#exit_table tbody").empty();
+            	 for (let i = 0; i < data.length; i++) {
+                     var filteredProductObj = data[i];
+                     
+                     // For example, append to a div
+                     $('#exit_data').append(
+                             '<tr>' +
+                             '<td>' + filteredProductObj.prod_id + '</td>' +
+                             '<td>' + filteredProductObj.prod_name + '</td>' +
+                             '<td>' + filteredProductObj.prod_unit + '</td>' +
+                             '<td>' + filteredProductObj.prod_quantity + '</td>' +
+                             '<td>' + filteredProductObj.challan_no + '</td>' +
+                             '<td>' + filteredProductObj.challan_date + '</td>' +
+                             '<td>' + filteredProductObj.challan_type + '</td>' +
+                             '</tr>'
+                         );
+                         $('#view_exit_data').show();
+                 }
+             }                                                                    
+	   });
+	}
+	
 </script>
 </head>
 <body>
@@ -701,7 +931,7 @@ body, html {
         <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#" title="Gautam Constructions"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
+        <a class="navbar-brand" href="#" title="Gautam Construction"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
         <span class="navbar-toggler-icon"></span>
@@ -727,6 +957,7 @@ body, html {
         <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
             <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
                 <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
+                <li id="link_prod_report" class="nav-item"><a class="nav-link" href="#">Product Report</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
                     <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
@@ -762,10 +993,9 @@ body, html {
 
         <div id="dashboard" class="col main pt-5 mt-3">
             <h1 class="display-4 d-none d-sm-block">
-            	Shree Gautam Construction Co Ltd.
+            	Shree Gautam Construction Co Ltd.(Noonmati Flyover)
             </h1>
-            <p class="lead d-none d-sm-block">Insight into the over all general store inventory of Shree Gautam Constructions</p>
-
+            
             <div class="alert alert-warning fade collapse" role="alert" id="myAlert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
@@ -875,8 +1105,9 @@ body, html {
                                     <th>Product Id</th>
                                     <th>Product Name</th>
                                     <th>Product Unit</th>
-                                    <th>Quantity(in store)</th>                                    
+                                    <th>Total Balance Quantity</th>                                    
                                     <th>Type</th>
+                                    <th>Material</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -886,6 +1117,7 @@ body, html {
                             		<td th:text="${pr.unit}"></td>
                             		<td th:text="${pr.quantity}"></td>
                             		<td th:text="${pr.type}"></td>
+                            		<td th:text="${pr.material}"></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -894,6 +1126,122 @@ body, html {
             </div>
             <!--/row-->
                
+        </div>
+        <div id="prod_report" style="display:none;" class="col main pt-5 mt-3">
+        	<div class="card">
+				    <div class="card-header">
+				      	<h3>Filter Products &nbsp&nbsp&nbsp&nbsp&nbsp</h3>
+				    </div>
+			      <div class="card-body">
+			        	<ul class="nav nav-tabs nav-justified" role="tablist">
+						    <li class="nav-item">
+						      <a class="nav-link active" data-toggle="tab" href="#by_entry" role="tab" aria-controls="by_entry" aria-selected="true">By Entry</a>
+						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" href="#by_exit" role="tab" aria-controls="by_exit" aria-selected="false">By Exit</a>
+						    </li>
+						</ul>
+						
+						<div class="tab-content mt-3">
+					          <div class="tab-pane active" id="by_entry" role="tabpanel" aria-labelledby="entry-tab">
+					                <h6>Filter Product Entry</h6>
+					                <div class="row">
+					                	<div class="col-md-3">
+					                		<label for="entry_type">Select Entry Type:</label>
+					                		<select class="form-control select2" name="entry_type" id="entry_type" style="width:100%;">
+												    <option value="">select option</option>
+												    <option value="by_challan">Entry By Challan</option>
+												    <option value="by_ghy_office">Entry By Purchase from Ghy. Office</option>
+												    <option value="by_local_purchase">Entry By local Purchase</option>
+											 </select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="entry_date">Select Entry Date:</label>
+											<input type="date" id="entry_date" name="entry_date" placeholder="Entry Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="entry_product_id">Select Product:</label>
+					                		<select class="form-control select2" name="entry_product_id" id="entry_product_id" style="width:100%;">
+												    <option value="">select option</option>
+												    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+											</select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<br><button type="button" id="search_entry" class="btn btn-info" onclick="searchEntry()">Search</button>
+					                	</div>
+					                </div>
+					                <div id="view_entry_data" style="display:none;">
+					          			<table id="entry_table" class="table table-striped">
+											<thead style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No/Invoice No</th>
+													<th>Entry Date</th>
+													<th>Entry Type</th>
+												</tr>
+											</thead>
+										    <tbody id="entry_data">
+										      
+										    </tbody>
+								  		</table>
+					          		</div>
+					                
+					          </div>
+					          <div class="tab-pane" id="by_exit" role="tabpanel" aria-labelledby="exit-tab">
+					            	<h6>Filter Product Exit</h6>
+					            	<div class="row">
+					                	<div class="col-md-3">
+					                		<label for="exit_type">Select Exit Type:</label>
+					                		<select class="form-control select2" name="exit_type" id="exit_type" style="width:100%;">
+												    <option value="">select option</option>
+												    <option value="by_challan">Exit By Challan</option>
+												    <option value="by_staff">Exit By Employee</option>
+												    <option value="by_contractor">Exit By Sub-Contractor</option>
+												    <option value="by_misc">Exit By Miscellaneous</option>
+											 </select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="exit_date">Select Exit Date:</label>
+											<input type="date" id="exit_date" name="exit_date" placeholder="Exit Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="exit_product_id">Select Product:</label>
+					                		<select class="form-control select2" name="exit_product_id" id="exit_product_id" style="width:100%;">
+												    <option value="">select option</option>
+												    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+											 </select>
+					                	</div>
+					                	<div class="col-md-3">
+					                		<br><button type="button" id="search_exit" class="btn btn-info" onclick="searchExit()">Search</button>
+					                	</div>
+					                </div>
+					                <div id="view_exit_data" style="display:none;">
+					          			<table id="exit_table" class="table table-striped">
+											<thead style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No</th>
+													<th>Entry Date</th>
+													<th>Entry Type</th>
+												</tr>
+											</thead>
+										    <tbody id="exit_data">
+										      
+										    </tbody>
+								  		</table>
+					          		</div>
+					          </div>
+					          
+				        </div>
+			      </div>
+				
+			</div><br>
         </div>
         <div id="addProductEntryByChallan" style="display:none;" class="col main pt-5 mt-3">
         		<div class="card">
@@ -907,16 +1255,20 @@ body, html {
 				        	<table class="table table-striped">
 								<thead style="background-color:#5c6499;color:#ffffff;">
 									<tr>
+										<th>Bill No</th>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
 							      <tr th:each="challan: ${briefProdAddChallanList}">
+							      	<td><p th:text="${challan.bill_no}"></p></td>
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdAddChallan(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -930,13 +1282,13 @@ body, html {
 		              <div class="card-body">
 		                <form autocomplete="off" th:action="@{/addProductEntryByChallan}" method="post" class="form" role="form">
 		                  <div class="form-group row">
-			                    <label class="col-lg-3 col-form-label form-control-label">Challan Number</label>
+			                    <label class="col-lg-3 col-form-label form-control-label">Challan Number<span><b>*</b></span></label>
 			                    <div class="col-lg-9">
 			                      <input id="challan_no" name="challan_no" class="form-control" type="text" value="">
 			                    </div>
 			              </div>
 			              <div class="form-group row">
-			                    <label class="col-lg-3 col-form-label form-control-label">Date of Entry</label>
+			                    <label class="col-lg-3 col-form-label form-control-label">Date of Entry<span><b>*</b></span></label>
 			                    <div class="col-lg-9">
 			                      <input id="challan_date" name="challan_date" class="form-control" type="date" value="">
 			                    </div>
@@ -945,22 +1297,22 @@ body, html {
 			              <h3><b>#1</b></h3>
 		                  <div class="addByChallan">
 			                  <div class="form-group row">
-			                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+			                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 			                    <div class="col-lg-9">
-			                      <select class="form-control" name="product_id" id="product_id">
+			                      <select class="form-control select2" name="product_id" id="product_id_ech" style="width:100%;height:100%;">
 									    <option value="">select option</option>
 									    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 								  </select>
 			                    </div>
 			                  </div>
 			                  <div class="form-group row">
-			                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+			                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 			                    <div class="col-lg-9">
 			                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
 			                    </div>
 			                  </div>
 			                  <div class="form-group row">
-			                    <label class="col-lg-3 col-form-label form-control-label">Issuing Branch</label>
+			                    <label class="col-lg-3 col-form-label form-control-label">Issuing Branch<span><b>*</b></span></label>
 			                    <div class="col-lg-9">
 			                      <select class="form-control" name="from_branch" id="from_branch">
 									    <option value="">select option</option>
@@ -971,10 +1323,7 @@ body, html {
 			                  <div class="form-group row">
 			                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
 			                    <div class="col-lg-9">
-			                      <select class="form-control" name="vehicle_no" id="vehicle_no">
-									    <option value="">select option</option>
-									    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
-								  </select>
+			                    	<input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
 			                    </div>
 			                  </div>
 			                   <hr>
@@ -985,6 +1334,13 @@ body, html {
 			                      <button id="btn_prod_add_challan" type="button" class="btn btn-info">Add Product(s)</button>
 			                    </div>
 			                    <div class="col-lg-10"></div>
+			                  </div>
+			                  <hr>
+				              <div class="form-group row">
+			                    <label class="col-lg-3 col-form-label form-control-label">Remarks.</label>
+			                    <div class="col-lg-9">
+			                    	<textarea id="remarks" name="remarks" class="form-control" rows="4" cols="50">NA</textarea>
+			                    </div>
 			                  </div>
 			                  <div class="form-group row">
 			                    <label class="col-lg-3 col-form-label form-control-label"></label>
@@ -1001,7 +1357,7 @@ body, html {
         		<div class="card">
 				    <div class="card-header">
 				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddGhyOffice">
-				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      	View Entry By Purchase From Guwahati Office&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
 				      </a>
 				    </div>
 				    <div id="collapseAddGhyOffice" class="collapse">
@@ -1009,16 +1365,20 @@ body, html {
 				        	<table class="table table-striped">
 								<thead style="background-color:#5c6499;color:#ffffff;">
 									<tr>
+										<th>Bill No</th>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
 							      <tr th:each="challan: ${briefProdAddGhyOfficeList}">
+							      	<td><p th:text="${challan.bill_no}"></p></td>
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdAddGhyOffice(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1032,13 +1392,13 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addProductEntryByGhyOffice}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
 	                    </div>
@@ -1047,22 +1407,22 @@ body, html {
 			          <h3><b>#1</b></h3>
 			          <div class="addByGhyOffice">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="product_id" id="product_id">
+	                      <select class="form-control select2" name="product_id" id="product_id_ego" style="width:100%;height:100%;">
 							    <option value="">select option</option>
 							    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 						  </select>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">
 	                    </div>
@@ -1070,10 +1430,7 @@ body, html {
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="vehicle_no" id="vehicle_no">
-							    <option value="">select option</option>
-							    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
-						  </select>
+	                    	<input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  	<hr>
@@ -1083,6 +1440,13 @@ body, html {
 	                      <button id="btn_prod_add_ghy_office" type="button" class="btn btn-info">Add Product(s)</button>
 	                    </div>
 	                    <div class="col-lg-10"></div>
+	                  </div>
+	                  <hr>
+		              <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Remarks.</label>
+	                    <div class="col-lg-9">
+	                    	<textarea id="remarks" name="remarks" class="form-control" rows="4" cols="50">NA</textarea>
+	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
@@ -1099,7 +1463,7 @@ body, html {
         	<div class="card">
 				    <div class="card-header">
 				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddLocalOffice">
-				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      	View Entry By Local Purchase&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
 				      </a>
 				    </div>
 				    <div id="collapseAddLocalOffice" class="collapse">
@@ -1107,16 +1471,20 @@ body, html {
 				        	<table class="table table-striped">
 								<thead style="background-color:#5c6499;color:#ffffff;">
 									<tr>
+										<th>Bill No</th>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
 							      <tr th:each="challan: ${briefProdAddLocalOfficeList}">
+							      	<td><p th:text="${challan.bill_no}"></p></td>
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdAddLocalOffice(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1130,13 +1498,13 @@ body, html {
               <div class="card-body">
                 <form autocomplete="off" th:action="@{/addProductEntryBylocalOffice}" method="post" class="form" role="form">
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number<span><b>*</b></span></label>
                     <div class="col-lg-9">
                       <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date<span><b>*</b></span></label>
                     <div class="col-lg-9">
                       <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
                     </div>
@@ -1145,22 +1513,22 @@ body, html {
 		          <h3><b>#1</b></h3>
 		          <div class="addByLocalOffice">
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
                     <div class="col-lg-9">
-                      <select class="form-control" name="product_id" id="product_id">
+                      <select class="form-control select2" name="product_id" id="product_id_elo" style="width:100%;height:100%;">
 						    <option value="">select option</option>
 						    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 					  </select>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
                     <div class="col-lg-9">
                       <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name</label>
+                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name<span><b>*</b></span></label>
                     <div class="col-lg-9">
                       <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">
                     </div>
@@ -1168,10 +1536,7 @@ body, html {
                   <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
                     <div class="col-lg-9">
-                      <select class="form-control" name="vehicle_no" id="vehicle_no">
-						    <option value="">select option</option>
-						    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
-					  </select>
+                    	<input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
                     </div>
                   </div>
                   <hr>
@@ -1181,7 +1546,14 @@ body, html {
 	                      <button id="btn_prod_add_local" type="button" class="btn btn-info">Add Product(s)</button>
 	                    </div>
 	                    <div class="col-lg-10"></div>
-	                  </div>
+	              </div>
+	              <hr>
+	              <div class="form-group row">
+                    <label class="col-lg-3 col-form-label form-control-label">Remarks.</label>
+                    <div class="col-lg-9">
+                    	<textarea id="remarks" name="remarks" class="form-control" rows="4" cols="50">NA</textarea>
+                    </div>
+                  </div>
                   <div class="form-group row">
                     <label class="col-lg-3 col-form-label form-control-label"></label>
                     <div class="col-lg-9">
@@ -1223,7 +1595,7 @@ body, html {
 				                            <thead class="thead-inverse">
 				                                <tr>
 				                                    <th>Fuel Type</th>
-				                                    <th>Quantity</th>
+				                                    <th>Issue Quantity</th>
 				                                    <th>Invoice No</th>
 				                                    <th>Invoice Date</th>
 				                                    <th>Vendor Name</th>
@@ -1254,7 +1626,7 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addFuelEntry}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="fuel_type" id="fuel_type">
 							    <option value="">select option</option>
@@ -1264,25 +1636,25 @@ body, html {
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" value="0">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">
 	                    </div>
@@ -1290,9 +1662,144 @@ body, html {
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
 	                    <div class="col-lg-9">
+	                      <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	           </div>
+        </div>
+        <div id="addFuelExit" style="display:none;" class="col main pt-5 mt-3">
+       			<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitFuel">
+				      	View Fuel Exit&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseExitFuel" class="collapse">
+				      <div class="card-body">
+				        	<div class="row my-4">
+				                <div class="col-lg-3 col-md-4">
+				                    <div class="card">
+				                        <div class="card-body">
+				                            <h4 class="card-title">Total Petrol Availability</h4>
+				                            <p class="card-text" style="font-size:50px;"><b th:text="${petrol_quantity}"></b></p>
+				                        </div>
+				                    </div>
+				                    <div class="card card-inverse bg-inverse mt-3">
+				                        <div class="card-body">
+				                            <h3 class="card-title">Total Diesel Availability</h3>
+				                            <p class="card-text" style="font-size:50px;	"><b th:text="${diesel_quantity}"></b></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-lg-9 col-md-8">
+				                    <div class="table-responsive">
+				                        <table class="table table-striped">
+				                            <thead class="thead-inverse">
+				                                <tr>
+				                                	<th>Fuel Exit Type</th>
+				                                    <th>Fuel Type</th>
+				                                    <th>Vehicle No.</th>
+				                                    <th>Opening Reading</th>
+				                                    <th>Mileage</th>
+				                                    <th>Fuel Issue</th>
+				                                    <th>Issue Date</th>
+				                                    <th>Vehicle Type</th>
+				                                </tr>
+				                            </thead>
+				                            <tbody>
+				                            	<tr th:each="fexr : ${fuelExitList}">
+				                            		<td th:text="${fexr.exit_type}"></td>
+				                            		<td th:text="${fexr.fuel_type}"></td>
+				                            		<td th:text="${fexr.vehicle_no}"></td>
+				                            		<td th:text="${fexr.opening_reading}"></td>
+				                            		<td th:text="${fexr.mileage}"></td>
+				                            		<td th:text="${fexr.fuel_issue}"></td>
+				                            		<td th:text="${fexr.issue_date}"></td>
+				                            		<td th:text="${fexr.vehicle_type}"></td>
+				                            	</tr>
+				                            </tbody>
+				                        </table>
+				                    </div>
+				                </div>
+				            </div>
+				      </div>
+				    </div>
+				  </div><br>
+	        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Fuel Exit</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/addFuelExit}" method="post" class="form" role="form">
+	                <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Type of Fuel Exit<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <select class="form-control" name="exit_type" id="exit_type">
+							    <option value="">select option</option>
+							    <option value="petrol_diesel">Petrol / Diesel</option>
+							    <option value="misc">Miscellaneous</option>
+						  </select>
+	                    </div>
+	                  </div>
+	                  <hr><br>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <select class="form-control" name="fuel_type" id="fuel_type">
+							    <option value="">select option</option>
+							    <option value="diesel">Diesel</option>
+							    <option value="petrol">Petrol</option>
+						  </select>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
 	                      <select class="form-control" name="vehicle_no" id="vehicle_no">
 							    <option value="">select option</option>
 							    <option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>
+						  </select>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Opening Reading<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <input id="opening_reading" name="opening_reading" class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Mileage<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <input id="mileage" name="mileage" class="form-control" type="text" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Issue<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <input id="fuel_issue" name="fuel_issue" class="form-control" type="text" value="0">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Issue Date<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <input id="issue_date" name="issue_date" class="form-control" type="date" value="">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Type of Vehicle<span><b>*</b></span></label>
+	                    <div class="col-lg-9">
+	                      <select class="form-control" name="vehicle_type" id="vehicle_type">
+							    <option value="">select option</option>
+							    <option th:each="vehicleType : ${distinctVehicleTypeList}" th:value="${vehicleType}" th:text="${vehicleType}"></option>
 						  </select>
 	                    </div>
 	                  </div>
@@ -1311,7 +1818,7 @@ body, html {
         		<div class="card">
 				    <div class="card-header">
 				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitChallan">
-				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      	View Exit By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
 				      </a>
 				    </div>
 				    <div id="collapseExitChallan" class="collapse">
@@ -1321,7 +1828,9 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1329,6 +1838,8 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitChallan(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+							        <td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byChallan')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1342,7 +1853,7 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByChallan" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="exit_date" name="exit_date" class="form-control" type="date" value="">
 	                    </div>
@@ -1351,22 +1862,22 @@ body, html {
 			          <h3><b>#1</b></h3>
 			          <div class="exitByChallan">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="product_id" id="product_id">
+	                      <select class="form-control select2" name="product_id" id="product_id_exch" style="width:100%;height:100%;">
 							    <option value="">select option</option>
 							    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 						  </select>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input id="product_quantity1" name="product_quantity" class="form-control" type="text" value="0">
+	                      <input id="product_quantity1" name="product_quantity" class="form-control" type="text" value="0" onclick="checkAvailableQuantity(event)">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">To Location</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">To Location<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="to_location" id="to_location">
 							    <option value="">select option</option>
@@ -1375,7 +1886,7 @@ body, html {
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="vehicle_no" id="vehicle_no">
 							    <option value="">select option</option>
@@ -1406,7 +1917,7 @@ body, html {
         		<div class="card">
 				    <div class="card-header">
 				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitContractor">
-				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      	View Exit By Sub - Contractor&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
 				      </a>
 				    </div>
 				    <div id="collapseExitContractor" class="collapse">
@@ -1416,7 +1927,9 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1424,6 +1937,8 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitBySubContractor(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+							        <td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byContractor')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1437,7 +1952,7 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByContractor" th:action="@{/addProductExitByContractor}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
 	                    </div>
@@ -1446,22 +1961,22 @@ body, html {
 			          <h3><b>#1</b></h3>
 			          <div class="exitByContractor">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="product_id" id="product_id">
+	                      <select class="form-control select2" name="product_id" id="product_id_exco" style="width:100%;height:100%;">
 							    <option value="">select option</option>
 							    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 						  </select>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">product Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity2" name="product_quantity" class="form-control" type="text" value="0" onclick="checkAvailableQuantity(event)">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="contractor_name" id="contractor_name">
 							    <option value="">select option</option>
@@ -1470,7 +1985,7 @@ body, html {
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="receiving_person" name="receiving_person" class="form-control" type="text" value="0">
 	                    </div>
@@ -1498,7 +2013,7 @@ body, html {
         		<div class="card">
 				    <div class="card-header">
 				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitStaff">
-				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      	View Exit By Employee&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
 				      </a>
 				    </div>
 				    <div id="collapseExitStaff" class="collapse">
@@ -1508,7 +2023,9 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1516,6 +2033,8 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitByStaff(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+							      	<td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byStaff')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1529,7 +2048,7 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByStaff" th:action="@{/addProductExitByStaff}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
 	                    </div>
@@ -1538,22 +2057,22 @@ body, html {
 			          <h3><b>#1</b></h3>
 			          <div class="exitByStaff">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="product_id" id="product_id">
+	                      <select class="form-control select2" name="product_id" id="product_id_exemp" style="width:100%;height:100%;">
 							    <option value="">select option</option>
 							    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 						  </select>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">product Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity3" name="product_quantity" class="form-control" type="text" value="0" onclick="checkAvailableQuantity(event)">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <select class="form-control" name="staff_emp_code" id="staff_emp_code">
 							    <option value="">select option</option>
@@ -1562,7 +2081,7 @@ body, html {
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="receiving_person" name="receiving_person" class="form-control" type="text" value="0">
 	                    </div>
@@ -1590,7 +2109,7 @@ body, html {
         		<div class="card">
 				    <div class="card-header">
 				      <a class="card-link" data-toggle="collapse" data-target="#collapseExitMisc">
-				      	View Entry By Challan&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      	View Exit By Miscellaneous&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
 				      </a>
 				    </div>
 				    <div id="collapseExitMisc" class="collapse">
@@ -1600,7 +2119,9 @@ body, html {
 									<tr>
 										<th>Challan No</th>
 										<th>Total Products</th>
-										<th>Total Quantity</th>
+										<th>Total Issue Quantity</th>
+										<th></th>
+										<th></th>
 									</tr>
 								</thead>
 							    <tbody>
@@ -1608,6 +2129,8 @@ body, html {
 							        <td><p th:text="${challan.challan_no}"></p></td>
 							        <td><p th:text="${challan.total_prod}"></p></td>
 							        <td><p th:text="${challan.total_quantity}"></p></td>
+							        <td><a th:href="@{/editProdExitByMisc(challan_no=${challan.challan_no})}" th:target="_blank"><i class="fa-solid fa-eye fa-xl"></i></a></td>
+							        <td><a th:href="@{/billDetails(challan_no=${challan.challan_no},type='byMisc')}" th:target="_blank"><i class="fa-solid fa-file-arrow-down fa-xl"></i></a></td>
 							      </tr>
 							    </tbody>
 					  		</table>
@@ -1621,7 +2144,7 @@ body, html {
 	              <div class="card-body">
 	                <form autocomplete="off" id="formExitByMiscellaneous" th:action="@{/addProductExitByMiscellaneous}" method="post" class="form" role="form">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Exit Date<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="exit_date" name="exit_date" class="form-control" type="datetime-local" value="">
 	                    </div>
@@ -1630,28 +2153,28 @@ body, html {
 			          <h3><b>#1</b></h3>
 			          <div class="exitByMisc">
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Product name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="product_id" id="product_id">
+	                      <select class="form-control select2" name="product_id" id="product_id_exmisc" style="width:100%;height:100%;">
 							    <option value="">select option</option>
 							    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
 						  </select>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">product Quantity</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="product_quantity4" name="product_quantity" class="form-control" type="text" value="0" onclick="checkAvailableQuantity(event)">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Name of Work</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Name of Work<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="work_name" name="work_name" class="form-control" type="text" value="">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name</label>
+	                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
 	                      <input id="receiving_person" name="receiving_person" class="form-control" type="text" value="">
 	                    </div>
@@ -1696,14 +2219,15 @@ body, html {
                 </div>
                 <div class="col-lg-9 col-md-8">
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table id="product_table" class="table table-striped">
                             <thead class="thead-inverse">
                                 <tr>
                                     <th>Product Id</th>
                                     <th>Product Name</th>
                                     <th>Product Unit</th>
+                                    <th>Total Balance Quantity</th>
                                     <th>Type</th>
-                                    <th>Quantity(in store)</th>
+                                    <th>Material</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1713,6 +2237,7 @@ body, html {
                             		<td th:text="${pr.unit}"></td>
                             		<td th:text="${pr.quantity}"></td>
                             		<td th:text="${pr.type}"></td>
+                            		<td th:text="${pr.material}"></td>
                             	</tr>
                             </tbody>
                         </table>
@@ -1811,6 +2336,7 @@ body, html {
                             <thead class="thead-inverse">
                                 <tr>
                                     <th>Vehicle No.</th>
+                                    <th>Vehicle Type.</th>
                                     <th>Driver Lisence No.</th>
                                     <th>Tyre No.</th>
                                     <th>Battery No.</th>
@@ -1826,6 +2352,7 @@ body, html {
                             <tbody>
                             	<tr th:each="vr : ${vehicleList}">
                             		<td th:text="${vr.vehicle_no}"></td>
+                            		<td th:text="${vr.vehicle_type}"></td>
                             		<td th:text="${vr.driver_lisence_no}"></td>
                             		<td th:text="${vr.tyre_no}"></td>
                             		<td th:text="${vr.battery_no}"></td>
@@ -1906,5 +2433,8 @@ body, html {
         </div>
     </div>
 </div>
+<script>
+    $('.select2').select2();
+</script>
 </body>
 </html>

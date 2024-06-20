@@ -27,12 +27,12 @@ public class InventoryUserDetailsService implements UserDetailsService{
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-				users user = userRepo.getUserCredentiaLs(Integer.parseInt(userName)).get(0);
+				users user = userRepo.getUserCredentiaLs(userName).get(0);
 				if (user == null)
 					throw new UsernameNotFoundException(userName);
 				List<String> userRoles = userRoleRepo.getUserRoles(userName);
 				System.out.println("user roles are: "+userRoles.size());
-				return new org.springframework.security.core.userdetails.User(user.getUser_id().toString(), user.getPassword(),
+				return new org.springframework.security.core.userdetails.User(user.getUser_id(), user.getPassword(),
 						grantedAuthorities(userRoles));
 			}
 			

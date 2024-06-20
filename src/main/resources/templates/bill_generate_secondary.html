@@ -24,11 +24,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!--  
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 		<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 -->		
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
 <script>
 	function generatePDF() {                                             
 		// Choose the element that your content will be rendered to.
@@ -46,11 +47,11 @@
 
 	    html2canvas($(".invoice")[0]).then(function (canvas) {
 	        var imgData = canvas.toDataURL("image/jpeg", 1.0);
-	        //var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+	        // var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]); // Portrait Orientation
 	        var pdf = new jsPDF('l', 'pt', [PDF_Height, PDF_Width]); // Landscape orientation
 	        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
 	        for (var i = 1; i <= totalPDFPages; i++) { 
-	           // pdf.addPage(PDF_Width, PDF_Height);
+	            //pdf.addPage(PDF_Width, PDF_Height); // Portrait Orientation
 	            pdf.addPage(PDF_Height, PDF_Width); // Landscape orientation
 	           // pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
 	            pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Width*i)+(top_left_margin*4), canvas_image_width, canvas_image_height);
@@ -60,6 +61,7 @@
 	       // $("#html-content").hide();
 	    });
 	}
+	
 	function downloadPdf(){
 		const { jsPDF } = window.jspdf;
 	    const content = document.getElementById('invoice');
@@ -93,11 +95,9 @@
 	    });
 	}
 	$(document).ready(function(){
-		 
 		//generatePDF();
 		downloadPdf();
 		document.getElementById("print").style.display = "block";
-		 
 	});
 </script>
 <style>
@@ -139,7 +139,7 @@
 				</div>
 			</div>
 			<div class="col-md-9">
-				<h2><b>SHREE GAUTAM CONSTRUCTION CO.LTD(Noonmati Flyover)</b></h2>
+				<h2><b>SHREE GAUTAM CONSTRUCTION CO.LTD (Noonmati Flyover)</b></h2>
 				<div class="row">
 					<div class="col-md-4">
 						<h6><u>REGD. OFFICE:</u></h6>
@@ -182,10 +182,10 @@
 		<div th:if="${contractor==1}">
 			<div class="row">
 				<div class="col-md-6">
-					<p>Issuing Branch.: <span>Noonmati Flyover</span></p>
+					<p><b>Issuing Branch.:</b> <span>Noonmati Flyover</span></p>
 				</div>
 				<div class="col-md-6">
-					<p>Name of Contractor: <span></span></p>
+					<p><b>Name of Contractor:</b> <span th:text="${contractor_name}"></span></p>
 				</div>
 			</div>
 			<div class="row">
@@ -193,17 +193,17 @@
 					
 				</div>
 				<div class="col-md-6">
-					<p>Name of Receiving Person: <span></span></p>
+					<p><b>Name of Receiving Person:</b> <span th:text="${receiving_person}"></span></p>
 				</div>
 			</div>
 		</div>
 		<div th:if="${staff==1}">
 			<div class="row">
 				<div class="col-md-6">
-					<p>Issuing Branch.: <span>Noonmati Flyover</span></p>
+					<p><b>Issuing Branch.:</b> <span>Noonmati Flyover</span></p>
 				</div>
 				<div class="col-md-6">
-					<p>Employee Name: <span></span></p>
+					<p><b>Employee Name:</b> <span th:text="${staff_name}"></span></p>
 				</div>
 			</div>
 			<div class="row">
@@ -211,17 +211,17 @@
 					
 				</div>
 				<div class="col-md-6">
-					<p>Designation: <span></span></p>
+					<p><b>Designation:</b> <span th:text="${staff_designation}"></span></p>
 				</div>
 			</div>
 		</div>
 		<div th:if="${misc==1}">
 			<div class="row">
 				<div class="col-md-6">
-					<p>Issuing Branch.: <span>Noonmati Flyover</span></p>
+					<p><b>Issuing Branch.:</b> <span>Noonmati Flyover</span></p>
 				</div>
 				<div class="col-md-6">
-					<p>Receiving Person: <span></span></p>
+					<p><b>Receiving Person:</b> <span th:text="${receiving_person}"></span></p>
 				</div>
 			</div>
 			<div class="row">
@@ -229,7 +229,7 @@
 					
 				</div>
 				<div class="col-md-6">
-					<p>Nature of Work: <span></span></p>
+					<p><b>Nature of Work:</b> <span th:text="${work_name}"></span></p>
 				</div>
 			</div>
 		</div>
@@ -267,8 +267,8 @@
 		  <br><br><br>
 		  <div class="row">
 		  	<div class="col-md-4">Receiver's Signature</div>
-		  	<div class="col-md-4">Driver's Signature</div>
-		  	<div class="col-md-4">Signature of Signing Authority</div>
+		  	<div class="col-md-4">Store Keeper's Signature</div>
+		  	<div class="col-md-4">Signature of Sub Admin</div>
 		  </div>
 		  <br>
 		  <button id="print" type="button" class="btn btn-success" style="margin:0 auto;display:block;" onclick="window.print();return false;">Print</button>

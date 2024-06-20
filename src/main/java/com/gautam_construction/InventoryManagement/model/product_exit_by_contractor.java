@@ -18,12 +18,13 @@ public class product_exit_by_contractor {
 	private String contractor_name;
 	private String receiving_person;
 	private String bill;
+	private String sub_admin;
 	public product_exit_by_contractor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public product_exit_by_contractor(Integer id, Integer prod_id, String quantity, String challan_no, String exit_date,
-			String contractor_name, String receiving_person, String bill) {
+			String contractor_name, String receiving_person, String bill,String sub_admin) {
 		super();
 		this.id = id;
 		this.prod_id = prod_id;
@@ -33,6 +34,7 @@ public class product_exit_by_contractor {
 		this.contractor_name = contractor_name;
 		this.receiving_person = receiving_person;
 		this.bill = bill;
+		this.sub_admin = sub_admin;
 	}
 	public Integer getId() {
 		return id;
@@ -82,9 +84,17 @@ public class product_exit_by_contractor {
 	public void setBill(String bill) {
 		this.bill = bill;
 	}
+	
+	public String getSub_admin() {
+		return sub_admin;
+	}
+	public void setSub_admin(String sub_admin) {
+		this.sub_admin = sub_admin;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(bill, challan_no, contractor_name, exit_date, id, prod_id, quantity, receiving_person);
+		return Objects.hash(bill, challan_no, contractor_name, exit_date, id, prod_id, quantity, receiving_person,
+				sub_admin);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -98,14 +108,16 @@ public class product_exit_by_contractor {
 		return Objects.equals(bill, other.bill) && Objects.equals(challan_no, other.challan_no)
 				&& Objects.equals(contractor_name, other.contractor_name) && Objects.equals(exit_date, other.exit_date)
 				&& Objects.equals(id, other.id) && Objects.equals(prod_id, other.prod_id)
-				&& Objects.equals(quantity, other.quantity) && Objects.equals(receiving_person, other.receiving_person);
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(receiving_person, other.receiving_person)
+				&& Objects.equals(sub_admin, other.sub_admin);
 	}
 	@Override
 	public String toString() {
 		return "product_exit_by_contractor [id=" + id + ", prod_id=" + prod_id + ", quantity=" + quantity
 				+ ", challan_no=" + challan_no + ", exit_date=" + exit_date + ", contractor_name=" + contractor_name
-				+ ", receiving_person=" + receiving_person + ", bill=" + bill + "]";
+				+ ", receiving_person=" + receiving_person + ", bill=" + bill + ", sub_admin=" + sub_admin + "]";
 	}
+	
 	
 	
 }

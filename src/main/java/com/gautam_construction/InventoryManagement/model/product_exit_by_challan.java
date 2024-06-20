@@ -18,12 +18,14 @@ public class product_exit_by_challan {
 	private String to_location;
 	private String vehicle_no;
 	private String bill;
+	private String from;
+	private String sub_admin;
 	public product_exit_by_challan() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public product_exit_by_challan(Integer id, Integer prod_id, String quantity, String challan_no, String exit_date, String to_location,
-			String vehicle_no, String bill) {
+			String vehicle_no, String bill, String from, String sub_admin) {
 		super();
 		this.id = id;
 		this.prod_id = prod_id;
@@ -33,6 +35,8 @@ public class product_exit_by_challan {
 		this.to_location = to_location;
 		this.vehicle_no = vehicle_no;
 		this.bill = bill;
+		this.from = from;
+		this.sub_admin = sub_admin;
 	}
 	public Integer getId() {
 		return id;
@@ -83,9 +87,27 @@ public class product_exit_by_challan {
 	public void setBill(String bill) {
 		this.bill = bill;
 	}
+	
+	
+	public String getFrom() {
+		return from;
+	}
+	public void setFrom(String from) {
+		this.from = from;
+	}
+	
+	
+	
+	public String getSub_admin() {
+		return sub_admin;
+	}
+	public void setSub_admin(String sub_admin) {
+		this.sub_admin = sub_admin;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(bill, challan_no, exit_date, id, prod_id, quantity, to_location, vehicle_no);
+		return Objects.hash(bill, challan_no, exit_date, from, id, prod_id, quantity, sub_admin, to_location,
+				vehicle_no);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -97,16 +119,18 @@ public class product_exit_by_challan {
 			return false;
 		product_exit_by_challan other = (product_exit_by_challan) obj;
 		return Objects.equals(bill, other.bill) && Objects.equals(challan_no, other.challan_no)
-				&& Objects.equals(exit_date, other.exit_date) && Objects.equals(id, other.id)
-				&& Objects.equals(prod_id, other.prod_id) && Objects.equals(quantity, other.quantity)
+				&& Objects.equals(exit_date, other.exit_date) && Objects.equals(from, other.from)
+				&& Objects.equals(id, other.id) && Objects.equals(prod_id, other.prod_id)
+				&& Objects.equals(quantity, other.quantity) && Objects.equals(sub_admin, other.sub_admin)
 				&& Objects.equals(to_location, other.to_location) && Objects.equals(vehicle_no, other.vehicle_no);
 	}
 	@Override
 	public String toString() {
 		return "product_exit_by_challan [id=" + id + ", prod_id=" + prod_id + ", quantity=" + quantity + ", challan_no="
 				+ challan_no + ", exit_date=" + exit_date + ", to_location=" + to_location + ", vehicle_no="
-				+ vehicle_no + ", bill=" + bill + "]";
+				+ vehicle_no + ", bill=" + bill + ", from=" + from + ", sub_admin=" + sub_admin + "]";
 	}
+	
 	
 	
 	

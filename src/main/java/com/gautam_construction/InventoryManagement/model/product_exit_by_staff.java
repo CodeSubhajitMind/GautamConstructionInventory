@@ -18,12 +18,13 @@ public class product_exit_by_staff {
 	private String staff_emp_code;
 	private String receiving_person;
 	private String bill;
+	private String sub_admin;
 	public product_exit_by_staff() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public product_exit_by_staff(Integer id, Integer prod_id, String quantity, String challan_no, String exit_date, String staff_emp_code,
-			String receiving_person, String bill) {
+			String receiving_person, String bill,String sub_admin) {
 		super();
 		this.id = id;
 		this.prod_id = prod_id;
@@ -33,6 +34,7 @@ public class product_exit_by_staff {
 		this.staff_emp_code = staff_emp_code;
 		this.receiving_person = receiving_person;
 		this.bill = bill;
+		this.sub_admin = sub_admin;
 	}
 	public Integer getId() {
 		return id;
@@ -82,9 +84,17 @@ public class product_exit_by_staff {
 	public void setBill(String bill) {
 		this.bill = bill;
 	}
+	
+	public String getSub_admin() {
+		return sub_admin;
+	}
+	public void setSub_admin(String sub_admin) {
+		this.sub_admin = sub_admin;
+	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(bill, challan_no, exit_date, id, prod_id, quantity, receiving_person, staff_emp_code);
+		return Objects.hash(bill, challan_no, exit_date, id, prod_id, quantity, receiving_person, staff_emp_code,
+				sub_admin);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -99,15 +109,14 @@ public class product_exit_by_staff {
 				&& Objects.equals(exit_date, other.exit_date) && Objects.equals(id, other.id)
 				&& Objects.equals(prod_id, other.prod_id) && Objects.equals(quantity, other.quantity)
 				&& Objects.equals(receiving_person, other.receiving_person)
-				&& Objects.equals(staff_emp_code, other.staff_emp_code);
+				&& Objects.equals(staff_emp_code, other.staff_emp_code) && Objects.equals(sub_admin, other.sub_admin);
 	}
 	@Override
 	public String toString() {
 		return "product_exit_by_staff [id=" + id + ", prod_id=" + prod_id + ", quantity=" + quantity + ", challan_no="
 				+ challan_no + ", exit_date=" + exit_date + ", staff_emp_code=" + staff_emp_code + ", receiving_person="
-				+ receiving_person + ", bill=" + bill + "]";
+				+ receiving_person + ", bill=" + bill + ", sub_admin=" + sub_admin + "]";
 	}
-	
 	
 	
 }

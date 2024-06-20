@@ -15,7 +15,7 @@ import org.springframework.lang.NonNull;
 @Table(name = "users")
 public class users {
 	@Id
-    private Integer user_id;
+    private String user_id;
 	@NonNull
 	private String password;
 	@NonNull
@@ -28,10 +28,10 @@ public class users {
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private Set<user_roles> user_roles = new HashSet<user_roles>();
 	
-	public Integer getUser_id() {
+	public String getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
 	public String getPassword() {
@@ -64,7 +64,7 @@ public class users {
 	public void setUser_roles(Set<user_roles> user_roles) {
 		this.user_roles = user_roles;
 	}
-	public users(Integer user_id, String password, String name, String user_type, String datetime, Set<user_roles> user_roles) {
+	public users(String user_id, String password, String name, String user_type, String datetime, Set<user_roles> user_roles) {
 		super();
 		this.user_id = user_id;
 		this.password = password;
