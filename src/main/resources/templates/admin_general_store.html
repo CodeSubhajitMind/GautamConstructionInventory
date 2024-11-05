@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,6 +49,20 @@
 body, html {
   height:100%;
 }
+
+.exceeded-date {
+            color: red;
+        }
+.safe-date {
+    color: green;
+}
+.expiring-soon {
+            color: orange;
+        }
+.width-fit-content {
+        width: 1px;
+        white-space: nowrap;
+    }
 /*
  * Off Canvas sidebar at medium breakpoint
  * --------------------------------------------------
@@ -144,6 +158,8 @@ body, html {
 	        ]
 	    });
 		
+		
+		
 		$('#link_prod_report').click(function(e){
 			$('#prod_report').show();
 			$('#addAdmin').hide();
@@ -162,6 +178,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			
 			$(".nav-item .active").removeClass('active');
 		    $(this).parent().addClass('active'); 
@@ -186,6 +204,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		
 		$('#link_sub_admin').click(function(e){
@@ -206,6 +226,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		
 		$('#link_dashboard').click(function(e){
@@ -226,6 +248,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			
 			$(".nav-item .active").removeClass('active');
 		    $(this).parent().addClass('active'); 
@@ -250,6 +274,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_add_staffs').click(function(){
 			$('#addAdmin').hide();
@@ -269,6 +295,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_add_contractors').click(function(){
 			$('#addAdmin').hide();
@@ -288,6 +316,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_add_vehicles').click(function(){
 			$('#addAdmin').hide();
@@ -307,6 +337,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_add_locations').click(function(){
 			$('#addAdmin').hide();
@@ -326,6 +358,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		
 		$('#link_view_product').click(function(){
@@ -346,6 +380,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_view_staff').click(function(){
 			$('#addAdmin').hide();
@@ -365,6 +401,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_view_contractor').click(function(){
 			$('#addAdmin').hide();
@@ -384,6 +422,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_view_vehicle').click(function(){
 			$('#addAdmin').hide();
@@ -403,6 +443,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		$('#link_view_location').click(function(){
 			$('#addAdmin').hide();
@@ -422,6 +464,30 @@ body, html {
 			$('#viewLocations').show();
 			$('#viewChallan').hide();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
+		});
+		
+		$('#link_product_return').click(function(){
+			$('#addAdmin').hide();
+			$('#prod_report').hide();
+			$('#addSubAdmin').hide();
+			$('#dashboard').hide();
+			$('#addProduct').hide();
+			$('#addStaff').hide();
+			$('#addContractor').hide();
+			$('#addVehicle').hide();
+			$('#addLocation').hide();
+			
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+			$('#viewChallan').hide();
+			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').show();
 		});
 		
 		
@@ -443,6 +509,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').show();
 			$('#viewFuel').hide();
+			//add product return
+			$('#addProductReturn').hide();
 		});
 		
 		$('#link_view_fuel_details').click(function(){
@@ -463,6 +531,8 @@ body, html {
 			$('#viewLocations').hide();
 			$('#viewChallan').hide();
 			$('#viewFuel').show();
+			//add product return
+			$('#addProductReturn').hide();
 
 		});
 		
@@ -706,6 +776,18 @@ function searchEntry(){
 				xhr.setRequestHeader(header,token);
 		  },
          success: function(data){
+        	 
+        	 $('#entry_table').DataTable().destroy(); 
+       		// Add Excel export button only to table1
+       	 	var entry_table = $('#entry_table').DataTable({
+       	        dom: 'Bfrtip',
+       	        buttons: [
+       	            {
+       	                extend: 'excelHtml5',
+       	                title: 'Product Report'
+       	            }
+       	        ]
+       	    });
         	 /*
         	 var table = $('#entry_table').DataTable({
                  // Initial setup options
@@ -713,25 +795,16 @@ function searchEntry(){
         	 */
         	 //table.clear();
         	 $("#entry_table tbody").empty();
+        	 
+        	 
+	      		
+	     	// Clear the existing data
+            entry_table.clear().draw();
         	 for (let i = 0; i < data.length; i++) {
-                 var filteredProductObj = data[i];
+                 var filteredProductObj = data[i];                
                  
-                 /*
-                 table.row.add([
-                	 filteredProductObj.prod_id,
-                	 filteredProductObj.prod_name,
-                	 filteredProductObj.prod_unit,
-                	 filteredProductObj.prod_quantity,
-                	 filteredProductObj.challan_no,
-                     filteredProductObj.challan_date,
-                     filteredProductObj.challan_type
-                 ]);
-                 
-                 table.draw(); 
-                 */
-                 
-                
                  // For example, append to a div
+                 /*
                  $('#entry_data').append(
                      '<tr>' +
                      '<td>' + filteredProductObj.prod_id + '</td>' +
@@ -743,10 +816,28 @@ function searchEntry(){
                      '<td>' + filteredProductObj.challan_type + '</td>' +
                      '</tr>'
                  );
+                 */
+                
                
                  
-                 $('#view_entry_data').show();
+                 entry_table.row.add([
+                	 filteredProductObj.prod_id,
+                	 filteredProductObj.prod_name,
+                	 filteredProductObj.type,
+                	 filteredProductObj.prod_unit,
+                	 filteredProductObj.prod_quantity,
+                	 filteredProductObj.challan_no,
+                     filteredProductObj.challan_date,
+                     filteredProductObj.challan_type
+                 ]);
+                 
+                 
+                 
+                  
+              
              }
+        	 entry_table.draw(); 
+        	 $('#view_entry_data').show();
          }                                                                    
    });
 }
@@ -769,11 +860,27 @@ function searchExit(){
 				xhr.setRequestHeader(header,token);
 		  },
          success: function(data){
+        	 	$('#exit_table').DataTable().destroy(); 
+          		// Add Excel export button only to table1
+          	    var exit_table = $('#exit_table').DataTable({
+          	        dom: 'Bfrtip',
+          	        buttons: [
+          	            {
+          	                extend: 'excelHtml5',
+          	                title: 'Product Report'
+          	            }
+          	        ]
+          	    });
+          		
+          	  
         	 $("#exit_table tbody").empty();
+        	// Clear the existing data
+             exit_table.clear().draw();
         	 for (let i = 0; i < data.length; i++) {
                  var filteredProductObj = data[i];
                  
                  // For example, append to a div
+                 /*
                  $('#exit_data').append(
                          '<tr>' +
                          '<td>' + filteredProductObj.prod_id + '</td>' +
@@ -785,8 +892,147 @@ function searchExit(){
                          '<td>' + filteredProductObj.challan_type + '</td>' +
                          '</tr>'
                      );
-                     $('#view_exit_data').show();
+                 */
+                 
+                 
+                 exit_table.row.add([
+                	 filteredProductObj.prod_id,
+                	 filteredProductObj.prod_name,
+                	 filteredProductObj.type,
+                	 filteredProductObj.prod_unit,
+                	 filteredProductObj.prod_quantity,
+                	 filteredProductObj.challan_no,
+                     filteredProductObj.challan_date,
+                     filteredProductObj.challan_type
+                 ]);
+                     
+                 
+                     
+                     
              }
+        	 exit_table.draw(); 
+        	 $('#view_exit_data').show();
+         }                                                                    
+   });
+}
+
+function searchProduct(){
+	var token = $('#_csrf').attr("content");
+	 var header = $('#_csrf_header').attr("content");
+	 var f_product_id = $('#f_product_id').val();
+	 var s_date = $('#s_date').val();
+	 var e_date = $('#e_date').val();
+	 
+	 $.ajax({                                                                                                           
+		 type: "GET",                                                           
+		 async: false,
+         url: "/getProductEntryExitDetails",
+         data: {f_product_id:f_product_id,s_date:s_date,e_date:e_date},
+         beforeSend: function(xhr){
+				xhr.setRequestHeader(header,token);
+		  },
+         success: function(data){
+        	 $('#product_entry_table').DataTable().destroy(); 
+     		// Add Excel export button only to table1
+     	  var product_entry_table = $('#product_entry_table').DataTable({
+     	        dom: 'Bfrtip',
+     	        buttons: [
+     	            {
+     	                extend: 'excelHtml5',
+     	                title: 'Product Report'
+     	            }
+     	        ]
+     	    });
+     		
+     	 $('#product_exit_table').DataTable().destroy(); 
+     	// Add Excel export button only to table1
+     	 var product_exit_table = $('#product_exit_table').DataTable({
+     	       dom: 'Bfrtip',
+     	       buttons: [
+     	           {
+     	               extend: 'excelHtml5',
+     	               title: 'Product Report'
+     	           }
+     	       ]
+     	   });
+        	 $("#product_entry_table tbody").empty();
+        	 $("#product_exit_table tbody").empty();
+        	 product_entry_table.clear().draw();
+        	 product_exit_table.clear().draw();
+        	 var entryProductList = data[0];
+        	 var exitProductList = data[1];
+        	 
+        	 for (let i = 0; i < entryProductList.length; i++) {
+                 var filteredProductObj = entryProductList[i];
+                 
+              // For example, append to a div
+              /*
+                 $('#product_entry_data').append(
+                         '<tr>' +
+                         '<td>' + filteredProductObj.prod_id + '</td>' +
+                         '<td>' + filteredProductObj.prod_name + '</td>' +
+                         '<td>' + filteredProductObj.type + '</td>' +
+                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+                         '<td>' + filteredProductObj.challan_no + '</td>' +
+                         '<td>' + filteredProductObj.challan_date + '</td>' +
+                         '<td>' + filteredProductObj.challan_type + '</td>' +
+                         '</tr>'
+                 );
+              */
+              
+                 product_entry_table.row.add([
+                	 filteredProductObj.prod_id,
+                	 filteredProductObj.prod_name,
+                	 filteredProductObj.type,
+                	 filteredProductObj.prod_unit,
+                	 filteredProductObj.prod_quantity,
+                	 filteredProductObj.challan_no,
+                     filteredProductObj.challan_date,
+                     filteredProductObj.challan_type
+                 ]);
+                
+             }
+        	 
+        	 
+        	 for (let i = 0; i < exitProductList.length; i++) {
+                 var filteredProductObj = exitProductList[i];
+                 
+                 // For example, append to a div
+                 /*
+                 $('#product_exit_data').append(
+                         '<tr>' +
+                         '<td>' + filteredProductObj.prod_id + '</td>' +
+                         '<td>' + filteredProductObj.prod_name + '</td>' +
+                         '<td>' + filteredProductObj.type + '</td>' +
+                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+                         '<td>' + filteredProductObj.challan_no + '</td>' +
+                         '<td>' + filteredProductObj.challan_date + '</td>' +
+                         '<td>' + filteredProductObj.challan_type + '</td>' +
+                         '</tr>'
+                 );
+                 */
+                 
+                 product_exit_table.row.add([
+                	 filteredProductObj.prod_id,
+                	 filteredProductObj.prod_name,
+                	 filteredProductObj.type,
+                	 filteredProductObj.prod_unit,
+                	 filteredProductObj.prod_quantity,
+                	 filteredProductObj.challan_no,
+                     filteredProductObj.challan_date,
+                     filteredProductObj.challan_type
+                 ]);
+              
+             }
+        	 
+        	 product_entry_table.draw();
+        	 product_exit_table.draw();
+        	 $('#view_product_data').show();
+        	 
+        	 
+     		
          }                                                                    
    });
 }
@@ -828,7 +1074,7 @@ function searchExit(){
     		<div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
 	            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
 	                <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
-	                <li id="link_prod_report" class="nav-item"><a class="nav-link" href="#">Product Report</a></li>
+	                <li id="link_prod_report" class="nav-item"><a class="nav-link" href="#">Product Reports</a></li>
 	                <li class="nav-item">
 	                    <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
 	                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
@@ -837,6 +1083,7 @@ function searchExit(){
 	                       <li id="link_view_contractor" class="nav-item"><a class="nav-link" href="#">View Sub-Contractor Details</a></li>
 	                       <li id="link_view_vehicle" class="nav-item"><a class="nav-link" href="#">View Vehicle Details</a></li>
 	                       <li id="link_view_location" class="nav-item"><a class="nav-link" href="#">View Location Details</a></li>
+	                       <li id="link_product_return" class="nav-item"><a class="nav-link" href="#">View	 Product Return</a></li>
 	                       <li id="link_view_Challan" class="nav-item"><a class="nav-link" href="#">View All Challan(s)</a></li>
 	                       <li id="link_view_fuel_details" class="nav-item"><a class="nav-link" href="#">View Fuel Details</a></li>
 	                    </ul>
@@ -999,8 +1246,82 @@ function searchExit(){
         	<div class="card">
 				    <div class="card-header">
 				      	<h3>Filter Products &nbsp&nbsp&nbsp&nbsp&nbsp</h3>
-				    </div>
+				    </div>                                                   
 			      <div class="card-body">
+			      		<!-- 
+			      			<div class="row">
+					      		<div class="col-md-4">
+				      				<label for="entry_exit">Entry/Exit:</label>
+			                		<select class="form-control select2" name="entry_exit" id="entry_exit" style="width:100%;">
+										    <option value="">select option</option>
+										    <option value="entry">Entry</option>
+										    <option value="exit">Exit</option>
+									 </select>
+				      			</div>
+				      			<div class="col-md-4">
+				      				<label for="entry_exit_type">Entry/Exit Type:</label>
+				      				<div>
+				      					<select class="form-control select2" name="entry_exit_type" id="entry_exit_type" style="width:100%;">
+										    <option value="">select option</option>
+										    <option value="by_challan">Entry By Challan</option>
+										    <option value="by_ghy_office">Entry By Purchase from Ghy. Office</option>
+										    <option value="by_local_purchase">Entry By local Purchase</option>
+									 	</select>
+				      				</div>
+				      				<div>
+				      					<select class="form-control select2" name="exit_type" id="exit_type" style="width:100%;">
+										    <option value="">select option</option>
+										    <option value="by_challan">Exit By Challan</option>
+										    <option value="by_staff">Exit By Employee</option>
+										    <option value="by_contractor">Exit By Sub-Contractor</option>
+										    <option value="by_misc">Exit By Miscellaneous</option>
+									 </select>
+				      				</div> 
+				      			</div>
+				      			<div class="col-md-4">
+			                		<label for="entry_exit_date">Select Date:</label>
+									<input type="date" id="entry_exit_date" name="entry_exit_date" placeholder="Entry Date" style="width:100%;">
+						        </div>
+				      		</div>	
+				      		<div class="row">
+					      		<div class="col-md-4">
+				      				<label for="entry_exit_product_id">Select Product:</label>
+			                		<select class="form-control select2" name="entry_exit_product_id" id="entry_exit_product_id" style="width:100%;">
+										    <option value="">select option</option>
+										    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+									</select>
+				      			</div>
+				      			<div class="col-md-4">
+				      				<label for="if_refundable">If Refundable:</label>
+			                		<select class="form-control select2" name="if_refundable" id="if_refundable" style="width:100%;">
+										    <option value="">select option</option>
+										    <option value="refundable">Refundable</option>
+										    <option value="not_refundable">Not Refundable</option>
+									 </select>
+				      			</div>
+				      			<div class="col-md-4">
+						             <br><button type="button" id="search_entry_exit" class="btn btn-info" onclick="searchEntryExit()">Search</button>
+						        </div>
+				      		</div> 
+				      		<div id="view_entry_exit_data" style="display:none;">
+			          			<table id="entry_exit_table" class="table table-striped">
+									<thead style="background-color:#5c6499;color:#ffffff;">
+										<tr>
+											<th>Product Id</th>
+											<th>Product Name</th>
+											<th>Units</th>
+											<th>Quantity</th>
+											<th>Challan No/Invoice No</th>
+											<th>Entry Date</th>
+											<th>Entry Type</th>
+										</tr>
+									</thead>
+								    <tbody id="entry_exit_data">
+								      
+								    </tbody>
+						  		</table>
+			          		</div>
+			      		 -->                                                  
 			        	<ul class="nav nav-tabs nav-justified" role="tablist">
 						    <li class="nav-item">
 						      <a class="nav-link active" data-toggle="tab" href="#by_entry" role="tab" aria-controls="by_entry" aria-selected="true">By Entry</a>
@@ -1008,10 +1329,13 @@ function searchExit(){
 						    <li class="nav-item">
 						      <a class="nav-link" data-toggle="tab" href="#by_exit" role="tab" aria-controls="by_exit" aria-selected="false">By Exit</a>
 						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" href="#by_product" role="tab" aria-controls="by_product" aria-selected="false">By Product</a>
+						    </li>
 						</ul>
 						
 						<div class="tab-content mt-3">
-					          <div class="tab-pane active" id="by_entry" role="tabpanel" aria-labelledby="entry-tab">
+					          <div class="tab-pane fade show active" id="by_entry" role="tabpanel" aria-labelledby="entry-tab">
 					                <h6>Filter Product Entry</h6>
 					                <div class="row">
 					                	<div class="col-md-3">
@@ -1038,12 +1362,13 @@ function searchExit(){
 					                		<br><button type="button" id="search_entry" class="btn btn-info" onclick="searchEntry()">Search</button>
 					                	</div>
 					                </div>
-					                <div id="view_entry_data" style="display:none;">
+					                <div id="view_entry_data" class="table-responsive" style="display:none;">
 					          			<table id="entry_table" class="table table-striped">
-											<thead style="background-color:#5c6499;color:#ffffff;">
+											<thead class="thead-inverse" style="background-color:#5c6499;color:#ffffff;">
 												<tr>
 													<th>Product Id</th>
 													<th>Product Name</th>
+													<th>Is Refundable?</th>
 													<th>Units</th>
 													<th>Quantity</th>
 													<th>Challan No/Invoice No</th>
@@ -1058,7 +1383,7 @@ function searchExit(){
 					          		</div>
 					                
 					          </div>
-					          <div class="tab-pane" id="by_exit" role="tabpanel" aria-labelledby="exit-tab">
+					          <div class="tab-pane fade" id="by_exit" role="tabpanel" aria-labelledby="exit-tab">
 					            	<h6>Filter Product Exit</h6>
 					            	<div class="row">
 					                	<div class="col-md-3">
@@ -1086,12 +1411,13 @@ function searchExit(){
 					                		<br><button type="button" id="search_exit" class="btn btn-info" onclick="searchExit()">Search</button>
 					                	</div>
 					                </div>
-					                <div id="view_exit_data" style="display:none;">
+					                <div id="view_exit_data" class="table-responsive" style="display:none;">
 					          			<table id="exit_table" class="table table-striped">
-											<thead style="background-color:#5c6499;color:#ffffff;">
+											<thead class="thead-inverse" style="background-color:#5c6499;color:#ffffff;">
 												<tr>
 													<th>Product Id</th>
 													<th>Product Name</th>
+													<th>Is Refundable?</th>
 													<th>Units</th>
 													<th>Quantity</th>
 													<th>Challan No</th>
@@ -1103,6 +1429,78 @@ function searchExit(){
 										      
 										    </tbody>
 								  		</table>
+					          		</div>
+					          </div>
+					          <div class="tab-pane fade" id="by_product" role="tabpanel" aria-labelledby="product-tab">
+					            	<h6>Filter By Product</h6>
+					            	<div class="row">
+					                	<div class="col-md-3">
+					                		<label for="product_id">Select Product:</label>
+					                		<select class="form-control select2" name="f_product_id" id="f_product_id" style="width:100%;">
+												    <option value="">select option</option>
+												    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+											 </select>
+					                	</div>
+					                	<!-- 
+					                		<div class="col-md-3">
+						                		<label for="if_refundable">If Refundable:</label>
+						                		<select class="form-control select2" name="if_refundable" id="if_refundable" style="width:100%;">
+													    <option value="">select option</option>
+													    <option value="refundable">Refundable</option>
+													    <option value="not_refundable">Not Refundable</option>
+												 </select>
+						                	</div>
+						                	
+					                	 -->
+					                	 					                	
+					                	<div class="col-md-3">
+					                		<label for="s_date">Select Date:</label>
+											<input type="date" id="s_date" name="s_date" placeholder="Enter Transaction Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="e_date">Select To Date:</label>
+											<input type="date" id="e_date" name="e_date" placeholder="To Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<br><button type="button" id="search_product" class="btn btn-info" onclick="searchProduct()">Search</button>
+					                	</div>
+					                </div>
+					                <div id="view_product_data" class="table-responsive" style="display:none;">
+					          			<table id="product_entry_table" class="table table-striped">
+											<thead class="thead-inverse" style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Is Refundable?</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No</th>
+													<th>Entry Date</th>
+													<th>Entry Type</th>
+												</tr>
+											</thead>
+										    <tbody id="product_entry_data">
+										      
+										    </tbody>
+								  		</table>
+								  		<table id="product_exit_table" class="table table-striped">
+											<thead style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Is Refundable?</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No</th>
+													<th>Exit Date</th>
+													<th>Exit Type</th>
+												</tr>
+											</thead>
+										    <tbody id="product_exit_data">
+										      
+										    </tbody>
+								  		</table>
+								  		
 					          		</div>
 					          </div>
 					          
@@ -1227,19 +1625,19 @@ function searchExit(){
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input id="product_name" name="product_name" class="form-control" type="text" value="">
+	                      <input id="product_name" name="product_name" class="form-control" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Unit<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input id="product_unit" name="product_unit" class="form-control" type="text" value="">
+	                      <input id="product_unit" name="product_unit" class="form-control" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Product Issue Quantity<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0">
+	                      <input id="product_quantity" name="product_quantity" class="form-control" type="text" value="0" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1282,19 +1680,19 @@ function searchExit(){
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Staff Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="staff_name" name="staff_name" type="text" value="">
+	                      <input class="form-control" id="staff_name" name="staff_name" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Staff Designation<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="staff_designation" name="staff_designation" type="text" value="">
+	                      <input class="form-control" id="staff_designation" name="staff_designation" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Employee Code<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="emp_code" name="emp_code" type="text" value="">
+	                      <input class="form-control" id="emp_code" name="emp_code" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1318,13 +1716,13 @@ function searchExit(){
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="contractor_name" name="contractor_name" type="text" value="">
+	                      <input class="form-control" id="contractor_name" name="contractor_name" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Department<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="contractor_department" name="contractor_department" type="text" value="">
+	                      <input class="form-control" id="contractor_department" name="contractor_department" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1354,7 +1752,7 @@ function searchExit(){
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="vehicle_no" name="vehicle_no" type="text" value="">
+	                      <input class="form-control" id="vehicle_no" name="vehicle_no" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1444,7 +1842,7 @@ function searchExit(){
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Location Name<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
-	                      <input class="form-control" id="location_name" name="location_name" type="text" value="">
+	                      <input class="form-control" id="location_name" name="location_name" type="text" value="" required>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
@@ -1593,9 +1991,15 @@ function searchExit(){
         <div id="viewVehicles" style="display:none;" class="col main pt-5 mt-3">
                 
                 <h3 class="mb-0">Vehicle Details</h3>
+                <div class="alert alert-danger">
+				    <strong>Note:</strong> Dates marked Red indicates validity of the certificate is over.
+				</div>
+				<div class="alert alert-warning">
+				    <strong>Note:</strong> Dates marked Orange indicates validity of the certificate is going to get over in the next 7 days.
+			</div>
 
             <div class="row my-4">
-                <div class="col-lg-3 col-md-4">
+                <div class="width-fit-content col-lg-3 col-md-4">
                     <div class="card card-inverse bg-inverse mt-3">
                         <div class="card-body">
                             <h4 class="card-title">Total Vehicles</h4>
@@ -1603,7 +2007,7 @@ function searchExit(){
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-8">
+                <div class="width-fit-content col-lg-9 col-md-8">
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead class="thead-inverse">
@@ -1625,18 +2029,21 @@ function searchExit(){
                                 </tr>
                             </thead>
                             <tbody>
-                            	<tr th:each="vr : ${vehicleList}">
+                            	<tr th:each="vr : ${vehicleListDto}">
                             		<td th:text="${vr.vehicle_no}"></td>
                             		<td th:text="${vr.vehicle_type}"></td>
                             		<td th:text="${vr.driver_lisence_no}"></td>
                             		<td th:text="${vr.tyre_no}"></td>
                             		<td th:text="${vr.battery_no}"></td>
                             		<td th:text="${vr.pollution_from_date}"></td>
-                            		<td th:text="${vr.pollution_expiry_date}"></td>
+                            		<td th:if="${vr.pollution_expiry_date != null}" th:text="${#temporals.format(vr.pollution_expiry_date, 'yyyy-MM-dd')}" th:classappend="${vr.pollution_expiry_date.isBefore(T(java.time.LocalDate).now())} ? 'exceeded-date' : (${vr.isPollutionExpiringInNextWeek()} ? 'expiring-soon' : 'safe-date')"></td>
+                            		<td th:if="${vr.pollution_expiry_date == null}">N/A</td>
                             		<td th:text="${vr.fitness_from_date}"></td>
-                            		<td th:text="${vr.fitness_end_date}"></td>
+                            		<td th:if="${vr.fitness_end_date != null}" th:text="${#temporals.format(vr.fitness_end_date, 'yyyy-MM-dd')}" th:classappend="${vr.fitness_end_date.isBefore(T(java.time.LocalDate).now())} ? 'exceeded-date' : (${vr.isFitnessExpiringInNextWeek()} ? 'expiring-soon' : 'safe-date')"></td>
+                            		<td th:if="${vr.fitness_end_date == null}">N/A</td>
                             		<td th:text="${vr.insurance_from_date}"></td>
-                            		<td th:text="${vr.insurance_end_date}"></td>
+                            		<td th:if="${vr.insurance_end_date != null}" th:text="${#temporals.format(vr.insurance_end_date, 'yyyy-MM-dd')}" th:classappend="${vr.insurance_end_date.isBefore(T(java.time.LocalDate).now())} ? 'exceeded-date' : (${vr.isInsuranceExpiringInNextWeek()} ? 'expiring-soon' : 'safe-date')"></td>
+                            		<td th:if="${vr.insurance_end_date == null}">N/A</td>
                             		<td th:text="${vr.last_servicing_date}"></td>
                             		<td><a th:href="@{/editVehicle(vehicle_id=${vr.id})}" th:target="_blank"><i class="fa-solid fa-pen-to-square fa-xl"></i></a></td>
                             		<td><a class="btn_admin_del" th:data-id="${vr.id}" th:onclick="deleteVehicle(this.getAttribute('data-id'))"><i class="fa-solid fa-trash fa-xl" style="color: #c52216;"></i></a></td>
@@ -1684,6 +2091,55 @@ function searchExit(){
                 </div>
             </div>
         </div>
+        <div id="addProductReturn" style="display:none;" class="col main pt-5 mt-3">
+       			<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddFuel">
+				      	View Product Return&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseAddFuel" class="collapse">
+				      <div class="card-body">
+				        	<div class="row my-4">
+				                <div class="col-lg-3 col-md-4">
+				                    <div class="card">
+				                        <div class="card-body">
+				                            <h4 class="card-title">Total Products Returned</h4>
+				                            <p class="card-text" style="font-size:50px;"><b th:text="${products_returned}"></b></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-lg-9 col-md-8">
+				                    <div class="table-responsive">
+				                        <table class="table table-striped">
+				                            <thead class="thead-inverse">
+				                                <tr>
+				                                    <th>Product Id</th>
+				                                    <th>Product Name</th>
+				                                    <th>Quantity Returned</th>
+				                                    <th>Return Date</th>
+				                                    <th>Contractor Name</th>
+				                                    <th>Receiving Person Name</th>
+				                                </tr>
+				                            </thead>
+				                            <tbody>
+				                            	<tr th:each="pr : ${productReturnList}">
+				                            		<td th:text="${pr.prod_id}"></td>
+				                            		<td th:text="${pr.prod_name}"></td>
+				                            		<td th:text="${pr.return_quantity}"></td>
+				                            		<td th:text="${pr.return_date}"></td>
+				                            		<td th:text="${pr.contractor_name}"></td>
+				                            		<td th:text="${pr.receiving_person_name}"></td>
+				                            	</tr>
+				                            </tbody>
+				                        </table>
+				                    </div>
+				                </div>
+				            </div>
+				      </div>
+				    </div>
+				  </div><br>
+		</div>
         <!-- Fuel Add Exit -->
         <div id="viewFuel" style="display:none;" class="col main pt-5 mt-3">
         	<div class="card">

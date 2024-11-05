@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
 import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto;
+import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto_by_product;
 import com.gautam_construction.InventoryManagement.DTO.product_add_by_local_office_dto;
 import com.gautam_construction.InventoryManagement.model.product_add_by_ghy_office;
 import com.gautam_construction.InventoryManagement.model.product_add_by_local_office;
@@ -51,10 +52,13 @@ public interface product_add_by_local_office_repository extends JpaRepository<pr
     @Transactional
 	void DeleteAllProductAddByLocalOffice(@Param("invoice_no") String invoice_no);
 	
-	public final static String GET_PRODUCT_FILTER_BY_SEARCH = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto(pe.prod_id,p.name,p.unit,pe.quantity,pe.invoice_no,pe.invoice_date,'By Local Office') FROM product_add_by_local_office pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (:date IS NULL OR :date = '' OR pe.invoice_date=:date)";
+	public final static String GET_PRODUCT_FILTER_BY_SEARCH = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto(pe.prod_id,p.name,p.type,p.unit,pe.quantity,pe.invoice_no,pe.invoice_date,'By Local Office') FROM product_add_by_local_office pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (:date IS NULL OR :date = '' OR pe.invoice_date=:date)";
 	@Query(value=GET_PRODUCT_FILTER_BY_SEARCH)
 	List<filter_product_search_dto> getProductFilterBySearch(@Param("prod_id") String prod_id,@Param("date") String date);
 	
-
+	public final static String GET_PRODUCT_FILTER_SEARCH_BY_PRODUCT = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto_by_product(pe.prod_id,p.name,p.type,p.unit,pe.quantity,pe.invoice_no,pe.invoice_date,'By Local Office') FROM product_add_by_local_office pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (COALESCE(:s_date, '') = '' OR STR_TO_DATE(pe.invoice_date, '%Y-%m-%d') >= STR_TO_DATE(:s_date, '%Y-%m-%d'))"
+			+ "  AND (COALESCE(:e_date, '') = '' OR STR_TO_DATE(pe.invoice_date, '%Y-%m-%d') <= STR_TO_DATE(:e_date, '%Y-%m-%d')) ORDER BY pe.invoice_date";
+	@Query(value=GET_PRODUCT_FILTER_SEARCH_BY_PRODUCT)
+	List<filter_product_search_dto_by_product> getProductFilterSearchByProduct(@Param("prod_id") String prod_id,@Param("s_date") String s_date,@Param("e_date") String e_date);
 	
 }

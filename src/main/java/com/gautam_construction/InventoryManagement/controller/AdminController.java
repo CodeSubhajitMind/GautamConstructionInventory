@@ -1,6 +1,8 @@
 package com.gautam_construction.InventoryManagement.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +28,9 @@ import com.gautam_construction.InventoryManagement.DTO.product_exit_by_contracto
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_misc_dto;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_staff_dto;
 import com.gautam_construction.InventoryManagement.DTO.userLoginDetailsDTO;
+import com.gautam_construction.InventoryManagement.DTO.vehicle_list_dto;
 import com.gautam_construction.InventoryManagement.model.contractor;
+import com.gautam_construction.InventoryManagement.model.fuel;
 import com.gautam_construction.InventoryManagement.model.fuel_entry;
 import com.gautam_construction.InventoryManagement.model.fuel_exit;
 import com.gautam_construction.InventoryManagement.model.location;
@@ -38,6 +42,7 @@ import com.gautam_construction.InventoryManagement.model.product_exit_by_challan
 import com.gautam_construction.InventoryManagement.model.product_exit_by_contractor;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_miscellaneous;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_staff;
+import com.gautam_construction.InventoryManagement.model.product_return;
 import com.gautam_construction.InventoryManagement.model.staff;
 import com.gautam_construction.InventoryManagement.model.users;
 import com.gautam_construction.InventoryManagement.model.vehicle;
@@ -56,6 +61,7 @@ import com.gautam_construction.InventoryManagement.repository.product_exit_by_ch
 import com.gautam_construction.InventoryManagement.repository.product_exit_by_contractor_repository;
 import com.gautam_construction.InventoryManagement.repository.product_exit_by_miscellaneous_repository;
 import com.gautam_construction.InventoryManagement.repository.product_exit_by_staff_repository;
+import com.gautam_construction.InventoryManagement.repository.product_return_repository;
 import com.gautam_construction.InventoryManagement.repository.userRepository;
 import com.gautam_construction.InventoryManagement.repository.user_roles_repository;
 import com.gautam_construction.InventoryManagement.services.loginServices;
@@ -107,7 +113,12 @@ public class AdminController {
 	@Autowired
 	private fuel_exit_repository fexr;
 	
+	@Autowired
+	private product_return_repository prr;
+	
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
+	
+	DateTimeFormatter formatterL = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	@RequestMapping("/AdminHome")
 	public Object AdminHome(HttpSession session,Model model,Authentication authentication) {
@@ -136,12 +147,44 @@ public class AdminController {
         List<staff> staffList = sr.getAllStaffs();
         List<contractor> contractorList = cr.getAllContractors();
         List<vehicle> vehicleList = vr.getAllVehicles();
+        List<vehicle_list_dto> vehicleListDto = new ArrayList<>();
         List<location> locationList = lr.getAllLocations();
+        List<product_return> productReturnList = prr.getAllProductReturn();
+        
         model.addAttribute("productList", productList);
         model.addAttribute("staffList", staffList);
         model.addAttribute("contractorList", contractorList);
         model.addAttribute("vehicleList", vehicleList);
         model.addAttribute("locationList", locationList);
+
+        model.addAttribute("productReturnList",productReturnList);
+        model.addAttribute("products_returned", productReturnList.size());
+        
+        
+        for(vehicle vr: vehicleList) {
+        	LocalDate pollutionExpiryDate = null;
+        	if(vr.getPollution_expiry_date().isEmpty())
+        		pollutionExpiryDate = null;
+        	else
+        		pollutionExpiryDate = LocalDate.parse(vr.getPollution_expiry_date(), formatterL);
+        	
+        	LocalDate FittnessEndDate = null;
+        	if(vr.getFitness_end_date().isEmpty())
+        		FittnessEndDate = null;
+        	else
+        		FittnessEndDate = LocalDate.parse(vr.getFitness_end_date(), formatterL);
+        	
+        	LocalDate InsuranceEndDate = null;
+        	if(vr.getInsurance_end_date().isEmpty())
+        		InsuranceEndDate = null;
+        	else
+        		InsuranceEndDate = LocalDate.parse(vr.getInsurance_end_date(), formatterL);
+        	
+        	vehicle_list_dto vld = new vehicle_list_dto(vr.getId(),vr.getVehicle_no(),vr.getDriver_lisence_no(),vr.getTyre_no(),vr.getBattery_no(),vr.getPollution_from_date(),pollutionExpiryDate,vr.getFitness_from_date(),FittnessEndDate,vr.getInsurance_from_date(),InsuranceEndDate,vr.getLast_servicing_date(),vr.getVehicle_type());
+        	vehicleListDto.add(vld);
+        }
+        
+        model.addAttribute("vehicleListDto", vehicleListDto);
         
         model.addAttribute("productCount", productList.size());
         model.addAttribute("staffCount", staffList.size());
@@ -533,19 +576,47 @@ public class AdminController {
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
+		model.addAttribute("fuel_id", fuel_id);
         List<users> user_info = ur.getUserCredentiaLs(user_id);
         model.addAttribute("office_name", office_name);
         List<fuel_entry> fuel_entry_list = fer.getAllFuelEntryById(Integer.parseInt(fuel_id));
         //return "admin_home";
         model.addAttribute("fuel_entry_obj", fuel_entry_list.get(0));
-        return "edit_staff";
+        return "edit_fuel_entry";
+	}
+	
+	@RequestMapping(value="/updateFuelEntry",method=RequestMethod.POST)
+	public Object updateFuelEntry(@RequestParam("fuel_id") String fuel_id,
+			@RequestParam("fuel_type") String fuel_type,
+			@RequestParam("fuel_quantity") String fuel_quantity,
+			@RequestParam("invoice_no") String invoice_no,
+			@RequestParam("invoice_date") String invoice_date,
+			@RequestParam("vendor_name") String vendor_name,
+			@RequestParam("vehicle_no") String vehicle_no
+			) {
+		List<fuel_entry> fuel_entry_list = fer.getAllFuelEntryById(Integer.parseInt(fuel_id));
+		String fuel_entry_quantity = fuel_entry_list.get(0).getQuantity();
+		Double fuel_update_diff = Double.parseDouble(fuel_quantity) - Double.parseDouble(fuel_entry_quantity);
+		List<fuel> fuelDetails = fr.getFuelDetailsByType(fuel_type);
+		Double fuelStoreQuantity = Double.parseDouble(fuelDetails.get(0).getQuantity());
+		Double updatedFuelStoreQuantity = fuelStoreQuantity + fuel_update_diff;
+		fer.UpdateFuelEntryAllAttr(Integer.parseInt(fuel_id), fuel_type, fuel_quantity, invoice_no, invoice_date, vendor_name, vehicle_no);
+		fr.UpdateFuelQuantity(fuel_type, updatedFuelStoreQuantity.toString());
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/deleteFuelEntry",method=RequestMethod.POST)
 	public Object deleteFuelEntry(@RequestParam("fuel_id") String fuel_id) throws Exception {
 		//String pass = "abc123";
+		List<fuel_entry> fuelEntryDetails = fer.getAllFuelEntryById(Integer.parseInt(fuel_id));
+		String fuelEntryQuantity =  fuelEntryDetails.get(0).getQuantity();
+		String fuel_type = fuelEntryDetails.get(0).getFuel_type();
+		List<fuel> fuelDetails = fr.getFuelDetailsByType(fuel_type);
+		String fuelStoreQuantity = fuelDetails.get(0).getQuantity();
+		Double fuel_balance = Double.parseDouble(fuelStoreQuantity)-Double.parseDouble(fuelEntryQuantity);
 		fer.deleteFuelEntryId(Integer.parseInt(fuel_id));
+		fr.UpdateFuelQuantity(fuel_type, fuel_balance.toString());
 		return "success";
 	}
 	
@@ -562,18 +633,47 @@ public class AdminController {
         model.addAttribute("currentDate",formatter.format(currentDate));
 		model.addAttribute("office_name", office_name);
         List<users> user_info = ur.getUserCredentiaLs(user_id);
-        model.addAttribute("office_name", office_name);
+        model.addAttribute("fuel_id", fuel_id);
         List<fuel_exit> fuel_exit_list = fexr.getAllFuelExitById(Integer.parseInt(fuel_id));
         //return "admin_home";
         model.addAttribute("fuel_exit_obj", fuel_exit_list.get(0));
-        return "edit_staff";
+        return "edit_fuel_exit";
+	}
+	
+	@RequestMapping(value="/updateFuelExit",method=RequestMethod.POST)
+	public Object updateFuelExit(@RequestParam("fuel_id") String fuel_id,
+			@RequestParam("exit_type") String exit_type,
+			@RequestParam("fuel_type") String fuel_type,
+			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam("opening_reading") String opening_reading,
+			@RequestParam("mileage") String mileage,
+			@RequestParam("fuel_issue") String fuel_issue,
+			@RequestParam("issue_date") String issue_date,
+			@RequestParam("vehicle_type") String vehicle_type
+			) {
+		List<fuel_exit> fuel_exit_list = fexr.getAllFuelExitById(Integer.parseInt(fuel_id));
+		String fuel_exit_quantity = fuel_exit_list.get(0).getFuel_issue();
+		Double fuel_update_diff = Double.parseDouble(fuel_issue) - Double.parseDouble(fuel_exit_quantity);
+		List<fuel> fuelDetails = fr.getFuelDetailsByType(fuel_type);
+		Double fuelStoreQuantity = Double.parseDouble(fuelDetails.get(0).getQuantity());
+		Double updatedFuelStoreQuantity = fuelStoreQuantity - fuel_update_diff;
+		fexr.UpdateFuelExitAllAttr(Integer.parseInt(fuel_id), exit_type, fuel_type, vehicle_no, opening_reading, mileage, fuel_issue, issue_date, vehicle_type);
+		fr.UpdateFuelQuantity(fuel_type, updatedFuelStoreQuantity.toString());
+		return "redirect:/AdminGeneralStoreHome";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/deleteFuelExit",method=RequestMethod.POST)
 	public Object deleteFuelExit(@RequestParam("fuel_id") String fuel_id) throws Exception {
 		//String pass = "abc123";
+		List<fuel_exit> fuelExitDetails = fexr.getAllFuelExitById(Integer.parseInt(fuel_id));
+		String fuelExitQuantity =  fuelExitDetails.get(0).getFuel_issue();
+		String fuel_type = fuelExitDetails.get(0).getFuel_type();
+		List<fuel> fuelDetails = fr.getFuelDetailsByType(fuel_type);
+		String fuelStoreQuantity = fuelDetails.get(0).getQuantity();
+		String fuel_balance = Double.toString(Double.parseDouble(fuelStoreQuantity)+Double.parseDouble(fuelExitQuantity));
 		fexr.deleteFuelExitId(Integer.parseInt(fuel_id));
+		fr.UpdateFuelQuantity(fuel_type, fuel_balance);
 		return "success";
 	}
 	

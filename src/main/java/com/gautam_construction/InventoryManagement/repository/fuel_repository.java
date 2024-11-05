@@ -23,5 +23,4 @@ public interface fuel_repository extends JpaRepository<fuel, Long>{
     @Transactional
 	void UpdateFuelQuantity(@Param("fuel_type") String fuel_type,@Param("quantity") String quantity);
 
-	
 }

@@ -60,44 +60,41 @@
 	              </div>
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/updateFuelEntry}" method="post" class="form" role="form">
+	                  <input id="fuel_id" name="fuel_id" class="form-control" type="hidden" th:value="${fuel_id}">
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type</label>
 	                    <div class="col-lg-9">
-	                      <select class="form-control" name="fuel_type" id="fuel_type">
-							    <option value="">select option</option>
-							    <option value="diesel">Diesel</option>
-							    <option value="petrol">Petrol</option>
-						  </select>
+	                      <input id="fuel_type" name="fuel_type" class="form-control" type="text" th:value="${fuel_entry_obj.fuel_type}" readonly>
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Issue Quantity</label>
 	                    <div class="col-lg-9">
-	                      <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" value="0">
+	                      <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" th:value="${fuel_entry_obj.quantity}">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number</label>
 	                    <div class="col-lg-9">
-	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
+	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" th:value="${fuel_entry_obj.invoice_no}">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date</label>
 	                    <div class="col-lg-9">
-	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
+	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" th:value="${fuel_entry_obj.invoice_date}">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name</label>
 	                    <div class="col-lg-9">
-	                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">
+	                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" th:value="${fuel_entry_obj.vendor_name}">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
 	                    <div class="col-lg-9">
-	                      <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
+	                      <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" th:value="${fuel_entry_obj.vehicle_no}">
 	                    </div>
 	                  </div>
 	                  <div class="form-group row">

@@ -61,6 +61,19 @@
 body, html {
   height:100%;
 }
+.exceeded-date {
+            color: red;
+        }
+.safe-date {
+    color: green;
+}
+.expiring-soon {
+            color: orange;
+        }
+.width-fit-content {
+        width: 1px;
+        white-space: nowrap;
+    }
 /*
  * Off Canvas sidebar at medium breakpoint
  * --------------------------------------------------
@@ -168,6 +181,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -197,6 +212,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -229,6 +246,8 @@ body, html {
 			$('#addProductEntryByChallan').show();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -255,6 +274,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').show();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -281,6 +302,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').show();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -309,6 +332,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -334,6 +359,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -359,6 +386,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -384,6 +413,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -403,6 +434,35 @@ body, html {
 			$('#viewLocations').hide();
 		});
 		
+		//Product Return
+		$('#link_product_return').click(function(){
+			$('#dashboard').hide();
+			$('#prod_report').hide();
+			//add product
+			$('#addProductEntryByChallan').hide();
+			$('#addProductEntryByGhyOffice').hide();
+			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').show();
+			//add fuel
+			$('#addFuelEntry').hide();
+			//exit fuel
+			$('#addFuelExit').hide();
+			
+			//exit product
+			$('#addProductExitByChallan').hide();
+			$('#addProductExitByContractor').hide();
+			$('#addProductExitByStaff').hide();
+			$('#addProductExitByMiscellaneous').hide();
+			
+			//view entries
+			$('#viewProducts').hide();
+			$('#viewStaffs').hide();
+			$('#viewContractors').hide();
+			$('#viewVehicles').hide();
+			$('#viewLocations').hide();
+		});
+		
 		//Fuel add 
 		$('#link_fuel_entry').click(function(){
 			$('#dashboard').hide();
@@ -411,6 +471,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').show();
 			//exit fuel
@@ -438,6 +500,8 @@ body, html {
 			$('#addProductEntryByChallan').hide();
 			$('#addProductEntryByGhyOffice').hide();
 			$('#addProductEntryBylocalOffice').hide();
+			//add product return
+			$('#addProductReturn').hide();
 			//add fuel
 			$('#addFuelEntry').hide();
 			//exit fuel
@@ -469,6 +533,7 @@ body, html {
 			$('#addContractor').hide();
 			$('#addVehicle').hide();
 			$('#addLocation').hide();
+			$('#addProductReturn').hide();
 			
 			$('#viewProducts').show();
 			$('#viewStaffs').hide();
@@ -485,6 +550,7 @@ body, html {
 			$('#addContractor').hide();
 			$('#addVehicle').hide();
 			$('#addLocation').hide();
+			$('#addProductReturn').hide();
 			
 			$('#viewProducts').hide();
 			$('#viewStaffs').show();
@@ -501,6 +567,7 @@ body, html {
 			$('#addContractor').hide();
 			$('#addVehicle').hide();
 			$('#addLocation').hide();
+			$('#addProductReturn').hide();
 			
 			$('#viewProducts').hide();
 			$('#viewStaffs').hide();
@@ -517,6 +584,7 @@ body, html {
 			$('#addContractor').hide();
 			$('#addVehicle').hide();
 			$('#addLocation').hide();
+			$('#addProductReturn').hide();
 			
 			$('#viewProducts').hide();
 			$('#viewStaffs').hide();
@@ -533,6 +601,7 @@ body, html {
 			$('#addContractor').hide();
 			$('#addVehicle').hide();
 			$('#addLocation').hide();
+			$('#addProductReturn').hide();
 			
 			$('#viewProducts').hide();
 			$('#viewStaffs').hide();
@@ -789,6 +858,31 @@ body, html {
 	        });
 	    });
 		
+		$('#product_id_return').change(function(e){
+			var productId = document.getElementById("product_id_return").value;
+			var token = $('#_csrf').attr("content");
+			var header = $('#_csrf_header').attr("content");
+			$.ajax({
+	            type: 'GET',
+	            async: false,
+	            url: '/getProductDetails',
+	            data: {product_id:productId},
+	            beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			    },
+	            success: function(data){
+	                // Handle the response from the controller
+	               // $('#result').html(response);
+	                document.getElementById("product_name_return").value = data.name;
+	                document.getElementById("units_return").value = data.unit;
+	            },
+	            error: function(xhr, status, error){
+	                // Handle errors
+	                console.error(xhr.responseText);
+	            }
+	        });
+		});
+		
 		
 	});
 
@@ -832,57 +926,78 @@ body, html {
 		 $.ajax({                                                                                                           
 			 type: "GET",                                                           
 			 async: false,
-             url: "/getProductEntryDetails",
-             data: {entry_type:entry_type,entry_date:entry_date,entry_product_id:entry_product_id},
-             beforeSend: function(xhr){
+	         url: "/getProductEntryDetails",
+	         data: {entry_type:entry_type,entry_date:entry_date,entry_product_id:entry_product_id},
+	         beforeSend: function(xhr){
 					xhr.setRequestHeader(header,token);
 			  },
-             success: function(data){
-            	 /*
-            	 var table = $('#entry_table').DataTable({
-                     // Initial setup options
-                 });
-            	 */
-            	 //table.clear();
-            	 $("#entry_table tbody").empty();
-            	 for (let i = 0; i < data.length; i++) {
-                     var filteredProductObj = data[i];
-                     
-                     /*
-                     table.row.add([
-                    	 filteredProductObj.prod_id,
-                    	 filteredProductObj.prod_name,
-                    	 filteredProductObj.prod_unit,
-                    	 filteredProductObj.prod_quantity,
-                    	 filteredProductObj.challan_no,
-                         filteredProductObj.challan_date,
-                         filteredProductObj.challan_type
-                     ]);
-                     
-                     table.draw(); 
-                     */
-                     
-                    
-                     // For example, append to a div
-                     $('#entry_data').append(
-                         '<tr>' +
-                         '<td>' + filteredProductObj.prod_id + '</td>' +
-                         '<td>' + filteredProductObj.prod_name + '</td>' +
-                         '<td>' + filteredProductObj.prod_unit + '</td>' +
-                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
-                         '<td>' + filteredProductObj.challan_no + '</td>' +
-                         '<td>' + filteredProductObj.challan_date + '</td>' +
-                         '<td>' + filteredProductObj.challan_type + '</td>' +
-                         '</tr>'
-                     );
-                   
-                     
-                     $('#view_entry_data').show();
-                 }
-             }                                                                    
+	         success: function(data){
+	        	 
+	        	 $('#entry_table').DataTable().destroy(); 
+	       		// Add Excel export button only to table1
+	       	 	var entry_table = $('#entry_table').DataTable({
+	       	        dom: 'Bfrtip',
+	       	        buttons: [
+	       	            {
+	       	                extend: 'excelHtml5',
+	       	                title: 'Product Report'
+	       	            }
+	       	        ]
+	       	    });
+	        	 /*
+	        	 var table = $('#entry_table').DataTable({
+	                 // Initial setup options
+	             });
+	        	 */
+	        	 //table.clear();
+	        	 $("#entry_table tbody").empty();
+	        	 
+	        	 
+		      		
+		     	// Clear the existing data
+	            entry_table.clear().draw();
+	        	 for (let i = 0; i < data.length; i++) {
+	                 var filteredProductObj = data[i];                
+	                 
+	                 // For example, append to a div
+	                 /*
+	                 $('#entry_data').append(
+	                     '<tr>' +
+	                     '<td>' + filteredProductObj.prod_id + '</td>' +
+	                     '<td>' + filteredProductObj.prod_name + '</td>' +
+	                     '<td>' + filteredProductObj.prod_unit + '</td>' +
+	                     '<td>' + filteredProductObj.prod_quantity + '</td>' +
+	                     '<td>' + filteredProductObj.challan_no + '</td>' +
+	                     '<td>' + filteredProductObj.challan_date + '</td>' +
+	                     '<td>' + filteredProductObj.challan_type + '</td>' +
+	                     '</tr>'
+	                 );
+	                 */
+	                
+	               
+	                 
+	                 entry_table.row.add([
+	                	 filteredProductObj.prod_id,
+	                	 filteredProductObj.prod_name,
+	                	 filteredProductObj.type,
+	                	 filteredProductObj.prod_unit,
+	                	 filteredProductObj.prod_quantity,
+	                	 filteredProductObj.challan_no,
+	                     filteredProductObj.challan_date,
+	                     filteredProductObj.challan_type
+	                 ]);
+	                 
+	                 
+	                 
+	                  
+	              
+	             }
+	        	 entry_table.draw(); 
+	        	 $('#view_entry_data').show();
+	         }                                                                    
 	   });
 	}
-	
+
 	function searchExit(){
 		
 		var token = $('#_csrf').attr("content");
@@ -895,31 +1010,186 @@ body, html {
 		 $.ajax({                                                                                                           
 			 type: "GET",                                                           
 			 async: false,
-             url: "/getProductExitDetails",
-             data: {exit_type:exit_type,exit_date:exit_date,exit_product_id:exit_product_id},
-             beforeSend: function(xhr){
+	         url: "/getProductExitDetails",
+	         data: {exit_type:exit_type,exit_date:exit_date,exit_product_id:exit_product_id},
+	         beforeSend: function(xhr){
 					xhr.setRequestHeader(header,token);
 			  },
-             success: function(data){
-            	 $("#exit_table tbody").empty();
-            	 for (let i = 0; i < data.length; i++) {
-                     var filteredProductObj = data[i];
-                     
-                     // For example, append to a div
-                     $('#exit_data').append(
-                             '<tr>' +
-                             '<td>' + filteredProductObj.prod_id + '</td>' +
-                             '<td>' + filteredProductObj.prod_name + '</td>' +
-                             '<td>' + filteredProductObj.prod_unit + '</td>' +
-                             '<td>' + filteredProductObj.prod_quantity + '</td>' +
-                             '<td>' + filteredProductObj.challan_no + '</td>' +
-                             '<td>' + filteredProductObj.challan_date + '</td>' +
-                             '<td>' + filteredProductObj.challan_type + '</td>' +
-                             '</tr>'
-                         );
-                         $('#view_exit_data').show();
-                 }
-             }                                                                    
+	         success: function(data){
+	        	 	$('#exit_table').DataTable().destroy(); 
+	          		// Add Excel export button only to table1
+	          	    var exit_table = $('#exit_table').DataTable({
+	          	        dom: 'Bfrtip',
+	          	        buttons: [
+	          	            {
+	          	                extend: 'excelHtml5',
+	          	                title: 'Product Report'
+	          	            }
+	          	        ]
+	          	    });
+	          		
+	          	  
+	        	 $("#exit_table tbody").empty();
+	        	// Clear the existing data
+	             exit_table.clear().draw();
+	        	 for (let i = 0; i < data.length; i++) {
+	                 var filteredProductObj = data[i];
+	                 
+	                 // For example, append to a div
+	                 /*
+	                 $('#exit_data').append(
+	                         '<tr>' +
+	                         '<td>' + filteredProductObj.prod_id + '</td>' +
+	                         '<td>' + filteredProductObj.prod_name + '</td>' +
+	                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+	                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+	                         '<td>' + filteredProductObj.challan_no + '</td>' +
+	                         '<td>' + filteredProductObj.challan_date + '</td>' +
+	                         '<td>' + filteredProductObj.challan_type + '</td>' +
+	                         '</tr>'
+	                     );
+	                 */
+	                 
+	                 
+	                 exit_table.row.add([
+	                	 filteredProductObj.prod_id,
+	                	 filteredProductObj.prod_name,
+	                	 filteredProductObj.type,
+	                	 filteredProductObj.prod_unit,
+	                	 filteredProductObj.prod_quantity,
+	                	 filteredProductObj.challan_no,
+	                     filteredProductObj.challan_date,
+	                     filteredProductObj.challan_type
+	                 ]);
+	                     
+	                 
+	                     
+	                     
+	             }
+	        	 exit_table.draw(); 
+	        	 $('#view_exit_data').show();
+	         }                                                                    
+	   });
+	}
+
+	function searchProduct(){
+		var token = $('#_csrf').attr("content");
+		 var header = $('#_csrf_header').attr("content");
+		 var f_product_id = $('#f_product_id').val();
+		 var s_date = $('#s_date').val();
+		 var e_date = $('#e_date').val();
+		 
+		 $.ajax({                                                                                                           
+			 type: "GET",                                                           
+			 async: false,
+	         url: "/getProductEntryExitDetails",
+	         data: {f_product_id:f_product_id,s_date:s_date,e_date:e_date},
+	         beforeSend: function(xhr){
+					xhr.setRequestHeader(header,token);
+			  },
+	         success: function(data){
+	        	 $('#product_entry_table').DataTable().destroy(); 
+	     		// Add Excel export button only to table1
+	     	  var product_entry_table = $('#product_entry_table').DataTable({
+	     	        dom: 'Bfrtip',
+	     	        buttons: [
+	     	            {
+	     	                extend: 'excelHtml5',
+	     	                title: 'Product Report'
+	     	            }
+	     	        ]
+	     	    });
+	     		
+	     	 $('#product_exit_table').DataTable().destroy(); 
+	     	// Add Excel export button only to table1
+	     	 var product_exit_table = $('#product_exit_table').DataTable({
+	     	       dom: 'Bfrtip',
+	     	       buttons: [
+	     	           {
+	     	               extend: 'excelHtml5',
+	     	               title: 'Product Report'
+	     	           }
+	     	       ]
+	     	   });
+	        	 $("#product_entry_table tbody").empty();
+	        	 $("#product_exit_table tbody").empty();
+	        	 product_entry_table.clear().draw();
+	        	 product_exit_table.clear().draw();
+	        	 var entryProductList = data[0];
+	        	 var exitProductList = data[1];
+	        	 
+	        	 for (let i = 0; i < entryProductList.length; i++) {
+	                 var filteredProductObj = entryProductList[i];
+	                 
+	              // For example, append to a div
+	              /*
+	                 $('#product_entry_data').append(
+	                         '<tr>' +
+	                         '<td>' + filteredProductObj.prod_id + '</td>' +
+	                         '<td>' + filteredProductObj.prod_name + '</td>' +
+	                         '<td>' + filteredProductObj.type + '</td>' +
+	                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+	                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+	                         '<td>' + filteredProductObj.challan_no + '</td>' +
+	                         '<td>' + filteredProductObj.challan_date + '</td>' +
+	                         '<td>' + filteredProductObj.challan_type + '</td>' +
+	                         '</tr>'
+	                 );
+	              */
+	              
+	                 product_entry_table.row.add([
+	                	 filteredProductObj.prod_id,
+	                	 filteredProductObj.prod_name,
+	                	 filteredProductObj.type,
+	                	 filteredProductObj.prod_unit,
+	                	 filteredProductObj.prod_quantity,
+	                	 filteredProductObj.challan_no,
+	                     filteredProductObj.challan_date,
+	                     filteredProductObj.challan_type
+	                 ]);
+	                
+	             }
+	        	 
+	        	 
+	        	 for (let i = 0; i < exitProductList.length; i++) {
+	                 var filteredProductObj = exitProductList[i];
+	                 
+	                 // For example, append to a div
+	                 /*
+	                 $('#product_exit_data').append(
+	                         '<tr>' +
+	                         '<td>' + filteredProductObj.prod_id + '</td>' +
+	                         '<td>' + filteredProductObj.prod_name + '</td>' +
+	                         '<td>' + filteredProductObj.type + '</td>' +
+	                         '<td>' + filteredProductObj.prod_unit + '</td>' +
+	                         '<td>' + filteredProductObj.prod_quantity + '</td>' +
+	                         '<td>' + filteredProductObj.challan_no + '</td>' +
+	                         '<td>' + filteredProductObj.challan_date + '</td>' +
+	                         '<td>' + filteredProductObj.challan_type + '</td>' +
+	                         '</tr>'
+	                 );
+	                 */
+	                 
+	                 product_exit_table.row.add([
+	                	 filteredProductObj.prod_id,
+	                	 filteredProductObj.prod_name,
+	                	 filteredProductObj.type,
+	                	 filteredProductObj.prod_unit,
+	                	 filteredProductObj.prod_quantity,
+	                	 filteredProductObj.challan_no,
+	                     filteredProductObj.challan_date,
+	                     filteredProductObj.challan_type
+	                 ]);
+	              
+	             }
+	        	 
+	        	 product_entry_table.draw();
+	        	 product_exit_table.draw();
+	        	 $('#view_product_data').show();
+	        	 
+	        	 
+	     		
+	         }                                                                    
 	   });
 	}
 	
@@ -957,7 +1227,7 @@ body, html {
         <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
             <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
                 <li id="link_dashboard" class="nav-item active"><a class="nav-link" href="#">Dashboard</a></li>
-                <li id="link_prod_report" class="nav-item"><a class="nav-link" href="#">Product Report</a></li>
+                <li id="link_prod_report" class="nav-item"><a class="nav-link" href="#">Product Reports</a></li>
                 <li class="nav-item">
                     <a class="nav-link" href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports▾</a>
                     <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
@@ -985,6 +1255,7 @@ body, html {
 	                       <li id="link_prod_exit_by_miscellaneous" class="nav-item"><a class="nav-link" href="#">By Miscellaneous</a></li>
 	                    </ul>
                 </li>
+                <li id="link_product_return" class="nav-item"><a class="nav-link" href="#">Add Product Return</a></li>
                 <li id="link_fuel_entry" class="nav-item"><a class="nav-link" href="#">Add Fuel Entry</a></li>
                 <li id="link_fuel_exit" class="nav-item"><a class="nav-link" href="#">Add Fuel Exit</a></li>
             </ul>
@@ -992,6 +1263,7 @@ body, html {
         <!--/col-->
 
         <div id="dashboard" class="col main pt-5 mt-3">
+        
             <h1 class="display-4 d-none d-sm-block">
             	Shree Gautam Construction Co Ltd.(Noonmati Flyover)
             </h1>
@@ -1140,10 +1412,13 @@ body, html {
 						    <li class="nav-item">
 						      <a class="nav-link" data-toggle="tab" href="#by_exit" role="tab" aria-controls="by_exit" aria-selected="false">By Exit</a>
 						    </li>
+						    <li class="nav-item">
+						      <a class="nav-link" data-toggle="tab" href="#by_product" role="tab" aria-controls="by_product" aria-selected="false">By Product</a>
+						    </li>
 						</ul>
 						
 						<div class="tab-content mt-3">
-					          <div class="tab-pane active" id="by_entry" role="tabpanel" aria-labelledby="entry-tab">
+					          <div class="tab-pane fade show active" id="by_entry" role="tabpanel" aria-labelledby="entry-tab">
 					                <h6>Filter Product Entry</h6>
 					                <div class="row">
 					                	<div class="col-md-3">
@@ -1176,6 +1451,7 @@ body, html {
 												<tr>
 													<th>Product Id</th>
 													<th>Product Name</th>
+													<th>Is Refundable?</th>
 													<th>Units</th>
 													<th>Quantity</th>
 													<th>Challan No/Invoice No</th>
@@ -1190,7 +1466,7 @@ body, html {
 					          		</div>
 					                
 					          </div>
-					          <div class="tab-pane" id="by_exit" role="tabpanel" aria-labelledby="exit-tab">
+					          <div class="tab-pane fade" id="by_exit" role="tabpanel" aria-labelledby="exit-tab">
 					            	<h6>Filter Product Exit</h6>
 					            	<div class="row">
 					                	<div class="col-md-3">
@@ -1224,6 +1500,7 @@ body, html {
 												<tr>
 													<th>Product Id</th>
 													<th>Product Name</th>
+													<th>Is Refundable?</th>
 													<th>Units</th>
 													<th>Quantity</th>
 													<th>Challan No</th>
@@ -1232,9 +1509,81 @@ body, html {
 												</tr>
 											</thead>
 										    <tbody id="exit_data">
+										                        
+										    </tbody>
+								  		</table>
+					          		</div>
+					          </div>
+					          <div class="tab-pane fade" id="by_product" role="tabpanel" aria-labelledby="product-tab">
+					            	<h6>Filter By Product</h6>
+					            	<div class="row">
+					                	<div class="col-md-3">
+					                		<label for="product_id">Select Product:</label>
+					                		<select class="form-control select2" name="f_product_id" id="f_product_id" style="width:100%;">
+												    <option value="">select option</option>
+												    <option th:each="prod : ${productList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+											 </select>
+					                	</div>
+					                	<!-- 
+					                		<div class="col-md-3">
+						                		<label for="if_refundable">If Refundable:</label>
+						                		<select class="form-control select2" name="if_refundable" id="if_refundable" style="width:100%;">
+													    <option value="">select option</option>
+													    <option value="refundable">Refundable</option>
+													    <option value="not_refundable">Not Refundable</option>
+												 </select>
+						                	</div>
+						                	
+					                	 -->
+					                	 					                	
+					                	<div class="col-md-3">
+					                		<label for="s_date">Select Date:</label>
+											<input type="date" id="s_date" name="s_date" placeholder="Enter Transaction Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<label for="e_date">Select To Date:</label>
+											<input type="date" id="e_date" name="e_date" placeholder="To Date" style="width:100%;">
+					                	</div>
+					                	<div class="col-md-3">
+					                		<br><button type="button" id="search_product" class="btn btn-info" onclick="searchProduct()">Search</button>
+					                	</div>
+					                </div>
+					                <div id="view_product_data" class="table-responsive" style="display:none;">
+					          			<table id="product_entry_table" class="table table-striped">
+											<thead class="thead-inverse" style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Is Refundable?</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No</th>
+													<th>Entry Date</th>
+													<th>Entry Type</th>
+												</tr>
+											</thead>
+										    <tbody id="product_entry_data">
 										      
 										    </tbody>
 								  		</table>
+								  		<table id="product_exit_table" class="table table-striped">
+											<thead style="background-color:#5c6499;color:#ffffff;">
+												<tr>
+													<th>Product Id</th>
+													<th>Product Name</th>
+													<th>Is Refundable?</th>
+													<th>Units</th>
+													<th>Quantity</th>
+													<th>Challan No</th>
+													<th>Exit Date</th>
+													<th>Exit Type</th>
+												</tr>
+											</thead>
+										    <tbody id="product_exit_data">
+										      
+										    </tbody>
+								  		</table>
+								  		
 					          		</div>
 					          </div>
 					          
@@ -1565,6 +1914,136 @@ body, html {
               </div>
            </div>
        </div>
+       <div id="addProductReturn" style="display:none;" class="col main pt-5 mt-3">
+       			<div class="card">
+				    <div class="card-header">
+				      <a class="card-link" data-toggle="collapse" data-target="#collapseAddFuel">
+				      	View Product Return&nbsp&nbsp&nbsp&nbsp&nbsp<i class='fas fa-angle-down'></i>
+				      </a>
+				    </div>
+				    <div id="collapseAddFuel" class="collapse">
+				      <div class="card-body">
+				        	<div class="row my-4">
+				                <div class="col-lg-3 col-md-4">
+				                    <div class="card">
+				                        <div class="card-body">
+				                            <h4 class="card-title">Total Products Returned</h4>
+				                            <p class="card-text" style="font-size:50px;"><b th:text="${products_returned}"></b></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-lg-9 col-md-8">
+				                    <div class="table-responsive">
+				                        <table class="table table-striped">
+				                            <thead class="thead-inverse">
+				                                <tr>
+				                                    <th>Product Id</th>
+				                                    <th>Product Name</th>
+				                                    <th>Quantity Returned</th>
+				                                    <th>Return Date</th>
+				                                    <th>Contractor Name</th>
+				                                    <th>Receiving Person Name</th>
+				                                </tr>
+				                            </thead>
+				                            <tbody>
+				                            	<tr th:each="pr : ${productReturnList}">
+				                            		<td th:text="${pr.prod_id}"></td>
+				                            		<td th:text="${pr.prod_name}"></td>
+				                            		<td th:text="${pr.return_quantity}"></td>
+				                            		<td th:text="${pr.return_date}"></td>
+				                            		<td th:text="${pr.contractor_name}"></td>
+				                            		<td th:text="${pr.receiving_person_name}"></td>
+				                            	</tr>
+				                            </tbody>
+				                        </table>
+				                    </div>
+				                </div>
+				            </div>
+				      </div>
+				    </div>
+				  </div><br>
+	        	<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Add Product Return</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/returnProduct}" method="post" class="form" role="form">
+	                  <div class="fuelEntryDivStart">
+	                  	  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Product Added Through<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="prod_add_through" name="prod_add_through" class="form-control" type="text" value="Sub-Contractor" readonly>
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Product Type<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="prod_type" name="prod_type" class="form-control" type="text" value="Refundable" readonly>
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Product Name<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <select class="form-control select2" name="product_id" id="product_id_return" style="width:100%;height:100%;">
+								    <option value="">select option</option>
+								    <option th:each="prod : ${refundableProductList}" th:value="${prod.prod_id}" th:text="${prod.name}"></option>
+							  </select>
+		                    </div>
+		                  </div>
+		                  <input id="product_name_return" name="product_name" class="form-control" type="hidden" value="0">
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Return Quantity<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="return_quantity" name="return_quantity" class="form-control" type="text" value="0">
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Units<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="units_return" name="units" class="form-control" type="text" value="0" readonly>
+		                    </div>
+		                  </div>		     
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Return Date<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="return_date" name="return_date" class="form-control" type="date" value="">
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Contractor Name<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <select class="form-control select2" name="contractor_name" id="contractor_name" style="width:100%;height:100%;">
+								    <option value="">select option</option>
+								    <option th:each="contractor : ${contractorList}" th:value="${contractor.name}" th:text="${contractor.name}"></option>
+							  </select>
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Receiving Person Name<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="receiving_person_name" name="receiving_person_name" class="form-control" type="text" value="">
+		                    </div>
+		                  </div>
+		                  <hr>
+	                  </div>
+	                  <!--  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_fuel_entry_add" type="button" class="btn btn-info">Add Entry(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
+		              </div>-->
+		              <hr>
+		              <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label"></label>
+		                    <div class="col-lg-9">
+		                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+													<input class="btn btn-primary" type="submit" value="Save Changes">
+		                    </div>
+		                  </div>
+	                </form>
+	              </div>
+	           </div>
+        </div>
        <div id="addFuelEntry" style="display:none;" class="col main pt-5 mt-3">
        			<div class="card">
 				    <div class="card-header">
@@ -1625,53 +2104,64 @@ body, html {
 	              </div>
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addFuelEntry}" method="post" class="form" role="form">
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type<span><b>*</b></span></label>
-	                    <div class="col-lg-9">
-	                      <select class="form-control" name="fuel_type" id="fuel_type">
-							    <option value="">select option</option>
-							    <option value="diesel">Diesel</option>
-							    <option value="petrol">Petrol</option>
-						  </select>
-	                    </div>
+	                  <div class="fuelEntryDivStart">
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <select class="form-control" name="fuel_type" id="fuel_type">
+								    <option value="">select option</option>
+								    <option value="diesel">Diesel</option>
+								    <option value="petrol">Petrol</option>
+							  </select>
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Fuel Issue Quantity<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" value="0">
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name<span><b>*</b></span></label>
+		                    <div class="col-lg-9">
+		                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">
+		                    </div>
+		                  </div>
+		                  <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+		                    <div class="col-lg-9">
+		                      <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
+		                    </div>
+		                  </div>
+		            
+		                  <hr>
 	                  </div>
 	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Issue Quantity<span><b>*</b></span></label>
-	                    <div class="col-lg-9">
-	                      <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" value="0">
+	                    <div class="col-lg-2">
+	                      <button id="btn_fuel_entry_add" type="button" class="btn btn-info">Add Entry(s)</button>
 	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Number<span><b>*</b></span></label>
-	                    <div class="col-lg-9">
-	                      <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Invoice Date<span><b>*</b></span></label>
-	                    <div class="col-lg-9">
-	                      <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vendor Name<span><b>*</b></span></label>
-	                    <div class="col-lg-9">
-	                      <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
-	                    <div class="col-lg-9">
-	                      <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">
-	                    </div>
-	                  </div>
-	                  <div class="form-group row">
-	                    <label class="col-lg-3 col-form-label form-control-label"></label>
-	                    <div class="col-lg-9">
-	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
-												<input class="btn btn-primary" type="submit" value="Save Changes">
-	                    </div>
-	                  </div>
+	                    <div class="col-lg-10"></div>
+		              </div>
+		              <hr>
+		              <div class="form-group row">
+		                    <label class="col-lg-3 col-form-label form-control-label"></label>
+		                    <div class="col-lg-9">
+		                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+													<input class="btn btn-primary" type="submit" value="Save Changes">
+		                    </div>
+		                  </div>
 	                </form>
 	              </div>
 	           </div>
@@ -1740,6 +2230,7 @@ body, html {
 	              </div>
 	              <div class="card-body">
 	                <form autocomplete="off" th:action="@{/addFuelExit}" method="post" class="form" role="form">
+	                <div class="fuelExitDivStart">
 	                <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label">Type of Fuel Exit<span><b>*</b></span></label>
 	                    <div class="col-lg-9">
@@ -1803,6 +2294,15 @@ body, html {
 						  </select>
 	                    </div>
 	                  </div>
+	                  <hr>
+	                  </div>
+	                  <div class="form-group row">
+	                    <div class="col-lg-2">
+	                      <button id="btn_fuel_exit_add" type="button" class="btn btn-info">Add Exit(s)</button>
+	                    </div>
+	                    <div class="col-lg-10"></div>
+		              </div>
+		              <hr>
 	                  <div class="form-group row">
 	                    <label class="col-lg-3 col-form-label form-control-label"></label>
 	                    <div class="col-lg-9">
@@ -2319,10 +2819,15 @@ body, html {
         </div>
         <div id="viewVehicles" style="display:none;" class="col main pt-5 mt-3">
                 
-                <h3 class="mb-0">Vehicle Details</h3>
-
+           <h3 class="mb-0">Vehicle Details</h3>
+			<div class="alert alert-danger">
+				    <strong>Note:</strong> Dates marked Red indicates validity of the certificate is over.
+			</div>
+			<div class="alert alert-warning">
+				    <strong>Note:</strong> Dates marked Orange indicates validity of the certificate is going to get over in the next 7 days.
+			</div>
             <div class="row my-4">
-                <div class="col-lg-3 col-md-4">
+                <div class="width-fit-content col-lg-3 col-md-4">
                     <div class="card card-inverse bg-inverse mt-3">
                         <div class="card-body">
                             <h4 class="card-title">Total Vehicles</h4>
@@ -2330,7 +2835,7 @@ body, html {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-8">
+                <div class="width-fit-content col-lg-9 col-md-8">
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead class="thead-inverse">
@@ -2346,22 +2851,25 @@ body, html {
                                     <th>Fitness Expiry Date</th>
                                     <th>Insurance From Date</th>
                                     <th>Insurance Expiry Date</th>
-                                    <th>Last Servicing Date</th>
+                                    <th>Last Servicing Date</th>    
                                 </tr>
                             </thead>
                             <tbody>
-                            	<tr th:each="vr : ${vehicleList}">
+                            	<tr th:each="vr : ${vehicleListDto}">
                             		<td th:text="${vr.vehicle_no}"></td>
                             		<td th:text="${vr.vehicle_type}"></td>
                             		<td th:text="${vr.driver_lisence_no}"></td>
                             		<td th:text="${vr.tyre_no}"></td>
                             		<td th:text="${vr.battery_no}"></td>
                             		<td th:text="${vr.pollution_from_date}"></td>
-                            		<td th:text="${vr.pollution_expiry_date}"></td>
+                            		<td th:if="${vr.pollution_expiry_date != null}" th:text="${#temporals.format(vr.pollution_expiry_date, 'yyyy-MM-dd')}" th:classappend="${vr.pollution_expiry_date.isBefore(T(java.time.LocalDate).now())} ? 'exceeded-date' : (${vr.isPollutionExpiringInNextWeek()} ? 'expiring-soon' : 'safe-date')"></td>
+                            		<td th:if="${vr.pollution_expiry_date == null}">N/A</td>
                             		<td th:text="${vr.fitness_from_date}"></td>
-                            		<td th:text="${vr.fitness_end_date}"></td>
+                            		<td th:if="${vr.fitness_end_date != null}" th:text="${#temporals.format(vr.fitness_end_date, 'yyyy-MM-dd')}" th:classappend="${vr.fitness_end_date.isBefore(T(java.time.LocalDate).now())} ? 'exceeded-date' : (${vr.isFitnessExpiringInNextWeek()} ? 'expiring-soon' : 'safe-date')"></td>
+                            		<td th:if="${vr.fitness_end_date == null}">N/A</td>
                             		<td th:text="${vr.insurance_from_date}"></td>
-                            		<td th:text="${vr.insurance_end_date}"></td>
+                            		<td th:if="${vr.insurance_end_date != null}" th:text="${#temporals.format(vr.insurance_end_date, 'yyyy-MM-dd')}" th:classappend="${vr.insurance_end_date.isBefore(T(java.time.LocalDate).now())} ? 'exceeded-date' : (${vr.isInsuranceExpiringInNextWeek()} ? 'expiring-soon' : 'safe-date')"></td>
+                            		<td th:if="${vr.insurance_end_date == null}">N/A</td>
                             		<td th:text="${vr.last_servicing_date}"></td>
                             	</tr>
                             </tbody>

@@ -13,6 +13,7 @@ import com.gautam_construction.InventoryManagement.model.product;
 
 public interface ProductRepository extends JpaRepository<product, Long>{
 	public final static String GET_ALL_PRODUCTS = "SELECT * FROM product";
+	public final static String GET_ALL_REFUNDABLE_PRODUCTS = "SELECT * FROM product where type='refundable'";
 	public final static String INSERT_PRODUCT_DETAILS = "insert into product(name,unit,quantity,type,material) VALUES (:name,:unit,:quantity,:type, :material)";
 	public final static String GET_PRODUCT_QUANTITY = "SELECT * FROM product where prod_id=:prod_id";
 	public final static String UPDATE_PRODUCT_QUANTITY = "update product set quantity=:quantity where prod_id=:prod_id";
@@ -22,6 +23,9 @@ public interface ProductRepository extends JpaRepository<product, Long>{
 
 	@Query(value=GET_ALL_PRODUCTS,nativeQuery=true)
 	List<product> getAllProducts();
+	
+	@Query(value=GET_ALL_REFUNDABLE_PRODUCTS,nativeQuery=true)
+	List<product> getAllRefundableProducts();
 	                                             
 	@Modifying(clearAutomatically = true)
     @Query(value = INSERT_PRODUCT_DETAILS, nativeQuery = true)

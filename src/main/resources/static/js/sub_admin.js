@@ -73,7 +73,7 @@
 				counter--;
 		  }
   		  e.preventDefault(); $(this).parent('div').parent('div').parent('div').remove();
-  	})
+  		})
   	
   		var counterG = 1;
 		$('#btn_prod_add_ghy_office').click(function(event){
@@ -506,5 +506,165 @@
 		  }
   		  e.preventDefault(); $(this).parent('div').parent('div').parent('div').remove();
   		})
+		
+		/* fuel entry section */
+		var counterFuelEntry = 1;
+				$('#btn_fuel_entry_add').click(function(event){
+					event.preventDefault();
+					counterFuelEntry++;
+					//var prodList = '[[${productList}]]';
+					
+					var add_fuel_entry = 
+						'<div>'+
+						' <div class="form-group row">'+
+						' 	<div class="col-lg-2">'+
+						' 	</div>'+
+						' 	<div class="col-lg-8"></div>'+
+						' 	<div class="col-lg-2">'+
+						' 		<button type="button" class="product_remove btn btn-danger float-right">Delete Product</button>'+
+						' 	</div>'+
+						' </div>'+
+						'<div class="form-group row">'+
+						'<label class="col-lg-3 col-form-label form-control-label">Fuel Type<span><b>*</b></span></label>'+
+						'<div class="col-lg-9">'+
+						'  <select class="form-control" name="fuel_type" id="fuel_type">'+
+						'		<option value="">select option</option>'+
+						'		<option value="diesel">Diesel</option>'+
+						'		<option value="petrol">Petrol</option>'+
+						'  </select>'+
+						'</div>'+
+						'</div>'+
+						'<div class="form-group row">'+
+						'<label class="col-lg-3 col-form-label form-control-label">Fuel Issue Quantity<span><b>*</b></span></label>'+
+						'<div class="col-lg-9">'+
+						'  <input id="fuel_quantity" name="fuel_quantity" class="form-control" type="text" value="0">'+
+						'</div>'+
+						'</div>'+
+						'<div class="form-group row">'+
+						'<label class="col-lg-3 col-form-label form-control-label">Invoice Number<span><b>*</b></span></label>'+
+						'<div class="col-lg-9">'+
+						'  <input id="invoice_no" name="invoice_no" class="form-control" type="text" value="">'+
+						'</div>'+
+						'</div>'+
+						'<div class="form-group row">'+
+						'<label class="col-lg-3 col-form-label form-control-label">Invoice Date<span><b>*</b></span></label>'+
+						'<div class="col-lg-9">'+
+						'  <input id="invoice_date" name="invoice_date" class="form-control" type="date" value="">'+
+						'</div>'+
+						'</div>'+
+						'<div class="form-group row">'+
+						'<label class="col-lg-3 col-form-label form-control-label">Vendor Name<span><b>*</b></span></label>'+
+						'<div class="col-lg-9">'+
+						'  <input id="vendor_name" name="vendor_name" class="form-control" type="text" value="">'+
+						'</div>'+
+						'</div>'+
+						'<div class="form-group row">'+
+						'<label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>'+
+						'<div class="col-lg-9">'+
+						'  <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" value="">'+
+						'</div>'+
+						'</div>'+
+						'<hr>'+
+						'</div>';
+						
+						$('.fuelEntryDivStart').append(add_fuel_entry);
+						$('.select2').select2();
+				});
+				
+				$('.fuelEntryDivStart').on("click",".product_remove", function(e){ //user click on remove text
+		  		  e.preventDefault(); $(this).parent('div').parent('div').parent('div').remove();
+		  		})
+				
+				/* fuel exit section */
+				var counterFuelExit = 1;
+						$('#btn_fuel_exit_add').click(function(event){
+							//alert("within exit");
+							event.preventDefault();
+							counterFuelExit++;
+							//var prodList = '[[${productList}]]';
+							
+							var add_fuel_exit = 
+								'<div>'+
+								' <div class="form-group row">'+
+								' 	<div class="col-lg-2">'+
+								' 	</div>'+
+								' 	<div class="col-lg-8"></div>'+
+								' 	<div class="col-lg-2">'+
+								' 		<button type="button" class="product_remove btn btn-danger float-right">Delete Product</button>'+
+								' 	</div>'+
+								' </div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Type of Fuel Exit<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <select class="form-control" name="exit_type" id="exit_type">'+
+								'		<option value="">select option</option>'+
+								'		<option value="petrol_diesel">Petrol / Diesel</option>'+
+								'		<option value="misc">Miscellaneous</option>'+
+								'  </select>'+
+								'</div>'+
+								'</div>'+
+								'<hr><br>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Fuel Type<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <select class="form-control" name="fuel_type" id="fuel_type">'+
+								'		<option value="">select option</option>'+
+								'		<option value="diesel">Diesel</option>'+
+								'		<option value="petrol">Petrol</option>'+
+								'  </select>'+
+								'</div>'+
+								'</div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Vehicle No.<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <select class="form-control" name="vehicle_no" id="vehicle_no">'+
+								'		<option value="">select option</option>'+
+								'		<option th:each="vehicle : ${vehicleList}" th:value="${vehicle.vehicle_no}" th:text="${vehicle.vehicle_no}"></option>'+
+								'  </select>'+
+								'</div>'+
+								'</div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Opening Reading<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <input id="opening_reading" name="opening_reading" class="form-control" type="text" value="">'+
+								'</div>'+
+								'</div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Mileage<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <input id="mileage" name="mileage" class="form-control" type="text" value="">'+
+								'</div>'+
+								'</div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Fuel Issue<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <input id="fuel_issue" name="fuel_issue" class="form-control" type="text" value="0">'+
+								'</div>'+
+								'</div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Issue Date<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <input id="issue_date" name="issue_date" class="form-control" type="date" value="">'+
+								'</div>'+
+								'</div>'+
+								'<div class="form-group row">'+
+								'<label class="col-lg-3 col-form-label form-control-label">Type of Vehicle<span><b>*</b></span></label>'+
+								'<div class="col-lg-9">'+
+								'  <select class="form-control" name="vehicle_type" id="vehicle_type">'+
+								'		<option value="">select option</option>'+
+								'		<option th:each="vehicleType : ${distinctVehicleTypeList}" th:value="${vehicleType}" th:text="${vehicleType}"></option>'+
+								'  </select>'+
+								'</div>'+
+								'</div>'+
+								'<hr>'+
+								'</div>';
+								
+								$('.fuelExitDivStart').append(add_fuel_exit);
+								$('.select2').select2();
+						});
+						
+						$('.fuelExitDivStart').on("click",".product_remove", function(e){ //user click on remove text
+				  		  e.preventDefault(); $(this).parent('div').parent('div').parent('div').remove();
+				  		})
   		
 	});

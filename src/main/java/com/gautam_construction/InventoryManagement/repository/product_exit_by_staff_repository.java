@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
 import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto;
+import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto_by_product;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_staff_dto;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_staff;
 
@@ -46,7 +47,13 @@ public interface product_exit_by_staff_repository extends JpaRepository<product_
     @Transactional
 	void DeleteAllProductExitByStaff(@Param("challan_no") String challan_no);
 	
-	public final static String GET_PRODUCT_FILTER_BY_SEARCH = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto(pe.prod_id,p.name,p.unit,pe.quantity,pe.challan_no,pe.exit_date,'Exit By Staff') FROM product_exit_by_staff pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (:date IS NULL OR :date = '' OR pe.exit_date=:date)";
+	public final static String GET_PRODUCT_FILTER_BY_SEARCH = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto(pe.prod_id,p.name,p.type,p.unit,pe.quantity,pe.challan_no,pe.exit_date,'Exit By Staff') FROM product_exit_by_staff pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (:date IS NULL OR :date = '' OR pe.exit_date=:date)";
 	@Query(value=GET_PRODUCT_FILTER_BY_SEARCH)
 	List<filter_product_search_dto> getProductFilterBySearch(@Param("prod_id") String prod_id,@Param("date") String date);
+	
+	public final static String GET_PRODUCT_FILTER_SEARCH_BY_PRODUCT = "select new com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto_by_product(pe.prod_id,p.name,p.type,p.unit,pe.quantity,pe.challan_no,pe.exit_date,'Exit By Staff') FROM product_exit_by_staff pe inner join product p on pe.prod_id=p.prod_id where (:prod_id IS NULL OR :prod_id = '' OR p.prod_id=:prod_id) and (COALESCE(:s_date, '') = '' OR STR_TO_DATE(pe.exit_date, '%Y-%m-%d') >= STR_TO_DATE(:s_date, '%Y-%m-%d'))"
+			+ "  AND (COALESCE(:e_date, '') = '' OR STR_TO_DATE(pe.exit_date, '%Y-%m-%d') <= STR_TO_DATE(:e_date, '%Y-%m-%d')) ORDER BY pe.exit_date";
+	@Query(value=GET_PRODUCT_FILTER_SEARCH_BY_PRODUCT)
+	List<filter_product_search_dto_by_product> getProductFilterSearchByProduct(@Param("prod_id") String prod_id,@Param("s_date") String s_date,@Param("e_date") String e_date);
+	
 }

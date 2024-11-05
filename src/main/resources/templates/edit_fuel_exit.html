@@ -1,10 +1,127 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="_csrf" id="_csrf" th:content="${_csrf.token}" />
+        <meta name="_csrf_header" id="_csrf_header" th:content="${_csrf.headerName}" />
+<title>Shri Gautam Constructions - Inventory</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://kit.fontawesome.com/c1a8a4a3ac.js" crossorigin="anonymous"></script>
+<script type = "text/javascript"
+			 src = "https://code.jquery.com/jquery-2.1.3.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
 <body>
-
+	<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
+	    <div class="flex-row d-flex">
+	        <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <a class="navbar-brand" href="#" title="Gautam Constructions"><img src="images/logo.jpeg" class="brand_logo" alt="Logo" width="50" height="50"/></a>
+	    </div>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="navbar-collapse collapse" id="collapsingNavbar">
+	        <ul class="navbar-nav">
+	            <li class="nav-item active">
+	                <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
+	            </li>
+	        </ul>
+	        <ul class="navbar-nav ml-auto">
+	            <li class="nav-item">
+	                <a class="nav-link" href="#myAlert" data-toggle="collapse"><span th:text="${office_name}"></span></a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="/logout">Logout</a>
+	            </li>
+	        </ul>
+	    </div>
+	</nav><br>
+	<div class="container-fluid col main pt-5 mt-3" id="main">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card card-outline-secondary">
+	              <div class="card-header">
+	                <h3 class="mb-0">Edit Product Information</h3>
+	              </div>
+	              <div class="card-body">
+	                <form autocomplete="off" th:action="@{/updateFuelExit}" method="post" class="form" role="form">
+	                  <input id="fuel_id" name="fuel_id" class="form-control" type="hidden" th:value="${fuel_id}">
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Exit Type</label>
+	                    <div class="col-lg-9">
+	                      <input id="exit_type" name="exit_type" class="form-control" type="text" th:value="${fuel_exit_obj.exit_type}">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Type</label>
+	                    <div class="col-lg-9">
+	                      <input id="fuel_type" name="fuel_type" class="form-control" type="text" th:value="${fuel_exit_obj.fuel_type}" readonly>
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle No.</label>
+	                    <div class="col-lg-9">
+	                      <input id="vehicle_no" name="vehicle_no" class="form-control" type="text" th:value="${fuel_exit_obj.vehicle_no}">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Opening Reading</label>
+	                    <div class="col-lg-9">
+	                      <input id="opening_reading" name="opening_reading" class="form-control" type="text" th:value="${fuel_exit_obj.opening_reading}">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Mileage</label>
+	                    <div class="col-lg-9">
+	                      <input id="mileage" name="mileage" class="form-control" type="text" th:value="${fuel_exit_obj.mileage}">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Fuel Issue Quantity</label>
+	                    <div class="col-lg-9">
+	                      <input id="fuel_issue" name="fuel_issue" class="form-control" type="text" th:value="${fuel_exit_obj.fuel_issue}">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Issue Date</label>
+	                    <div class="col-lg-9">
+	                      <input id="issue_date" name="issue_date" class="form-control" type="date" th:value="${fuel_exit_obj.issue_date}">
+	                    </div>
+	                  </div>
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label">Vehicle type</label>
+	                    <div class="col-lg-9">
+	                      <input id="vehicle_type" name="vehicle_type" class="form-control" type="text" th:value="${fuel_exit_obj.vehicle_type}">
+	                    </div>
+	                  </div>
+	                  
+	                  <div class="form-group row">
+	                    <label class="col-lg-3 col-form-label form-control-label"></label>
+	                    <div class="col-lg-9">
+	                      <input class="btn btn-secondary" type="reset" value="Cancel"> 
+												<input class="btn btn-primary" type="submit" value="Save Changes">
+	                    </div>
+	                  </div>
+	                </form>
+	              </div>
+	           </div>
+			</div>
+			
+		</div>
+	</div>
 </body>
 </html>

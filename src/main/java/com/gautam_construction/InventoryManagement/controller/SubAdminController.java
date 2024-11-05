@@ -1,6 +1,8 @@
 package com.gautam_construction.InventoryManagement.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,10 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gautam_construction.InventoryManagement.DTO.brief_product_challan_dto;
 import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto;
+import com.gautam_construction.InventoryManagement.DTO.filter_product_search_dto_by_product;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_challan_dto;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_contractor_dto;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_misc_dto;
 import com.gautam_construction.InventoryManagement.DTO.product_exit_by_staff_dto;
+import com.gautam_construction.InventoryManagement.DTO.vehicle_list_dto;
 import com.gautam_construction.InventoryManagement.model.contractor;
 import com.gautam_construction.InventoryManagement.model.fuel;
 import com.gautam_construction.InventoryManagement.model.fuel_entry;
@@ -38,6 +42,7 @@ import com.gautam_construction.InventoryManagement.model.product_exit_by_challan
 import com.gautam_construction.InventoryManagement.model.product_exit_by_contractor;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_miscellaneous;
 import com.gautam_construction.InventoryManagement.model.product_exit_by_staff;
+import com.gautam_construction.InventoryManagement.model.product_return;
 import com.gautam_construction.InventoryManagement.model.staff;
 import com.gautam_construction.InventoryManagement.model.users;
 import com.gautam_construction.InventoryManagement.model.vehicle;
@@ -56,6 +61,7 @@ import com.gautam_construction.InventoryManagement.repository.product_exit_by_ch
 import com.gautam_construction.InventoryManagement.repository.product_exit_by_contractor_repository;
 import com.gautam_construction.InventoryManagement.repository.product_exit_by_miscellaneous_repository;
 import com.gautam_construction.InventoryManagement.repository.product_exit_by_staff_repository;
+import com.gautam_construction.InventoryManagement.repository.product_return_repository;
 import com.gautam_construction.InventoryManagement.repository.userRepository;
 
 @Controller
@@ -98,6 +104,10 @@ public class SubAdminController {
 	@Autowired
 	private fuel_exit_repository fexr;
 	
+	@Autowired
+	private product_return_repository prr;
+	
+	DateTimeFormatter formatterL = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/SubAdminHome")
@@ -113,10 +123,13 @@ public class SubAdminController {
         List<users> user_info = ur.getUserCredentiaLs(user_id);
         model.addAttribute("office_name", office_name);
 		List<product> productList = pr.getAllProducts();
+		List<product> refundableProductList = pr.getAllRefundableProducts();
         List<staff> staffList = sr.getAllStaffs();
         List<contractor> contractorList = cr.getAllContractors();
         List<vehicle> vehicleList = vr.getAllVehicles();
+        List<vehicle_list_dto> vehicleListDto = new ArrayList<>();
         List<location> locationList = lr.getAllLocations();
+        List<product_return> productReturnList = prr.getAllProductReturn();
         List<product_add_by_challan> prodAddChallanList = pacr.getAllProductAddByChallan();
         List<product_add_by_ghy_office> prodAddGhyOffice = pagor.getAllProductAddByGhyOffice();
         List<product_add_by_local_office> prodAddLocalOffice = palor.getAllProductAddByLocalOffice();
@@ -125,10 +138,38 @@ public class SubAdminController {
         List<product_exit_by_miscellaneous> prodExitMiscellaneous = pemr.getAllProductExitByMiscellaneous();
         List<product_exit_by_staff> prodExitStaff = pesr.getAllProductExitByStaff();
         model.addAttribute("productList", productList);
+        model.addAttribute("refundableProductList",refundableProductList);
         model.addAttribute("staffList", staffList);
         model.addAttribute("contractorList", contractorList);
         model.addAttribute("vehicleList", vehicleList);
         model.addAttribute("locationList", locationList);
+        model.addAttribute("productReturnList",productReturnList);
+        model.addAttribute("products_returned", productReturnList.size());
+        
+        for(vehicle vr: vehicleList) {
+        	LocalDate pollutionExpiryDate = null;
+        	if(vr.getPollution_expiry_date().isEmpty())
+        		pollutionExpiryDate = null;
+        	else
+        		pollutionExpiryDate = LocalDate.parse(vr.getPollution_expiry_date(), formatterL);
+        	
+        	LocalDate FittnessEndDate = null;
+        	if(vr.getFitness_end_date().isEmpty())
+        		FittnessEndDate = null;
+        	else
+        		FittnessEndDate = LocalDate.parse(vr.getFitness_end_date(), formatterL);
+        	
+        	LocalDate InsuranceEndDate = null;
+        	if(vr.getInsurance_end_date().isEmpty())
+        		InsuranceEndDate = null;
+        	else
+        		InsuranceEndDate = LocalDate.parse(vr.getInsurance_end_date(), formatterL);
+        	
+        	vehicle_list_dto vld = new vehicle_list_dto(vr.getId(),vr.getVehicle_no(),vr.getDriver_lisence_no(),vr.getTyre_no(),vr.getBattery_no(),vr.getPollution_from_date(),pollutionExpiryDate,vr.getFitness_from_date(),FittnessEndDate,vr.getInsurance_from_date(),InsuranceEndDate,vr.getLast_servicing_date(),vr.getVehicle_type());
+        	vehicleListDto.add(vld);
+        }
+        
+        model.addAttribute("vehicleListDto", vehicleListDto);
         
         model.addAttribute("productCount", productList.size());
         model.addAttribute("staffCount", staffList.size());
@@ -348,50 +389,56 @@ public class SubAdminController {
 	
 	@RequestMapping(value="/addFuelEntry",method=RequestMethod.POST)
 	public Object addFuelEntry(
-			@RequestParam("fuel_type") String fuel_type,
-			@RequestParam("fuel_quantity") String fuel_quantity,
-			@RequestParam("invoice_no") String invoice_no,
-			@RequestParam("invoice_date") String invoice_date,
-			@RequestParam("vendor_name") String vendor_name,
-			@RequestParam("vehicle_no") String vehicle_no,
+			@RequestParam("fuel_type") List<String> fuel_type,
+			@RequestParam("fuel_quantity") List<String> fuel_quantity,
+			@RequestParam("invoice_no") List<String> invoice_no,
+			@RequestParam("invoice_date") List<String> invoice_date,
+			@RequestParam("vendor_name") List<String> vendor_name,
+			@RequestParam("vehicle_no") List<String> vehicle_no,
 			HttpSession session,Model model,Authentication authentication) {
 			String office_name = session.getAttribute("officeName").toString();
-			Double quantity = 0.0;
-			List<fuel> fuelList = fr.getFuelDetailsByType(fuel_type);
-			if(fuelList.size()>0) {
-				quantity = quantity + Double.parseDouble(fuelList.get(0).getQuantity());
+			for(int i=0;i<fuel_type.size();i++) {
+				Double quantity = 0.0;
+				List<fuel> fuelList = fr.getFuelDetailsByType(fuel_type.get(i));
+				if(fuelList.size()>0) {
+					quantity = quantity + Double.parseDouble(fuelList.get(0).getQuantity());
+				}
+				quantity = quantity + Double.parseDouble(fuel_quantity.get(i));
+				fer.InsertFuelAdd(fuel_type.get(i), fuel_quantity.get(i), invoice_no.get(i), invoice_date.get(i), vendor_name.get(i), vehicle_no.get(i));
+				fr.UpdateFuelQuantity(fuel_type.get(i), Double.toString(quantity));
 			}
-			quantity = quantity + Double.parseDouble(fuel_quantity);
-			fer.InsertFuelAdd(fuel_type, fuel_quantity, invoice_no, invoice_date, vendor_name, vehicle_no);
-			fr.UpdateFuelQuantity(fuel_type, Double.toString(quantity));
+			
 		return "redirect:/SubAdminHome";
 	}
 	
 	@RequestMapping(value="/addFuelExit",method=RequestMethod.POST)
 	public Object addFuelExit(
 			RedirectAttributes redirectAttributes,
-			@RequestParam("exit_type") String exit_type,
-			@RequestParam("fuel_type") String fuel_type,
-			@RequestParam("vehicle_no") String vehicle_no,
-			@RequestParam("opening_reading") String opening_reading,
-			@RequestParam("mileage") String mileage,
-			@RequestParam("fuel_issue") String fuel_issue,
-			@RequestParam("issue_date") String issue_date,
-			@RequestParam("vehicle_type") String vehicle_type,
+			@RequestParam("exit_type") List<String> exit_type,
+			@RequestParam("fuel_type") List<String> fuel_type,
+			@RequestParam("vehicle_no") List<String> vehicle_no,
+			@RequestParam("opening_reading") List<String> opening_reading,
+			@RequestParam("mileage") List<String> mileage,
+			@RequestParam("fuel_issue") List<String> fuel_issue,
+			@RequestParam("issue_date") List<String> issue_date,
+			@RequestParam("vehicle_type") List<String> vehicle_type,
 			HttpSession session,Model model,Authentication authentication) {
-		String office_name = session.getAttribute("officeName").toString();
-			Double quantity = 0.0;
-			List<fuel> fuelList = fr.getFuelDetailsByType(fuel_type);
-			if(fuelList.size()>0) {
-				quantity = quantity + Double.parseDouble(fuelList.get(0).getQuantity());
+			String office_name = session.getAttribute("officeName").toString();
+			for(int i=0;i<fuel_type.size();i++) {
+				Double quantity = 0.0;
+				List<fuel> fuelList = fr.getFuelDetailsByType(fuel_type.get(i));
+				if(fuelList.size()>0) {
+					quantity = quantity + Double.parseDouble(fuelList.get(0).getQuantity());
+				}
+				if(Double.parseDouble(fuel_issue.get(i))>quantity) {
+					redirectAttributes.addFlashAttribute("alert_fuel_stock_out", 1);
+					return "redirect:/SubAdminHome";
+				}
+				quantity = quantity - Double.parseDouble(fuel_issue.get(i));
+				fexr.InsertFuelExit(exit_type.get(i), fuel_type.get(i), vehicle_no.get(i), opening_reading.get(i), mileage.get(i), fuel_issue.get(i), issue_date.get(i), vehicle_type.get(i));
+				fr.UpdateFuelQuantity(fuel_type.get(i), Double.toString(quantity));
 			}
-			if(Double.parseDouble(fuel_issue)>quantity) {
-				redirectAttributes.addFlashAttribute("alert_fuel_stock_out", 1);
-				return "redirect:/SubAdminHome";
-			}
-			quantity = quantity - Double.parseDouble(fuel_issue);
-			fexr.InsertFuelExit(exit_type, fuel_type, vehicle_no, opening_reading, mileage, fuel_issue, issue_date, vehicle_type);
-			fr.UpdateFuelQuantity(fuel_type, Double.toString(quantity));
+			
 		return "redirect:/SubAdminHome";
 	}
 	
@@ -667,5 +714,47 @@ public class SubAdminController {
 			filtered_product_list.addAll(pemr.getProductFilterBySearch(exit_product_id, exit_date));
 		}
 		return filtered_product_list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getProductEntryExitDetails", method=RequestMethod.GET)
+	public Object getProductEntryExitDetails(@RequestParam(name="f_product_id", required = false) String f_product_id,
+			@RequestParam(name="s_date", required = false) String s_date,
+			@RequestParam(name="e_date", required = false) String e_date,
+			HttpSession session,Model model,Authentication authentication) {
+		
+		List<List<filter_product_search_dto_by_product>> product_search_list = new ArrayList<>();
+		
+		List<filter_product_search_dto_by_product> filtered_entry_product_list = new ArrayList<>();
+		List<filter_product_search_dto_by_product> filtered_exit_product_list = new ArrayList<>();
+		
+		filtered_entry_product_list.addAll(pacr.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		filtered_entry_product_list.addAll(pagor.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		filtered_entry_product_list.addAll(palor.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		
+		filtered_exit_product_list.addAll(pecr.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		filtered_exit_product_list.addAll(pesr.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		filtered_exit_product_list.addAll(pecor.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		filtered_exit_product_list.addAll(pemr.getProductFilterSearchByProduct(f_product_id, s_date, e_date));
+		
+		product_search_list.add(filtered_entry_product_list);
+		product_search_list.add(filtered_exit_product_list);
+		
+		return product_search_list;
+	}
+	
+	@RequestMapping(value="/returnProduct",method=RequestMethod.POST)
+	public Object returnProduct(
+			@RequestParam("product_id") String product_id,
+			@RequestParam("product_name") String product_name,
+			@RequestParam("return_quantity") String return_quantity,
+			@RequestParam("return_date") String return_date,
+			@RequestParam("contractor_name") String contractor_name,
+			@RequestParam("receiving_person_name") String receiving_person_name) {
+		prr.InsertProductReturnDetails(product_id, product_name, return_quantity, return_date, contractor_name, receiving_person_name);
+		List<product> prodDetails = pr.getProductQuantity(Integer.parseInt(product_id));
+		Double product_stock = Double.parseDouble(prodDetails.get(0).getQuantity());
+		product_stock += Double.parseDouble(return_quantity);
+		return "redirect:/SubAdminHome";
 	}
 }
